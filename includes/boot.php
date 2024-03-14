@@ -7,7 +7,7 @@ $pdo = null;
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');  // Replace with your MySQL username
 define('DB_PASSWORD', '');  // Replace with your MySQL password
-define('DB_NAME', 'checklist');
+define('DB_NAME', 'bh_tracking');
 define('APP_ROOT', 'http://localhost/bh_tracking/');
 
 try {
