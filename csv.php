@@ -13,7 +13,7 @@ include 'delete.php';
 
                 <div class="col-sm-6">
                     <br>
-                    <h3 class="title" style="margin-left: 50px;">Records List <a href="csv.php" class="btn btn-primary  btn-sm rounded-s">Export to CSV</a></h3>
+                    <h3 class="title" style="margin-left: 50px;">Records List <a href="csv.php" class="btn btn-primary  btn-sm rounded-s">Import From CSV</a></h3>
 
 
 
