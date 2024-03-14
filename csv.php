@@ -28,18 +28,6 @@ include 'includes/header.php';
         <dive class="row">
 
 
-            <div class="alert alert-success alert-dismissible fade show" style="display: none; position: absolute; top: 0px; left: 50%; transform: translateX(-50%); border-radius: 10px;" role="alert">
-                Data deleted successfully.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="alert alert-warning alert-dismissible fade show deleteWarning" style="display: none;" role="alert">
-                Error deleting record. Please try again later.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>x-www-form-urlencoded
-                </button>
-            </div>
             <div class="card col-lg-11" style="margin-left: 60px;">
 
                 <div class="card-body">
@@ -87,11 +75,13 @@ include 'includes/header.php';
                             <table class="table table-bordered table-hover w-100" id="recordstable">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th class="text-center">Date</th>
-                                        <th class="text-center">Location Type</th>
+                                      
+                                        <th class="text-center">Account Number</th>
+                                        <th class="text-center">Name of Establishment</th>
+                                        <th class="text-center">Full Name</th>
                                         <th class="text-center">Address</th>
-                                        <th class="text-center">View Details</th>
-                                        <th class="text-center">Delete </th>
+                                        <th class="text-center">City Municipality</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -100,7 +90,7 @@ include 'includes/header.php';
                                     $servername = "localhost";
                                     $username = "root";
                                     $password = "";
-                                    $database = "drrmo";
+                                    $database = "bh_tracking";
 
                                     try {
 
@@ -109,7 +99,7 @@ include 'includes/header.php';
                                         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-                                        $sql = "SELECT id, date, loc_type, incident_loc FROM usar";
+                                        $sql = "SELECT id, account_number, establishment_name, first_name, middle_name, last_name, bh_address, bh_municipality FROM boarding_house_tracking";
                                         $stmt = $conn->prepare($sql);
                                         $stmt->execute();
 
@@ -118,11 +108,11 @@ include 'includes/header.php';
 
                                             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                                 echo "<tr>";
-                                                echo "<td class='text-center'>" . $row['date'] . "</td>";
-                                                echo "<td class='text-center'>" . $row['loc_type'] . "</td>";
-                                                echo "<td class='text-center'>" . $row['incident_loc'] . "</td>";
-                                                echo "<td class='text-center'><a href='records.php?id=" . $row['id'] . "' class='btn btn-primary'>View</a></td>";
-                                                echo "<td class='text-center'><button class='btn btn-danger' onclick='deleteRecord(" . $row['id'] . ")'>Delete</button></td>";
+                                                echo "<td class='text-center'>" . $row['account_number'] . "</td>";
+                                                echo "<td class='text-center'>" . $row['establishment_name'] . "</td>";
+                                                echo "<td class='text-center'>" . $row['first_name'. 'middle_name'. 'last_name'.'suffix'] . "</td>";
+                                                echo "<td class='text-center'>" . $row['bh_address'] . "</td>";
+                                                echo "<td class='text-center'>" . $row['bh_municipality'] . "</td>";
                                                 echo "</tr>";
                                             }
                                         } else {
@@ -144,34 +134,6 @@ include 'includes/header.php';
     </section>
 </article>
 
-<script>
-    function deleteRecord(id) {
-        if (confirm('Are you sure you want to delete this record?')) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        document.querySelector('.deleteWarning').innerHTML = 'Data deleted successfully.';
-                        document.querySelector('.deleteWarning').style.display = 'block';
-                        setTimeout(function() {
-                            window.location.reload();
-                        }, 500);
-                    } else {
-                        var errorMessage = xhr.responseText.trim();
-                        if (errorMessage) {
-                            alert(errorMessage);
-                        } else {
-                            alert('Error deleting record. Please try again later.');
-                        }
-                    }
-                }
-            };
-            xhr.open('POST', 'delete.php');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send('id=' + id);
-        }
-    }
-</script>
 
 <?php
 include 'includes/footer.php';
