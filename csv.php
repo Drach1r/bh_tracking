@@ -86,7 +86,7 @@ include 'includes/header.php';
                                 <thead class="table-dark">
                                     <tr>
 
-                                        <th class="text-center">Account Number</th>
+                                        <th class="text-center">#</th>
                                         <th class="text-center">Name of Establishment</th>
                                         <th class="text-center">Full Name</th>
                                         <th class="text-center">Address</th>
@@ -118,9 +118,18 @@ include 'includes/header.php';
 
                                             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                                 echo "<tr>";
-                                                echo "<td class='text-center'>" . $row['account_number'] . "</td>";
+                                                echo "<td class='text-center'>" . $row['id'] . "</td>";
                                                 echo "<td class='text-center'>" . $row['establishment_name'] . "</td>";
-                                                echo "<td class='text-center'>" . $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name'] . ' ' . $row['suffix'] . "</td>";
+                                                echo "<td class='text-center'>" . $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name'];
+
+                                                // Check if 'suffix' key exists and is not null
+                                                if (array_key_exists('suffix', $row) && $row['suffix'] !== null) {
+                                                    echo ' ' . $row['suffix'];
+                                                }
+
+                                                echo "</td>";
+
+
 
                                                 echo "<td class='text-center'>" . $row['bh_address'] . "</td>";
                                                 echo "<td class='text-center'>" . $row['bh_municipality'] . "</td>";
