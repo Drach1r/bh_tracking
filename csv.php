@@ -1,7 +1,5 @@
 <?php
-include 'header.php';
-include 'delete.php';
-
+include 'includes/header.php';
 ?>
 
 
@@ -174,3 +172,7 @@ include 'delete.php';
         }
     }
 </script>
+
+<?php
+include 'includes/footer.php';
+?>
