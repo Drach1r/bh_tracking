@@ -11,7 +11,7 @@ include 'includes/header.php';
 
                 <div class="col-sm-6">
                     <br>
-                    <h3 class="title" style="margin-left: 50px;">Records List </h3>
+                    <h3 class="title" style="margin-left: 50px;">Records List <a href="create.php" class="btn btn-primary  btn-sm rounded-s"> Add New Record</a></h3>
 
                     <form action="import_csv.php" method="post" enctype="multipart/form-data" style="margin-left: 50px;">
                         <div class="form-row align-items-center">

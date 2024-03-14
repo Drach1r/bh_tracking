@@ -36,6 +36,8 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/compressorjs@1.1.5/dist/compressor.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 
 
 
@@ -46,7 +48,7 @@ if (!isset($_SESSION['user_id'])) {
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container-fluid">
-            <a href="csv.php"><img src="resources/img/iloilo.png" alt="" height="80"></a>
+            <a href="records.php"><img src="resources/img/iloilo.png" alt="" height="80"></a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
