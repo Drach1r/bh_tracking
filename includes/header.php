@@ -3,7 +3,7 @@ require_once('boot.php');
 
 if (!isset($_SESSION['user_id'])) {
 
-    header("Location: login.php");
+    header("Location: index.php");
     exit();
 }
 ?>
@@ -40,21 +40,12 @@ if (!isset($_SESSION['user_id'])) {
 
 
 </head>
-<style type="text/css">
-    table tbody tr:hover {
-        cursor: pointer;
-    }
 
-    .normalTr:hover {
-        cursor: default;
-    }
-</style>
 <header>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container-fluid">
-            <a href="index.php"><img src="resources/img/iloilo.png" alt="" height="80"></a>
-            <a class="navbar-brand <?php echo basename($_SERVER['PHP_SELF']) == 'csv.php' ? 'active' : ''; ?>" href="csv.php" style="color: <?php echo basename($_SERVER['PHP_SELF']) == 'csv.php' ? 'blue' : 'white'; ?>;  margin-left: 30px;">Import CSV</a>
+            <a href="csv.php"><img src="resources/img/iloilo.png" alt="" height="80"></a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
