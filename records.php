@@ -26,6 +26,19 @@ include 'includes/header.php';
                             </div>
                         </div>
                     </form>
+                    <form action="district.php" method="post" enctype="multipart/form-data" style="margin-left: 50px;">
+                        <div class="form-row align-items-center">
+                            <div class="col-auto">
+                                <label for="file" class="col-form-label">Choose CSV file to import for district:</label>
+                            </div>
+                            <div class="col-auto">
+                                <input type="file" class="form-control-file" id="file" name="file">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary btn-sm rounded-s">Import</button>
+                            </div>
+                        </div>
+                    </form>
 
                 </div>
             </div>
