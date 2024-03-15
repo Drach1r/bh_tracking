@@ -3,17 +3,32 @@ include 'includes/header.php';
 ?>
 
 
+<div class="container">
 
-<article class="content items-list-page">
-    <div class="title-search-block">
-        <div class="title-block">
-            <div class="row form-group">
+                <?php
+      if (isset($_SESSION['error'])) {
+        echo "
+                    <div class='alert alert-danger text-center'>
+                        <i class='fas fa-exclamation-triangle'></i> " . $_SESSION['error'] . "
+                    </div>
+                ";
+        unset($_SESSION['error']);
+      }
 
-                <div class="col-sm-6">
-                    <br>
-                    <h3 class="title" style="margin-left: 50px;">Records List <a href="create.php" class="btn btn-primary  btn-sm rounded-s"> Add New Record</a></h3>
+      if (isset($_SESSION['success'])) {
+        echo "
+                    <div class='alert alert-success text-center'>
+                        <i class='fas fa-check-circle'></i> " . $_SESSION['success'] . "
+                    </div>
+                ";
+        unset($_SESSION['success']);
+      }
+      ?>
 
-                    <form action="import_csv.php" method="post" enctype="multipart/form-data" style="margin-left: 50px;">
+      <br>
+                    <h3 class="title">Records List <a href="create.php" class="btn btn-primary  btn-sm rounded-s"> Add New Record</a></h3>
+
+                    <form action="import_csv.php" method="post" enctype="multipart/form-data" >
                         <div class="form-row align-items-center">
                             <div class="col-auto">
                                 <label for="file" class="col-form-label">Choose CSV file to import:</label>
@@ -40,20 +55,24 @@ include 'includes/header.php';
                         </div>
                     </form>
 
-                </div>
+             
+
+        <div class="alert alert-success alert-dismissible fade show" style="display: none; position: absolute; top: 0px; left: 50%; transform: translateX(-50%); border-radius: 10px;" role="alert">
+                Data deleted successfully.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </div>
-    </div>
-    <br>
+            <div class="alert alert-warning alert-dismissible fade show deleteWarning" style="display: none;" role="alert">
+                Error deleting record. Please try again later.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>x-www-form-urlencoded
+                </button>
+            </div>
+        
+            <br>
+            <div class="card col-lg-12" > 
 
-
-    <section class="section">
-        <dive class="row">
-
-
-            <div class="card col-lg-11" style="margin-left: 60px;">
-
-                <div class="card-body">
                     <div class="card-body">
                         <br>
                         <div class="card-title-body">
@@ -94,6 +113,7 @@ include 'includes/header.php';
                                     cursor: default;
                                 }
                             </style>
+                            
 
                             <table class="table table-bordered table-hover w-100" id="recordstable">
                                 <thead class="table-dark">
@@ -104,6 +124,9 @@ include 'includes/header.php';
                                         <th class="text-center">Full Name</th>
                                         <th class="text-center">Address</th>
                                         <th class="text-center">City Municipality</th>
+                                        <th class="text-center">Action</th>
+
+
 
                                     </tr>
                                 </thead>
@@ -146,6 +169,22 @@ include 'includes/header.php';
 
                                                 echo "<td class='text-center'>" . $row['bh_address'] . "</td>";
                                                 echo "<td class='text-center'>" . $row['bh_municipality'] . "</td>";
+
+                                                echo "<td class='text-center'>
+                                                <a style='margin-bottom: 5px; color: blue;' href='form.php?id=" . $row['id'] . "'>
+                                                    <i class='fas fa-eye' style='color: blue;'></i> View
+                                                </a>
+                                                <br>
+                                                <a style='margin-bottom: 5px; color: green;' href='javascript:void(0);' onclick='editRecord(" . $row['id'] . ")'>
+                                                    <i class='fas fa-edit' style='color: green;'></i> Edit
+                                                </a>
+                                                <br>
+                                                <a style='margin-bottom: 5px; color: red;' href='javascript:void(0);' onclick='deleteRecord(" . $row['id'] . ")'>
+                                                    <i class='fas fa-trash' style='color: red;'></i> Delete
+                                                </a>
+                                            </td>";
+                                            
+                                            
                                                 echo "</tr>";
                                             }
                                         } else {
@@ -159,15 +198,41 @@ include 'includes/header.php';
 
                                 </tbody>
                             </table>
+
+
                         </div>
                     </div>
-                </div>
-            </div>
-        </dive>
-    </section>
-</article>
+                    </div>
+                    </div>
 
-
+        <script>
+    function deleteRecord(id) {
+        if (confirm('Are you sure you want to delete this record?')) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        document.querySelector('.deleteWarning').innerHTML = 'Data deleted successfully.';
+                        document.querySelector('.deleteWarning').style.display = 'block';
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 500);
+                    } else {
+                        var errorMessage = xhr.responseText.trim();
+                        if (errorMessage) {
+                            alert(errorMessage);
+                        } else {
+                            alert('Error deleting record. Please try again later.');
+                        }
+                    }
+                }
+            };
+            xhr.open('POST', 'delete.php');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('id=' + id);
+        }
+    }
+</script>
 <?php
 include 'includes/footer.php';
 ?>
