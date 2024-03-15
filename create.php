@@ -3,30 +3,18 @@ include 'includes/header.php';
 ?>
 
 
-<article class="content items-list-page">
-    <div class="title-search-block">
-        <div class="title-block">
+
+<h3 style = "margin-left: 10px;" class="title"> Add New Record</h3>
+               
+    <section class="container">
             <div class="row">
-                <div class="col-sm-6">
-                    <h3 style="margin-left: 150px;" class="title">
-                        Add New Record
-
-                    </h3>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <section class="row">
-        <div class="card col-lg-12" style="background-color: white; ">
-            <div class="card-body">
                 <div class="card-body">
                     <div class="card-title-body">
                     </div>
                     <br>
-                    <div class="card card-block  col-lg-10" style="margin-left: 100px; background-color: #E7E7E7; ">
+                    <div class="card card-block  col-lg-12" style=" background-color: #E7E7E7; ">
 
-                        <form action="insert_data.php" method="post">
+                        <form style = "align-item: center;" action="insert_data.php" method="post">
 
                             <br>
                             <div class="row">

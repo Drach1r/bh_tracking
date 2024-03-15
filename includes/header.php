@@ -56,13 +56,7 @@ if (!isset($_SESSION['user_id'])) {
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container-fluid">
-<<<<<<< Updated upstream
             <a href="records.php"><img src="resources/img/iloilo.png" alt="" height="80"></a>
-=======
-            <a href="index.php"><img src="resources/img/iloilo.png" alt="" height="80"></a>
-            <a class="navbar-brand <?php echo basename($_SERVER['PHP_SELF']) == 'csv.php' ? 'active' : ''; ?>" href="csv.php" style="color: <?php echo basename($_SERVER['PHP_SELF']) == 'csv.php' ? 'blue' : 'white'; ?>;  margin-left: 30px;">Import CSV</a>
-            <a class="navbar-brand <?php echo basename($_SERVER['PHP_SELF']) == 'form.php' ? 'active' : ''; ?>" href="form.php" style="color: <?php echo basename($_SERVER['PHP_SELF']) == 'form.php' ? 'blue' : 'white'; ?>;  margin-left: 30px;">Form</a>
->>>>>>> Stashed changes
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
