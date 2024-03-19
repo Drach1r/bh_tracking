@@ -13,8 +13,8 @@ include 'includes/header.php';
             </div>
             <br>
             <div class="card card-block  col-lg-12" style=" background-color: white; ">
+                <form action="resources/dr/save.php" method="POST" enctype="multipart/form-data">
 
-                <form action="resources/dir/save.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="CSRFkey" value="<?php echo $key ?>" id="CSRFkey">
                     <input type="hidden" name="token" value="<?php echo $token ?>" id="CSRFtoken">
 
@@ -64,10 +64,12 @@ include 'includes/header.php';
                     <div class="row">
 
                         <div class="form-group col-md-3">
-
                             <label for="bh_municipality">City/Municipality:</label>
                             <input type="text" id="bh_municipality" name="bh_municipality" class="form-control" value="ILOILO CITY" disabled required>
+                            <!-- Hidden input field to store the value -->
+                            <input type="hidden" name="bh_municipality_hidden" value="ILOILO CITY">
                         </div>
+
                         <div class="form-group col-md-3">
                             <label for="bh_district">District:</label>
                             <select id="bh_district" name="bh_district" class="form-control" placeholder="Enter City" onchange="populateBarangays()" required>
@@ -89,13 +91,13 @@ include 'includes/header.php';
                                 <option value="" disabled selected> -- Select Barangay --</option>
                             </select>
                         </div>
-
                         <div class="form-group col-md-3">
-
                             <label for="bh_province">Province:</label>
                             <input type="text" id="bh_province" name="bh_province" class="form-control" value="ILOILO" disabled required>
-
+                            <!-- Hidden input field to store the value -->
+                            <input type="hidden" name="bh_province_hidden" value="ILOILO">
                         </div>
+
                     </div>
                     <script>
                         function populateBarangays() {
@@ -192,19 +194,19 @@ include 'includes/header.php';
                     <div style="margin-left: 5px;" class="row">
                         <div class="form-group col-md-3">
                             <label>
-                                <input type="checkbox" class="form-check-input bh_construction_kind" name="bh_construction_kind" value="a__made_of_strong_materials" required>
+                                <input type="checkbox" class="form-check-input bh_construction_kind" name="bh_construction_kind" value="a__made_of_strong_materials">
                                 A. Made of Strong Materials
                             </label>
                         </div>
                         <div class="form-group col-md-3">
                             <label>
-                                <input type="checkbox" class="form-check-input bh_construction_kind" name="bh_construction_kind" value="b__made_of_light_materials" required>
+                                <input type="checkbox" class="form-check-input bh_construction_kind" name="bh_construction_kind" value="b__made_of_light_materials">
                                 B. Made of Light Materials
                             </label>
                         </div>
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input bh_construction_kind" id="otherSpecifyCheckbox" name="bh_construction_kind" value="c__other__specify" required>
+                                <input type="checkbox" class="form-check-input bh_construction_kind" id="otherSpecifyCheckbox" name="bh_construction_kind" value="c__other__specify">
                                 C. Other: </label>
                         </div>
                         <div class="form-group col-md-3">
@@ -240,25 +242,25 @@ include 'includes/header.php';
                     <div style="margin-left: 5px;" class="row">
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="class_a" required>
+                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="class_a">
                                 Class A
                             </label>
                         </div>
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="class_b" required>
+                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="class_b">
                                 Class B
                             </label>
                         </div>
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="class_c" required>
+                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="class_c">
                                 Class C
                             </label>
                         </div>
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="class_d" required>
+                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="class_d">
                                 Class D
                             </label>
                         </div>
@@ -319,17 +321,49 @@ include 'includes/header.php';
                     <div style="margin-left: 5px;" class="row">
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input " id="bh_water_source" name="bh_water_source" value="NAWASA" required>
+                                <input type="checkbox" class="form-check-input" id="bh_water_source_nawasa" name="bh_water_source_nawasa" value="NAWASA" onchange="updateWaterSource()">
                                 NAWASA
                             </label>
                         </div>
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input " id="bh_water_source" name="bh_water_source" value="Deep Well" required>
+                                <input type="checkbox" class="form-check-input" id="bh_water_source_deepwell" name="bh_water_source_deepwell" value="Deep Well" onchange="updateWaterSource()">
                                 Deep Well
                             </label>
                         </div>
                     </div>
+                    <input type="hidden" id="bh_water_source" name="bh_water_source" value="">
+                    <input type="hidden" id="bh_nawasa" name="bh_nawasa" value="">
+                    <input type="hidden" id="bh_deepwell" name="bh_deepwell" value="">
+
+                    <script type="text/javascript">
+                        function updateWaterSource() {
+                            var nawasaCheckbox = document.getElementById("bh_water_source_nawasa");
+                            var deepWellCheckbox = document.getElementById("bh_water_source_deepwell");
+                            var waterSourceInput = document.getElementById("bh_water_source");
+                            var nawasaInput = document.getElementById("bh_nawasa");
+                            var deepWellInput = document.getElementById("bh_deepwell");
+
+                            if (nawasaCheckbox.checked && deepWellCheckbox.checked) {
+                                waterSourceInput.value = "NAWASA / Deep Well";
+                                nawasaInput.value = 1;
+                                deepWellInput.value = 1;
+                            } else if (nawasaCheckbox.checked) {
+                                waterSourceInput.value = "NAWASA";
+                                nawasaInput.value = 1;
+                                deepWellInput.value = 0;
+                            } else if (deepWellCheckbox.checked) {
+                                waterSourceInput.value = "Deep Well";
+                                nawasaInput.value = 0;
+                                deepWellInput.value = 1;
+                            } else {
+                                waterSourceInput.value = "";
+                                nawasaInput.value = 0;
+                                deepWellInput.value = 0;
+                            }
+                        }
+                    </script>
+
                     <div class="row">
                         <div class="form-group col-md-2">
                             <label for="bh_adequate">Adequate:</label>
@@ -443,9 +477,9 @@ include 'includes/header.php';
                     </div>
                     <div class="row">
                         <div class="form-group col-md-3">
-                            <label for="bh_rodent_disposal">Lightning and Ventilation:</label>
+                            <label for="light_ventilation">Lightning and Ventilation:</label>
 
-                            <select id="bh_rodent_disposal" class="form-control" name="bh_rodent_disposal" required>>
+                            <select id="light_ventilation" class="form-control" name="light_ventilation" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
                                 <option value="Natural">Natural </option>
                                 <option value="Artificial"> Artificial</option>
@@ -454,9 +488,9 @@ include 'includes/header.php';
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="bh_rodent_disposal">Natural / Artficial</label>
+                            <label for="natural_artificial">Natural / Artficial</label>
 
-                            <select id="bh_rodent_disposal" class="form-control" name="bh_rodent_disposal" required>>
+                            <select id="natural_artificial" class="form-control" name="natural_artificial" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
                                 <option value="Satisfactory">Satisfactory </option>
                                 <option value="Unsatisfactory"> Unsatisfactory</option>
@@ -499,9 +533,9 @@ include 'includes/header.php';
 
                     <div class="row">
                         <div class="form-group col-md-2">
-                            <label for="bh_portable">With Permit?:</label>
+                            <label for="with_permit">With Permit?:</label>
 
-                            <select id="bh_portable" class="form-control" name="bh_portable" required>>
+                            <select id="with_permit" class="form-control" name="with_permit" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
                                 <option value="yes"> Yes</option>
                                 <option value="no"> No</option>
@@ -512,8 +546,8 @@ include 'includes/header.php';
 
                     <div class="row">
                         <div class="form-group col-md-9">
-                            <label for="bh_rate">Remarks & Recommendations:</label>
-                            <textarea type="text" id="bh_rate" class="form-control" name="bh_rate" placeholder="Enter Rates" required></textarea>
+                            <label for="bh_remarks">Remarks & Recommendations:</label>
+                            <textarea type="text" id="bh_remarks" class="form-control" name="bh_remarks" placeholder="Enter Rates" required></textarea>
                         </div>
                     </div>
 
@@ -543,8 +577,10 @@ include 'includes/header.php';
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-5">
                             <h5> GPS: <button type="button" onclick="getLocation()" class="btn btn-primary btn-sm my-2 buton"> <i class="fa-solid fa-location-dot"></i></button></h5>
+                            <label for="current_loc">Current Location:</label>
+                            <textarea id="current_loc" class="form-control" rows="1" name="current_loc" required readonly> </textarea>
 
                         </div>
 
@@ -575,7 +611,7 @@ include 'includes/header.php';
                             if (navigator.geolocation) {
                                 navigator.geolocation.getCurrentPosition(showPosition);
                             } else {
-                                x.innerHTML = "Geolocation is not supported by this browser.";
+                                document.getElementById("current_loc").innerHTML = "Geolocation is not supported by this browser.";
                             }
                         }
 
@@ -585,22 +621,33 @@ include 'includes/header.php';
                             var altitude = position.coords.altitude;
                             var accuracy = position.coords.accuracy;
 
+                            // Replace null values with "0"
+                            latitude = latitude !== null ? latitude : 0;
+                            longitude = longitude !== null ? longitude : 0;
+                            altitude = altitude !== null ? altitude : 0;
+                            accuracy = accuracy !== null ? accuracy : 0;
+
+                            var currentLocation = longitude + "," + latitude + "," + altitude + "," + accuracy;
+
                             document.getElementById("bh_longitude").innerHTML = longitude;
                             document.getElementById("bh_latitude").innerHTML = latitude;
                             document.getElementById("bh_altitude").innerHTML = altitude;
                             document.getElementById("bh_precision").innerHTML = accuracy;
+                            document.getElementById("current_loc").innerHTML = currentLocation;
 
                             var output = "";
                             output += '<center><iframe src="https://www.google.com/maps?q=' + latitude + ',' + longitude + '&ie=UTF8&iwloc=&output=embed" width="100%" height="200px"></iframe></center>';
                             document.getElementById('displayMapa').innerHTML = output;
                         }
                     </script>
+
+
                     <br>
                     <h2>Upload Boarding House Picture</h2>
 
                     <div class="row">
 
-                        <input type="file" name="images" accept="image/*" capture="camera" id="image-input" onchange="previewImage(this)">
+                        <input type="file" name="bh_image" accept="image/*" capture="camera" id="image-input" onchange="previewImage(this)">
                         <br><br>
 
                         <div class="imageform" style="height: 100%; width: 100%; display: flex; justify-content: center; border: 1px solid #ccc;">
