@@ -467,15 +467,37 @@ include 'includes/header.php';
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label for="bh_portable">Is there any extension or additional construction in the establishment? :</label>
-
-                            <select id="bh_portable" class="form-control" name="bh_portable" required>>
+                            <label for="establishment_extension">Is there any extension or additional construction in the establishment? :</label>
+                            <select id="establishment_extension" class="form-control" name="establishment_extension" required>
                                 <option value="" disabled selected>-- Select Option --</option>
-                                <option value="yes"> Yes</option>
-                                <option value="no"> No</option>
-
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
                             </select>
                         </div>
+                        <div class="form-group col-md-4">
+                            <label for="specify_txt">Specify if Yes:</label>
+                            <textarea type="text" id="specify_txt" class="form-control" name="specify_txt" rows="1" placeholder="Specify" required disabled></textarea>
+                        </div>
+                    </div>
+                    <script>
+                        function toggleTextArea() {
+                            var selectElement = document.getElementById("establishment_extension");
+                            var textArea = document.getElementById("specify_txt");
+
+                            if (selectElement.value === "yes") {
+                                textArea.disabled = false; // Enable textarea if "yes" is selected
+                                textArea.required = true; // Make textarea required if enabled
+                            } else {
+                                textArea.disabled = true; // Disable textarea if "no" is selected
+                                textArea.required = false; // Make textarea not required if disabled
+                                textArea.value = ""; // Clear textarea value if disabled
+                            }
+                        }
+                        // Call toggleTextArea function on select change
+                        document.getElementById("establishment_extension").addEventListener("change", toggleTextArea);
+                    </script>
+
+                    <div class="row">
                         <div class="form-group col-md-2">
                             <label for="bh_portable">With Permit?:</label>
 
