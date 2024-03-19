@@ -14,7 +14,9 @@ include 'includes/header.php';
             <br>
             <div class="card card-block  col-lg-12" style=" background-color: white; ">
 
-                <form style="align-item: center;" action="insert_data.php" method="post">
+                <form action="resources/dir/save.php" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="CSRFkey" value="<?php echo $key ?>" id="CSRFkey">
+                    <input type="hidden" name="token" value="<?php echo $token ?>" id="CSRFtoken">
 
                     <br>
                     <br>
@@ -190,19 +192,19 @@ include 'includes/header.php';
                     <div style="margin-left: 5px;" class="row">
                         <div class="form-group col-md-3">
                             <label>
-                                <input type="checkbox" class="form-check-input bh_construction_kind" name="bh_construction_kind" value="A" required>
+                                <input type="checkbox" class="form-check-input bh_construction_kind" name="bh_construction_kind" value="a__made_of_strong_materials" required>
                                 A. Made of Strong Materials
                             </label>
                         </div>
                         <div class="form-group col-md-3">
                             <label>
-                                <input type="checkbox" class="form-check-input bh_construction_kind" name="bh_construction_kind" value="B" required>
+                                <input type="checkbox" class="form-check-input bh_construction_kind" name="bh_construction_kind" value="b__made_of_light_materials" required>
                                 B. Made of Light Materials
                             </label>
                         </div>
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input bh_construction_kind" id="otherSpecifyCheckbox" name="bh_construction_kind" value="C" required>
+                                <input type="checkbox" class="form-check-input bh_construction_kind" id="otherSpecifyCheckbox" name="bh_construction_kind" value="c__other__specify" required>
                                 C. Other: </label>
                         </div>
                         <div class="form-group col-md-3">
@@ -238,25 +240,25 @@ include 'includes/header.php';
                     <div style="margin-left: 5px;" class="row">
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="A" required>
+                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="class_a" required>
                                 Class A
                             </label>
                         </div>
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="B" required>
+                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="class_b" required>
                                 Class B
                             </label>
                         </div>
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="C" required>
+                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="class_c" required>
                                 Class C
                             </label>
                         </div>
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="D" required>
+                                <input type="checkbox" class="form-check-input bh_class" id="bh_class" name="bh_class" value="class_d" required>
                                 Class D
                             </label>
                         </div>
@@ -405,7 +407,7 @@ include 'includes/header.php';
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="bh_garbage_disposal">1. Types of Garbage Disposal</label>
+                            <label for="bh_garbage_disposal">1. Types of Garbage Disposal:</label>
 
                             <select id="bh_garbage_disposal" class="form-control" name="bh_garbage_disposal" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
@@ -416,7 +418,7 @@ include 'includes/header.php';
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="bh_sewage_disposal">2. Types of Sewage Disposal</label>
+                            <label for="bh_sewage_disposal">2. Types of Sewage Disposal:</label>
 
                             <select id="bh_sewage_disposal" class="form-control" name="bh_sewage_disposal" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
@@ -427,7 +429,7 @@ include 'includes/header.php';
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="bh_rodent_disposal">3. Types of Rodent / Vermin Disposal</label>
+                            <label for="bh_rodent_disposal">3. Types of Rodent / Vermin Disposal:</label>
 
                             <select id="bh_rodent_disposal" class="form-control" name="bh_rodent_disposal" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
@@ -440,8 +442,8 @@ include 'includes/header.php';
 
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-2">
-                            <label for="bh_rodent_disposal">Lightning and Ventilation</label>
+                        <div class="form-group col-md-3">
+                            <label for="bh_rodent_disposal">Lightning and Ventilation:</label>
 
                             <select id="bh_rodent_disposal" class="form-control" name="bh_rodent_disposal" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
@@ -462,9 +464,10 @@ include 'includes/header.php';
 
                             </select>
                         </div>
-
-                        <div class="form-group col-md-5">
-                            <label for="bh_portable">Is there anyextension or additional construction in the establishment? :</label>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="bh_portable">Is there any extension or additional construction in the establishment? :</label>
 
                             <select id="bh_portable" class="form-control" name="bh_portable" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
@@ -474,7 +477,7 @@ include 'includes/header.php';
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="bh_portable">With Permit:</label>
+                            <label for="bh_portable">With Permit?:</label>
 
                             <select id="bh_portable" class="form-control" name="bh_portable" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
@@ -482,25 +485,146 @@ include 'includes/header.php';
                                 <option value="no"> No</option>
 
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-9">
+                            <label for="bh_rate">Remarks & Recommendations:</label>
+                            <textarea type="text" id="bh_rate" class="form-control" name="bh_rate" placeholder="Enter Rates" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="office_required">You are hereby requested to appear before this office:</label>
+                            <input type="date" id="office_required" class="form-control" name="office_required" required>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-2">
-                            <label for="bh_rate">Remarks & Recommendations:</label>
-                            <input type="text" id="bh_rate" class="form-control" name="bh_rate" placeholder="Enter Rates" required>
+                        <div class="form-group col-md-5">
+                            <label for="inspected_by">Inspected by:</label>
+                            <input type="text" id="inspected_by" class="form-control" name="inspected_by" placeholder="Enter name" required>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-5">
+                            <label for="acknowledge_by">Acknowledge by:</label>
+                            <input type="text" id="acknowledge_by" class="form-control" name="acknowledge_by" placeholder="Enter name" required>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <h2> Get Current Location </h2>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <h5> GPS: <button type="button" onclick="getLocation()" class="btn btn-primary btn-sm my-2 buton"> <i class="fa-solid fa-location-dot"></i></button></h5>
+
+                        </div>
+
                     </div>
 
 
-                    <input type="submit" value="Submit">
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <label for="bh_longitude">Longitude:</label>
+                            <textarea id="bh_longitude" class="form-control" rows="1" name="longitude" required readonly> </textarea>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="bh_latitude">Latitude:</label>
+                            <textarea id="bh_latitude" class="form-control" rows="1" name="latitude" required readonly></textarea>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="bh_altitude">Altitude:</label>
+                            <textarea id="bh_altitude" class="form-control" rows="1" name="altitude" required readonly></textarea>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="bh_precision">Precision:</label>
+                            <textarea id="bh_precision" class="form-control" rows="1" name="precision" required readonly></textarea>
+                        </div>
+
+                    </div>
+                    <script type="text/javascript">
+                        function getLocation() {
+                            if (navigator.geolocation) {
+                                navigator.geolocation.getCurrentPosition(showPosition);
+                            } else {
+                                x.innerHTML = "Geolocation is not supported by this browser.";
+                            }
+                        }
+
+                        function showPosition(position) {
+                            var latitude = position.coords.latitude;
+                            var longitude = position.coords.longitude;
+                            var altitude = position.coords.altitude;
+                            var accuracy = position.coords.accuracy;
+
+                            document.getElementById("bh_longitude").innerHTML = longitude;
+                            document.getElementById("bh_latitude").innerHTML = latitude;
+                            document.getElementById("bh_altitude").innerHTML = altitude;
+                            document.getElementById("bh_precision").innerHTML = accuracy;
+
+                            var output = "";
+                            output += '<center><iframe src="https://www.google.com/maps?q=' + latitude + ',' + longitude + '&ie=UTF8&iwloc=&output=embed" width="100%" height="200px"></iframe></center>';
+                            document.getElementById('displayMapa').innerHTML = output;
+                        }
+                    </script>
+                    <br>
+                    <h2>Upload Boarding House Picture</h2>
+
+                    <div class="row">
+
+                        <input type="file" name="images" accept="image/*" capture="camera" id="image-input" onchange="previewImage(this)">
+                        <br><br>
+
+                        <div class="imageform" style="height: 100%; width: 100%; display: flex; justify-content: center; border: 1px solid #ccc;">
+                            <img id="selected-image-preview" src="#" alt="Image Preview" style="max-width: 100%; max-height: 100%;">
+                        </div>
+
+                    </div>
+                    <script>
+                        function previewImage(input) {
+                            if (input.files && input.files[0]) {
+
+                                if (input.files[0].size <= 5 * 1024 * 1024) { // Limit to 5MB
+                                    var reader = new FileReader();
+                                    reader.onload = function(e) {
+                                        document.getElementById('selected-image-preview').src = e.target.result;
+                                    };
+                                    reader.readAsDataURL(input.files[0]);
+                                } else {
+                                    alert("File size exceeds 5MB. Please select a smaller file.");
+
+                                    input.value = ""; // Reset input field
+                                }
+                            }
+                        }
+                    </script>
+
+                    <br>
+                    <br>
+
+
+
+
+
+
+                    <button type="submit" class="btn btn-success btn-sm" onclick="uploadImage()" style="float: right;" name="addform">Submit</button>
+
                 </form>
             </div>
         </div>
     </div>
-    </div>
+
 </section>
 
 </article>
+
+
 
 
 

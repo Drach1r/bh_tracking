@@ -5,172 +5,159 @@ include 'includes/header.php';
 
 <div class="container">
 
-                <?php
-      if (isset($_SESSION['error'])) {
+    <?php
+    if (isset($_SESSION['error'])) {
         echo "
                     <div class='alert alert-danger text-center'>
                         <i class='fas fa-exclamation-triangle'></i> " . $_SESSION['error'] . "
                     </div>
                 ";
         unset($_SESSION['error']);
-      }
+    }
 
-      if (isset($_SESSION['success'])) {
+    if (isset($_SESSION['success'])) {
         echo "
                     <div class='alert alert-success text-center'>
                         <i class='fas fa-check-circle'></i> " . $_SESSION['success'] . "
                     </div>
                 ";
         unset($_SESSION['success']);
-      }
-      ?>
+    }
+    ?>
 
-      <br>
-                    <h3 class="title">Records List <a href="create.php" class="btn btn-primary  btn-sm rounded-s"> Add New Record</a></h3>
+    <br>
+    <h3 class="title">Records List <a href="create.php" class="btn btn-primary  btn-sm rounded-s"> Add New Record</a></h3>
 
-                    <form action="import_csv.php" method="post" enctype="multipart/form-data" >
-                        <div class="form-row align-items-center">
-                            <div class="col-auto">
-                                <label for="file" class="col-form-label">Choose CSV file to import:</label>
-                            </div>
-                            <div class="col-auto">
-                                <input type="file" class="form-control-file" id="file" name="file">
-                            </div>
-                            <div class="col-auto">
-                                <button type="submit" class="btn btn-primary btn-sm rounded-s">Import</button>
-                            </div>
-                        </div>
-                    </form>
-                    <form action="district.php" method="post" enctype="multipart/form-data" style="margin-left: 50px;">
-                        <div class="form-row align-items-center">
-                            <div class="col-auto">
-                                <label for="file" class="col-form-label">Choose CSV file to import for district:</label>
-                            </div>
-                            <div class="col-auto">
-                                <input type="file" class="form-control-file" id="file" name="file">
-                            </div>
-                            <div class="col-auto">
-                                <button type="submit" class="btn btn-primary btn-sm rounded-s">Import</button>
-                            </div>
-                        </div>
-                    </form>
-
-             
-
-        <div class="alert alert-success alert-dismissible fade show" style="display: none; position: absolute; top: 0px; left: 50%; transform: translateX(-50%); border-radius: 10px;" role="alert">
-                Data deleted successfully.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    <form action="import_csv.php" method="post" enctype="multipart/form-data">
+        <div class="form-row align-items-center">
+            <div class="col-auto">
+                <label for="file" class="col-form-label">Choose CSV file to import:</label>
             </div>
-            <div class="alert alert-warning alert-dismissible fade show deleteWarning" style="display: none;" role="alert">
-                Error deleting record. Please try again later.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>x-www-form-urlencoded
-                </button>
+            <div class="col-auto">
+                <input type="file" class="form-control-file" id="file" name="file">
             </div>
-        
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary btn-sm rounded-s">Import</button>
+            </div>
+        </div>
+    </form>
+
+
+
+    <div class="alert alert-success alert-dismissible fade show" style="display: none; position: absolute; top: 0px; left: 50%; transform: translateX(-50%); border-radius: 10px;" role="alert">
+        Data deleted successfully.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="alert alert-warning alert-dismissible fade show deleteWarning" style="display: none;" role="alert">
+        Error deleting record. Please try again later.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>x-www-form-urlencoded
+        </button>
+    </div>
+
+    <br>
+    <div class="card col-lg-12">
+
+        <div class="card-body">
             <br>
-            <div class="card col-lg-12" > 
-
-                    <div class="card-body">
-                        <br>
-                        <div class="card-title-body">
+            <div class="card-title-body">
 
 
 
 
-                            <script>
-                                $(document).ready(function() {
-                                    var table = $('#recordstable').DataTable({
-                                        'pageLength': 10,
-                                        'scrollY': '40vh',
-                                        columnDefs: [{
-                                                width: '10%',
-                                                targets: 1
-                                            },
-                                            {
-                                                width: '10%',
-                                                targets: 3
-                                            },
-                                        ]
-                                    });
+                <script>
+                    $(document).ready(function() {
+                        var table = $('#recordstable').DataTable({
+                            'pageLength': 10,
+                            'scrollY': '40vh',
+                            columnDefs: [{
+                                    width: '10%',
+                                    targets: 1
+                                },
+                                {
+                                    width: '10%',
+                                    targets: 3
+                                },
+                            ]
+                        });
 
-                                    $('.nav-link').click(function() {
-                                        table.columns.adjust().draw();
+                        $('.nav-link').click(function() {
+                            table.columns.adjust().draw();
 
-                                    });
-
-
-                                });
-                            </script>
-                            <style type="text/css">
-                                table tbody tr:hover {
-                                    cursor: pointer;
-                                }
-
-                                .normalTr:hover {
-                                    cursor: default;
-                                }
-                            </style>
-                            
-
-                            <table class="table table-bordered table-hover w-100" id="recordstable">
-                                <thead class="table-dark">
-                                    <tr>
-
-                                        <th class="text-center">#</th>
-                                        <th class="text-center">Name of Establishment</th>
-                                        <th class="text-center">Full Name</th>
-                                        <th class="text-center">Address</th>
-                                        <th class="text-center">City Municipality</th>
-                                        <th class="text-center">Action</th>
+                        });
 
 
+                    });
+                </script>
+                <style type="text/css">
+                    table tbody tr:hover {
+                        cursor: pointer;
+                    }
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-
-                                    $servername = "localhost";
-                                    $username = "root";
-                                    $password = "";
-                                    $database = "bh_tracking";
-
-                                    try {
-
-                                        $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
-
-                                        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    .normalTr:hover {
+                        cursor: default;
+                    }
+                </style>
 
 
-                                        $sql = "SELECT id, account_number, establishment_name, first_name, middle_name, last_name, bh_address, bh_municipality FROM boarding_house_tracking";
-                                        $stmt = $conn->prepare($sql);
-                                        $stmt->execute();
+                <table class="table table-bordered table-hover w-100" id="recordstable">
+                    <thead class="table-dark">
+                        <tr>
 
-
-                                        if ($stmt->rowCount() > 0) {
-
-                                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                                echo "<tr>";
-                                                echo "<td class='text-center'>" . $row['id'] . "</td>";
-                                                echo "<td class='text-center'>" . $row['establishment_name'] . "</td>";
-                                                echo "<td class='text-center'>" . $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name'];
-
-                                                // Check if 'suffix' key exists and is not null
-                                                if (array_key_exists('suffix', $row) && $row['suffix'] !== null) {
-                                                    echo ' ' . $row['suffix'];
-                                                }
-
-                                                echo "</td>";
+                            <th class="text-center">#</th>
+                            <th class="text-center">Name of Establishment</th>
+                            <th class="text-center">Full Name</th>
+                            <th class="text-center">Address</th>
+                            <th class="text-center">City Municipality</th>
+                            <th class="text-center">Action</th>
 
 
 
-                                                echo "<td class='text-center'>" . $row['bh_address'] . "</td>";
-                                                echo "<td class='text-center'>" . $row['bh_municipality'] . "</td>";
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
 
-                                                echo "<td class='text-center'>
+                        $servername = "localhost";
+                        $username = "root";
+                        $password = "";
+                        $database = "bh_tracking";
+
+                        try {
+
+                            $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+
+                            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+                            $sql = "SELECT id, account_number, establishment_name, first_name, middle_name, last_name, bh_address, bh_municipality FROM boarding_house_tracking";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+
+
+                            if ($stmt->rowCount() > 0) {
+
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    echo "<tr>";
+                                    echo "<td class='text-center'>" . $row['id'] . "</td>";
+                                    echo "<td class='text-center'>" . $row['establishment_name'] . "</td>";
+                                    echo "<td class='text-center'>" . $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name'];
+
+                                    // Check if 'suffix' key exists and is not null
+                                    if (array_key_exists('suffix', $row) && $row['suffix'] !== null) {
+                                        echo ' ' . $row['suffix'];
+                                    }
+
+                                    echo "</td>";
+
+
+
+                                    echo "<td class='text-center'>" . $row['bh_address'] . "</td>";
+                                    echo "<td class='text-center'>" . $row['bh_municipality'] . "</td>";
+
+                                    echo "<td class='text-center'>
                                                 <a style='margin-bottom: 5px; color: blue;' href='form.php?id=" . $row['id'] . "'>
                                                     <i class='fas fa-eye' style='color: blue;'></i> View
                                                 </a>
@@ -183,29 +170,29 @@ include 'includes/header.php';
                                                     <i class='fas fa-trash' style='color: red;'></i> Delete
                                                 </a>
                                             </td>";
-                                            
-                                            
-                                                echo "</tr>";
-                                            }
-                                        } else {
-                                            echo "<tr><td colspan='5' class='text-center'>No records found</td></tr>";
-                                        }
-                                    } catch (PDOException $e) {
-
-                                        echo "Connection failed: " . $e->getMessage();
-                                    }
-                                    ?>
-
-                                </tbody>
-                            </table>
 
 
-                        </div>
-                    </div>
-                    </div>
-                    </div>
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='5' class='text-center'>No records found</td></tr>";
+                            }
+                        } catch (PDOException $e) {
 
-        <script>
+                            echo "Connection failed: " . $e->getMessage();
+                        }
+                        ?>
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
     function deleteRecord(id) {
         if (confirm('Are you sure you want to delete this record?')) {
             var xhr = new XMLHttpRequest();
