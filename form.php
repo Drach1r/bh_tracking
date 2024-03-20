@@ -1,17 +1,28 @@
 <?php
 include 'includes/header.php';
 
+
 $servername = "localhost";
 $username = "root";
 $password = "";
 $database = "bh_tracking";
-$conn = new mysqli($servername, $username, $password, $database);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $pdo = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $stmt = $pdo->prepare("SELECT * FROM boarding_house_tracking WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
 }
 
-// Initialize variables with blank values
+
 $account_number = '';
 $establishment_name = '';
 $first_name = '';
@@ -90,7 +101,6 @@ if (isset($_FILES['bh_image']) && $_FILES['bh_image']['error'] === UPLOAD_ERR_OK
     $uploadDir = 'resources/gallery/';
 
     if (!is_dir($uploadDir) || !is_writable($uploadDir)) {
-        // die("Error: Upload directory is not writable or does not exist.");
         mkdir($uploadDir, 0777);
     }
 
@@ -113,14 +123,25 @@ if (isset($_FILES['bh_image']) && $_FILES['bh_image']['error'] === UPLOAD_ERR_OK
 }
 
 if (isset($_GET['id'])) {
-    $record_id = $conn->real_escape_string($_GET['id']);
-    $sql = "SELECT * FROM boarding_house_tracking WHERE id = $record_id";
-    $result = $conn->query($sql);
+    $record_id = $_GET['id']; 
+    try {
+        $pdo = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc(); // Fetch the row if it exists
+        $sql = "SELECT * FROM boarding_house_tracking WHERE id = :record_id";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(':record_id', $record_id, PDO::PARAM_INT);
+        
+        $statement->execute();
 
-        // Assign values to variables
+        if ($statement->rowCount() > 0) {
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+        } else {
+            echo "No record found";
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    
         $account_number = $row['account_number'] ?? '';
         $establishment_name = $row['establishment_name'] ?? '';
         $first_name = $row['first_name'] ?? '';
@@ -216,12 +237,11 @@ if (isset($_GET['id'])) {
         <table class="table table-bordered">
     <tbody>
         <tr>
-            <td>Account Number: <strong><?php echo $account_number; ?></strong></td>
+            <td>Account Number: <strong><?php echo isset($row['account_number']) ? $row['account_number'] : ''; ?></strong></td></strong></td>
         </tr>
         <tr>
-            <td>Name of Establishment: <strong><?php echo $establishment_name; ?></strong></td>
+            <td>Name of Establishment: <strong><?php echo isset($row['establishment_name']) ? $row['establishment_name'] : ''; ?></strong></td></strong></td>
         </tr>
-        <!-- Add other rows similarly for other fields -->
     </tbody>
 </table>
 
@@ -254,7 +274,6 @@ if (isset($_GET['id'])) {
         <div style="display: flex; flex-wrap: wrap;">
             <span style="margin-right: 10px;">District:</span><br>
             <?php
-            // Districts data
             $districts = isset($row['bh_district']) ? explode(',', $row['bh_district']) : []; // Extract district numbers from $row['bh_district'] or initialize an empty array
             $availableDistricts = [
                 1 => 'Arevalo',
@@ -264,14 +283,11 @@ if (isset($_GET['id'])) {
                 5 => 'Lapuz',
                 6 => 'Jaro',
                 7 => 'Mandurriao'
-            ]; // Associative array with district numbers as keys
+            ]; 
 
-            // Iterate through each district
             foreach ($availableDistricts as $districtNumber => $districtName) {
-                // Check if the district number exists in the $districts array
                 $checked = in_array($districtNumber, $districts) ? 'checked disabled' : '';
 
-                // Generate checkbox HTML with label
                 echo "<label style=\"margin-right: 15px;\">
                         <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_district[]\" value=\"$districtNumber\" $checked>
                         $districtName
@@ -285,25 +301,21 @@ if (isset($_GET['id'])) {
     <td>Barangay: 
         <strong>
             <?php
-            // Fetch barangay data based on the selected district
             $selectedBarangay = isset($row['bh_barangay']) ? $row['bh_barangay'] : null;
             if ($selectedBarangay !== null) {
-                // Query to fetch district based on barangay from bh_address table
-                $query = "SELECT barangay FROM bh_address WHERE id = ?";
-                $statement = $conn->prepare($query);
-                if (!$statement) {
-                    die("Error in preparing query: " . $conn->error);
-                }
-                $statement->bind_param("i", $selectedBarangay); // Assuming $selectedBarangay is an integer
-                $statement->execute();
-                $statement->bind_result($barangay);
-                $statement->fetch();
+                try {
+                    $pdo = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                if ($barangay) {
-                    // Output barangay
-                    echo $barangay;
-                } else {
-                    echo "";
+                    $query = "SELECT barangay FROM bh_address WHERE id = ?";
+                    $statement = $pdo->prepare($query);
+                    $statement->bindParam(1, $selectedBarangay, PDO::PARAM_INT);
+                    $statement->execute();
+                    $barangay = $statement->fetchColumn();
+
+                    echo $barangay !== false ? $barangay : "";
+                } catch (PDOException $e) {
+                    die("Error in executing query: " . $e->getMessage());
                 }
             } else {
                 echo "";
@@ -312,6 +324,7 @@ if (isset($_GET['id'])) {
         </strong>
     </td>
 </tr>
+
 
 
         <tr>
@@ -834,36 +847,18 @@ if (isset($_GET['id'])) {
     </td>
 </tr>
 
-<tr>
+<tr>  
     <td>Boarding House Picture:
-        <?php
-        if (isset($_GET['id'])) {
-            $id = $conn->real_escape_string($_GET['id']);
-
-            $sql_images = "SELECT bh_image FROM boarding_house_tracking WHERE id = $id";
-            $result_images = $conn->query($sql_images);
-
-            if ($result_images === false) {
-                // Query execution failed
-                echo "Error executing query: " . $conn->error;
+    <?php
+        if (isset($row['bh_image'])) {
+            $imagePath = "resources/gallery/" . $row['bh_image'];
+            if (file_exists($imagePath)) {
+                echo "<img src='{$imagePath}' alt='Uploaded Image' class='mx-auto d-block' style='max-width: 100%; height: auto;'>";
             } else {
-                if ($result_images->num_rows > 0) {
-                    $row_images = $result_images->fetch_assoc();
-                    $imagePath = $row_images['bh_image'];
-
-                    if (strpos($imagePath, 'resources/gallery/') === 0) {
-                        echo "<img src='{$imagePath}' alt='Uploaded Image' class='mx-auto d-block' style='max-width: 100%; height: auto;'>";
-                    } else {
-                        echo htmlentities($imagePath); // Display the data directly
-                    }
-                } else {
-                    // No images found
-                    echo "No images found";
-                }
-
-                // Free the result set
-                $result_images->free();
+                echo $row['bh_image'];
             }
+        } else {
+            echo "No image found";
         }
         ?>
     </td>
