@@ -23,8 +23,8 @@ if (isset($_FILES["file"]) && $_FILES["file"]["error"] == 0) {
     $file_name = $_FILES["file"]["tmp_name"];
     importCSV($file_name, $pdo);
     echo "Import successful!";
-    header("Location: records.php"); // Redirect to records.php after successful import
-    exit(); // Ensure that no other output is sent
+    header("Location: records.php");
+    exit();
 } else {
     echo "Error: Please select a file to import.";
 }

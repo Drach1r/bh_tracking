@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addform'])) {
             $uploadDir = '../../resources/gallery/';
 
             if (!is_dir($uploadDir) || !is_writable($uploadDir)) {
-                // die("Error: Upload directory is not writable or does not exist.");
+
                 mkdir($uploadDir, 0777);
             }
 
@@ -49,16 +49,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addform'])) {
             }
         }
 
-        // Construct the insertion query
+
         $sql = "INSERT INTO boarding_house_tracking 
         (account_number, establishment_name, first_name, middle_name, last_name, suffix, bh_address, bh_municipality, bh_district, bh_barangay, bh_province, bh_control_no, bh_or_num, date_issued, amount_paid, bh_bpn, bh_mp, date_paid, bh_period_cover, bh_complaint, bh_construction_kind, bh_specify, bh_class, bh_room, bh_occupants, bh_overcrowded, bh_rates_charge, bh_rate, bh_water_source, bh_nawasa, bh_deepwell, bh_adequate, bh_portable, bh_toilet_type, bh_toilet_cond, bh_bath_type, bh_bath_cond, bh_cr_num, bh_bathroom_num, bh_premises_cond, bh_garbage_disposal, bh_dps, bh_sewage_disposal, bh_sd_dps, bh_rodent_disposal, light_ventilation, natural_artificial, establishment_extension, specify_txt, with_permit, bh_remarks, office_required, inspected_by, acknowledge_by, current_loc, bh_latitude, bh_longitude, bh_altitude, bh_precision, bh_image)
         VALUES
         (:account_number, :establishment_name, :first_name, :middle_name, :last_name, :suffix, :bh_address, :bh_municipality, :bh_district, :bh_barangay, :bh_province, :bh_control_no, :bh_or_num, :date_issued, :amount_paid, :bh_bpn, :bh_mp, :date_paid, :bh_period_cover, :bh_complaint, :bh_construction_kind, :bh_specify, :bh_class, :bh_room, :bh_occupants, :bh_overcrowded, :bh_rates_charge, :bh_rate, :bh_water_source, :bh_nawasa, :bh_deepwell, :bh_adequate, :bh_portable, :bh_toilet_type, :bh_toilet_cond, :bh_bath_type, :bh_bath_cond, :bh_cr_num, :bh_bathroom_num, :bh_premises_cond, :bh_garbage_disposal, :bh_dps, :bh_sewage_disposal, :bh_sd_dps, :bh_rodent_disposal, :light_ventilation, :natural_artificial, :establishment_extension, :specify_txt, :with_permit, :bh_remarks, :office_required, :inspected_by, :acknowledge_by, :current_loc, :bh_latitude, :bh_longitude, :bh_altitude, :bh_precision, :bh_image)";
 
-        // Prepare the statement
         $stmt = $pdo->prepare($sql);
 
-        // Bind parameters
+
         $stmt->bindParam(':account_number', $_POST['account_number']);
         $stmt->bindParam(':establishment_name', $_POST['establishment_name']);
         $stmt->bindParam(':first_name', $_POST['first_name']);
@@ -144,9 +143,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addform'])) {
             header("Location: ../../create.php");
             exit();
         } else {
-            // Handle query execution failure
+
             $_SESSION['error'] = "Failed to insert record";
-            // Optionally, log the error or display a user-friendly message
         }
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
