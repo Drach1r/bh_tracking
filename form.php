@@ -85,6 +85,33 @@ $submitted_by = '';
 $bh_version = '';
 $bh_tags = '';
 
+
+if (isset($_FILES['bh_image']) && $_FILES['bh_image']['error'] === UPLOAD_ERR_OK) {
+    $uploadDir = 'resources/gallery/';
+
+    if (!is_dir($uploadDir) || !is_writable($uploadDir)) {
+        // die("Error: Upload directory is not writable or does not exist.");
+        mkdir($uploadDir, 0777);
+    }
+
+    $uploadFile = $uploadDir . basename($_FILES['bh_image']['name']);
+
+    if (move_uploaded_file($_FILES['bh_image']['tmp_name'], $uploadFile)) {
+        $imagePath = $uploadFile;
+
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM boarding_house_tracking WHERE bh_image = :imagePath");
+        $stmt->bindParam(':imagePath', $imagePath);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+
+        if ($count == 0) {
+            $sql = "INSERT INTO boarding_house_tracking (bh_image) VALUES (:imagePath)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':imagePath', $imagePath);
+        }
+    }
+}
+
 if (isset($_GET['id'])) {
     $record_id = $conn->real_escape_string($_GET['id']);
     $sql = "SELECT * FROM boarding_house_tracking WHERE id = $record_id";
@@ -227,24 +254,66 @@ if (isset($_GET['id'])) {
         <div style="display: flex; flex-wrap: wrap;">
             <span style="margin-right: 10px;">District:</span><br>
             <?php
-            $districts = isset($row['bh_district']) ? explode(',', $row['bh_district']) : [];
-            $districtsChecked = isset($row['bh_district']) ? explode(',', $row['bh_district']) : [];
-            $availableDistricts = ['Arevalo', 'Lapaz', 'Molo', 'City Proper', 'Lapuz', 'Jaro', 'Mandurriao'];
-            foreach ($availableDistricts as $district) {
-                $checked = in_array($district, $districtsChecked) ? 'checked disabled' : 'disabled';
+            // Districts data
+            $districts = isset($row['bh_district']) ? explode(',', $row['bh_district']) : []; // Extract district numbers from $row['bh_district'] or initialize an empty array
+            $availableDistricts = [
+                1 => 'Arevalo',
+                2 => 'Lapaz',
+                3 => 'Molo',
+                4 => 'City Proper',
+                5 => 'Lapuz',
+                6 => 'Jaro',
+                7 => 'Mandurriao'
+            ]; // Associative array with district numbers as keys
+
+            // Iterate through each district
+            foreach ($availableDistricts as $districtNumber => $districtName) {
+                // Check if the district number exists in the $districts array
+                $checked = in_array($districtNumber, $districts) ? 'checked disabled' : '';
+
+                // Generate checkbox HTML with label
                 echo "<label style=\"margin-right: 15px;\">
-                    <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_district[]\" value=\"$district\" $checked>
-                    $district
-                </label>";
+                        <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_district[]\" value=\"$districtNumber\" $checked>
+                        $districtName
+                      </label>";
             }
             ?>
         </div>
     </td>
 </tr>
+<tr>
+    <td>Barangay: 
+        <strong>
+            <?php
+            // Fetch barangay data based on the selected district
+            $selectedBarangay = isset($row['bh_barangay']) ? $row['bh_barangay'] : null;
+            if ($selectedBarangay !== null) {
+                // Query to fetch district based on barangay from bh_address table
+                $query = "SELECT barangay FROM bh_address WHERE id = ?";
+                $statement = $conn->prepare($query);
+                if (!$statement) {
+                    die("Error in preparing query: " . $conn->error);
+                }
+                $statement->bind_param("i", $selectedBarangay); // Assuming $selectedBarangay is an integer
+                $statement->execute();
+                $statement->bind_result($barangay);
+                $statement->fetch();
 
-        <tr>
-            <td>Barangay: <strong><?php echo isset($row['bh_barangay']) ? $row['bh_barangay'] : ''; ?></strong></td>
-        </tr>
+                if ($barangay) {
+                    // Output barangay
+                    echo $barangay;
+                } else {
+                    echo "";
+                }
+            } else {
+                echo "";
+            }
+            ?>
+        </strong>
+    </td>
+</tr>
+
+
         <tr>
             <td>Province: <strong><?php echo isset($row['bh_province']) ? $row['bh_province'] : ''; ?></strong></td>
         </tr>
@@ -765,7 +834,41 @@ if (isset($_GET['id'])) {
     </td>
 </tr>
 
-<td>Boarding House Picture:</td>
+<tr>
+    <td>Boarding House Picture:
+        <?php
+        if (isset($_GET['id'])) {
+            $id = $conn->real_escape_string($_GET['id']);
+
+            $sql_images = "SELECT bh_image FROM boarding_house_tracking WHERE id = $id";
+            $result_images = $conn->query($sql_images);
+
+            if ($result_images === false) {
+                // Query execution failed
+                echo "Error executing query: " . $conn->error;
+            } else {
+                if ($result_images->num_rows > 0) {
+                    $row_images = $result_images->fetch_assoc();
+                    $imagePath = $row_images['bh_image'];
+
+                    if (strpos($imagePath, 'resources/gallery/') === 0) {
+                        echo "<img src='{$imagePath}' alt='Uploaded Image' class='mx-auto d-block' style='max-width: 100%; height: auto;'>";
+                    } else {
+                        echo htmlentities($imagePath); // Display the data directly
+                    }
+                } else {
+                    // No images found
+                    echo "No images found";
+                }
+
+                // Free the result set
+                $result_images->free();
+            }
+        }
+        ?>
+    </td>
+</tr>
+
 
             </tbody>
         </table>
