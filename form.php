@@ -760,7 +760,7 @@ if (isset($_GET['id'])) {
 </tr>
 <tr>
     <td>Accuracy (m): <strong>
-        <?php echo isset($row['bh_accuracy']) ? $row['bh_accuracy'] : ''; ?>
+        <?php echo isset($row['bh_precision']) ? $row['bh_precision'] : ''; ?>
     </strong readonly>
     </td>
 </tr>
