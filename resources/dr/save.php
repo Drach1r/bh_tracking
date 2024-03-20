@@ -5,6 +5,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addform'])) {
 
 
 
+        $bh_water_source = '';
+        $bh_nawasa = 0;
+        $bh_deepwell = 0;
+
+        if (isset($_POST['bh_water_source_nawasa'])) {
+            $bh_water_source .= 'NAWASA/';
+            $bh_nawasa = 1;
+        }
+
+
+        if (isset($_POST['bh_water_source_deepwell'])) {
+            $bh_water_source .= 'Deep Well';
+            $bh_deepwell = 1;
+        }
+
+
+        $bh_water_source = rtrim($bh_water_source, '/');
 
         if (isset($_FILES['bh_image']) && $_FILES['bh_image']['error'] === UPLOAD_ERR_OK) {
             $uploadDir = '../../resources/gallery/';
@@ -34,9 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addform'])) {
 
         // Construct the insertion query
         $sql = "INSERT INTO boarding_house_tracking 
-        (account_number, establishment_name, first_name, middle_name, last_name, suffix, bh_address, bh_municipality, bh_district, bh_barangay, bh_province, bh_control_no, bh_or_num, date_issued, amount_paid, bh_bpn, bh_mp, date_paid, bh_period_cover, bh_complaint, bh_construction_kind, bh_specify, bh_class, bh_room, bh_occupants, bh_overcrowded, bh_rates_charge, bh_rate, bh_water_source, bh_nawasa, bh_deepwell, bh_adequate, bh_portable, bh_toilet_type, bh_toilet_cond, bh_bath_type, bh_bath_cond, bh_cr_num, bh_bathroom_num, bh_premises_cond, bh_garbage_disposal, bh_dps, bh_sewage_disposal, bh_sd_dps, bh_rodent_disposal, light_ventilation, natural_artificial, establishment_extension, specify_txt, with_permit, bh_remarks, office_required, inspected_by, acknowledge_by, current_loc, bh_latitude, bh_longitude, bh_altitude, bh_precision, bh_image, bh_permit_control, bh_class_rates, bh_facilities, bh_id, bh_uuid, submission_time, bh_valid_status, bh_notes, bh_status, submitted_by, bh_version, bh_tags)
+        (account_number, establishment_name, first_name, middle_name, last_name, suffix, bh_address, bh_municipality, bh_district, bh_barangay, bh_province, bh_control_no, bh_or_num, date_issued, amount_paid, bh_bpn, bh_mp, date_paid, bh_period_cover, bh_complaint, bh_construction_kind, bh_specify, bh_class, bh_room, bh_occupants, bh_overcrowded, bh_rates_charge, bh_rate, bh_water_source, bh_nawasa, bh_deepwell, bh_adequate, bh_portable, bh_toilet_type, bh_toilet_cond, bh_bath_type, bh_bath_cond, bh_cr_num, bh_bathroom_num, bh_premises_cond, bh_garbage_disposal, bh_dps, bh_sewage_disposal, bh_sd_dps, bh_rodent_disposal, light_ventilation, natural_artificial, establishment_extension, specify_txt, with_permit, bh_remarks, office_required, inspected_by, acknowledge_by, current_loc, bh_latitude, bh_longitude, bh_altitude, bh_precision, bh_image)
         VALUES
-        (:account_number, :establishment_name, :first_name, :middle_name, :last_name, :suffix, :bh_address, :bh_municipality, :bh_district, :bh_barangay, :bh_province, :bh_control_no, :bh_or_num, :date_issued, :amount_paid, :bh_bpn, :bh_mp, :date_paid, :bh_period_cover, :bh_complaint, :bh_construction_kind, :bh_specify, :bh_class, :bh_room, :bh_occupants, :bh_overcrowded, :bh_rates_charge, :bh_rate, :bh_water_source, :bh_nawasa, :bh_deepwell, :bh_adequate, :bh_portable, :bh_toilet_type, :bh_toilet_cond, :bh_bath_type, :bh_bath_cond, :bh_cr_num, :bh_bathroom_num, :bh_premises_cond, :bh_garbage_disposal, :bh_dps, :bh_sewage_disposal, :bh_sd_dps, :bh_rodent_disposal, :light_ventilation, :natural_artificial, :establishment_extension, :specify_txt, :with_permit, :bh_remarks, :office_required, :inspected_by, :acknowledge_by, :current_loc, :bh_latitude, :bh_longitude, :bh_altitude, :bh_precision, :bh_image, :bh_permit_control, :bh_class_rates, :bh_facilities, :bh_id, :bh_uuid, :submission_time, :bh_valid_status, :bh_notes, :bh_status, :submitted_by, :bh_version, :bh_tags)";
+        (:account_number, :establishment_name, :first_name, :middle_name, :last_name, :suffix, :bh_address, :bh_municipality, :bh_district, :bh_barangay, :bh_province, :bh_control_no, :bh_or_num, :date_issued, :amount_paid, :bh_bpn, :bh_mp, :date_paid, :bh_period_cover, :bh_complaint, :bh_construction_kind, :bh_specify, :bh_class, :bh_room, :bh_occupants, :bh_overcrowded, :bh_rates_charge, :bh_rate, :bh_water_source, :bh_nawasa, :bh_deepwell, :bh_adequate, :bh_portable, :bh_toilet_type, :bh_toilet_cond, :bh_bath_type, :bh_bath_cond, :bh_cr_num, :bh_bathroom_num, :bh_premises_cond, :bh_garbage_disposal, :bh_dps, :bh_sewage_disposal, :bh_sd_dps, :bh_rodent_disposal, :light_ventilation, :natural_artificial, :establishment_extension, :specify_txt, :with_permit, :bh_remarks, :office_required, :inspected_by, :acknowledge_by, :current_loc, :bh_latitude, :bh_longitude, :bh_altitude, :bh_precision, :bh_image)";
 
         // Prepare the statement
         $stmt = $pdo->prepare($sql);
@@ -70,9 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addform'])) {
         $stmt->bindParam(':bh_overcrowded', $_POST['bh_overcrowded']);
         $stmt->bindParam(':bh_rates_charge', $_POST['bh_rates_charge']);
         $stmt->bindParam(':bh_rate', $_POST['bh_rate']);
-        $stmt->bindParam(':bh_water_source', $_POST['bh_water_source']);
-        $stmt->bindParam(':bh_nawasa', $_POST['bh_nawasa']);
-        $stmt->bindParam(':bh_deepwell', $_POST['bh_deepwell']);
+        $stmt->bindParam(':bh_water_source', $bh_water_source);
+        $stmt->bindParam(':bh_nawasa', $bh_nawasa, PDO::PARAM_INT);
+        $stmt->bindParam(':bh_deepwell', $bh_deepwell, PDO::PARAM_INT);
+
         $stmt->bindParam(':bh_adequate', $_POST['bh_adequate']);
         $stmt->bindParam(':bh_portable', $_POST['bh_portable']);
         $stmt->bindParam(':bh_toilet_type', $_POST['bh_toilet_type']);
@@ -101,20 +119,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addform'])) {
         $stmt->bindParam(':bh_longitude', $_POST['bh_longitude']);
         $stmt->bindParam(':bh_altitude', $_POST['bh_altitude']);
         $stmt->bindParam(':bh_precision', $_POST['bh_precision']);
-        $stmt->bindParam(':bh_image', $_POST['bh_image']);
-        $stmt->bindParam(':bh_permit_control', $_POST['bh_permit_control']);
-        $stmt->bindParam(':bh_class_rates', $_POST['bh_class_rates']);
-        $stmt->bindParam(':bh_facilities', $_POST['bh_facilities']);
-        $stmt->bindParam(':bh_id', $_POST['bh_id']);
-        $stmt->bindParam(':bh_uuid', $_POST['bh_uuid']);
-        $stmt->bindParam(':submission_time', $_POST['submission_time']);
-        $stmt->bindParam(':bh_valid_status', $_POST['bh_valid_status']);
-        $stmt->bindParam(':bh_notes', $_POST['bh_notes']);
-        $stmt->bindParam(':bh_status', $_POST['bh_status']);
-        $stmt->bindParam(':submitted_by', $_POST['submitted_by']);
-        $stmt->bindParam(':bh_version', $_POST['bh_version']);
-        $stmt->bindParam(':bh_tags', $_POST['bh_tags']);
+        $stmt->bindParam(':bh_image', $imagePath);
 
+
+
+
+        if (isset($_POST['bh_specify'])) {
+
+            if ($_POST['bh_specify'] === '') {
+
+                $stmt->bindValue(':bh_specify', null, PDO::PARAM_NULL);
+            } else {
+
+                $stmt->bindParam(':bh_specify', $_POST['bh_specify']);
+            }
+        } else {
+
+            $stmt->bindValue(':bh_specify', null, PDO::PARAM_NULL);
+        }
 
         // Execute the query
         if ($stmt->execute()) {

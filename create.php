@@ -301,12 +301,12 @@ include 'includes/header.php';
 
                             <select id="bh_rates_charge" class="form-control" name="bh_rates_charge" required>>
                                 <option value="" disabled selected>-- Select Rates --</option>
-                                <option value="yes">Lodging</option>
-                                <option value="">Board</option>
-                                <option value="">Bed Space</option>
-                                <option value="">Room Rent</option>
-                                <option value="">House Rent </option>
-                                <option value="">Rent Per Unit(Apartment)</option>
+                                <option value="lodging">Lodging</option>
+                                <option value="board">Board</option>
+                                <option value="bed_space">Bed Space</option>
+                                <option value="room_rent">Room Rent</option>
+                                <option value="house_rent">House Rent </option>
+                                <option value="rent_per_unit__apartment">Rent Per Unit(Apartment)</option>
 
                             </select>
                         </div>
@@ -321,48 +321,18 @@ include 'includes/header.php';
                     <div style="margin-left: 5px;" class="row">
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input" id="bh_water_source_nawasa" name="bh_water_source_nawasa" value="NAWASA" onchange="updateWaterSource()">
+                                <input type="checkbox" class="form-check-input" id="bh_water_source_nawasa" name="bh_water_source_nawasa" value="NAWASA">
                                 NAWASA
                             </label>
                         </div>
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input" id="bh_water_source_deepwell" name="bh_water_source_deepwell" value="Deep Well" onchange="updateWaterSource()">
+                                <input type="checkbox" class="form-check-input" id="bh_water_source_deepwell" name="bh_water_source_deepwell" value="Deep Well">
                                 Deep Well
                             </label>
                         </div>
                     </div>
-                    <input type="hidden" id="bh_water_source" name="bh_water_source" value="">
-                    <input type="hidden" id="bh_nawasa" name="bh_nawasa" value="">
-                    <input type="hidden" id="bh_deepwell" name="bh_deepwell" value="">
 
-                    <script type="text/javascript">
-                        function updateWaterSource() {
-                            var nawasaCheckbox = document.getElementById("bh_water_source_nawasa");
-                            var deepWellCheckbox = document.getElementById("bh_water_source_deepwell");
-                            var waterSourceInput = document.getElementById("bh_water_source");
-                            var nawasaInput = document.getElementById("bh_nawasa");
-                            var deepWellInput = document.getElementById("bh_deepwell");
-
-                            if (nawasaCheckbox.checked && deepWellCheckbox.checked) {
-                                waterSourceInput.value = "NAWASA / Deep Well";
-                                nawasaInput.value = 1;
-                                deepWellInput.value = 1;
-                            } else if (nawasaCheckbox.checked) {
-                                waterSourceInput.value = "NAWASA";
-                                nawasaInput.value = 1;
-                                deepWellInput.value = 0;
-                            } else if (deepWellCheckbox.checked) {
-                                waterSourceInput.value = "Deep Well";
-                                nawasaInput.value = 0;
-                                deepWellInput.value = 1;
-                            } else {
-                                waterSourceInput.value = "";
-                                nawasaInput.value = 0;
-                                deepWellInput.value = 0;
-                            }
-                        }
-                    </script>
 
                     <div class="row">
                         <div class="form-group col-md-2">
@@ -590,19 +560,19 @@ include 'includes/header.php';
                     <div class="row">
                         <div class="form-group col-md-2">
                             <label for="bh_longitude">Longitude:</label>
-                            <textarea id="bh_longitude" class="form-control" rows="1" name="longitude" required readonly> </textarea>
+                            <textarea id="bh_longitude" class="form-control" rows="1" name="bh_longitude" required readonly> </textarea>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="bh_latitude">Latitude:</label>
-                            <textarea id="bh_latitude" class="form-control" rows="1" name="latitude" required readonly></textarea>
+                            <textarea id="bh_latitude" class="form-control" rows="1" name="bh_latitude" required readonly></textarea>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="bh_altitude">Altitude:</label>
-                            <textarea id="bh_altitude" class="form-control" rows="1" name="altitude" required readonly></textarea>
+                            <textarea id="bh_altitude" class="form-control" rows="1" name="bh_altitude" required readonly></textarea>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="bh_precision">Precision:</label>
-                            <textarea id="bh_precision" class="form-control" rows="1" name="precision" required readonly></textarea>
+                            <textarea id="bh_precision" class="form-control" rows="1" name="bh_precision" required readonly></textarea>
                         </div>
 
                     </div>
