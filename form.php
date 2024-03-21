@@ -1,7 +1,6 @@
 <?php
 include 'includes/header.php';
 
-
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -71,7 +70,7 @@ $bh_rodent_disposal = '';
 $light_ventilation = '';
 $natural_artificial = '';
 $establishment_extension = '';
-$specify_ext = '';
+$specify_txt = '';
 $with_permit = '';
 $bh_remarks = '';
 $office_required = '';
@@ -190,7 +189,7 @@ if (isset($_GET['id'])) {
         $light_ventilation = $row['light_ventilation'] ?? '';
         $natural_artificial = $row['natural_artificial'] ?? '';
         $establishment_extension = $row['establishment_extension'] ?? '';
-        $specify_ext = $row['specify_ext'] ?? '';
+        $specify_txt = $row['specify_txt'] ?? '';
         $with_permit = $row['with_permit'] ?? '';
         $bh_remarks = $row['bh_remarks'] ?? '';
         $office_required = $row['office_required'] ?? '';
@@ -219,62 +218,76 @@ if (isset($_GET['id'])) {
 ?>
 
 
+<h3 style="margin-left: 135px;" class="title">View Record</h3>
 
-<div class="container">
+<section class="container">
+    <div class="row">
+        <div class="card-body">
+            <div class="card-title-body">
+            </div>
+            <br>
+            <div class="card card-block  col-lg-12" style=" background-color: white; ">
+                <form action="" method="POST" enctype="multipart/form-data">
 
+                    <input type="hidden" name="CSRFkey" value="<?php echo $key ?>" id="CSRFkey">
+                    <input type="hidden" name="token" value="<?php echo $token ?>" id="CSRFtoken">
 
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="form-group col-md-3">
 
+                            <label for="account_number">Account Number:</label>
+                            <input type="text" id="account_number" name="account_number" class="form-control" value="<?php echo isset($row['account_number']) ? $row['account_number'] : ''; ?>" readonly required>
+                        </div>
+                        <div class="form-group col-md-5">
 
+                            <label for="establishment_name">Name of Establishment:</label>
+                            <input type="text" id="establishment_name" name="establishment_name" class="form-control" value="<?php echo isset($row['establishment_name']) ? $row['establishment_name'] : ''; ?>" readonly required>
+                        </div>
 
-    <br>
-    <form action="" method="POST">
-        <input type="hidden" name="CSRFkey" value="<?php echo $key ?>" id="CSRFkey">
-        <input type="hidden" name="token" value="<?php echo $token ?>" id="CSRFtoken">
+                    </div>
+                    <BR>
+                    <h2>Name of Owner / Manager</h2>
 
-        <h4>Boarding House Tracking Information Management Application</h4>
-        <br>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="lastname">Last Name:</label>
+                            <input type="text" name="last_name" id="last_name" class="form-control" value="<?php echo isset($row['last_name']) ? $row['last_name'] : ''; ?>" readonly required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="firstname">First Name:</label>
+                            <input type="text" name="first_name" id="first_name" class="form-control" value="<?php echo isset($row['first_name']) ? $row['first_name'] : ''; ?>" readonly required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="middlename">Middle Name:</label>
+                            <input type="text" name="middle_name" id="middle_name" class="form-control" value="<?php echo isset($row['middle_name']) ? $row['middle_name'] : ''; ?>" readonly required>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label for="suffix">Suffix:</label>
+                            <input type="text" name="suffix" id="suffix" class="form-control" value="<?php echo isset($row['suffix']) ? $row['suffix'] : ''; ?>" readonly required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
 
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <td>Account Number: <strong><?php echo isset($row['account_number']) ? $row['account_number'] : ''; ?></strong></td></strong></td>
-                </tr>
-                <tr>
-                    <td>Name of Establishment: <strong><?php echo isset($row['establishment_name']) ? $row['establishment_name'] : ''; ?></strong></td></strong></td>
-                </tr>
-            </tbody>
-        </table>
+                            <label for="bh_address">Address:</label>
+                            <input type="text" id="bh_address" name="bh_address" class="form-control" value="<?php echo isset($row['bh_address']) ? $row['bh_address'] : ''; ?>" readonly required>
+                        </div>
+                    </div>
+                    <div class="row">
 
+                        <div class="form-group col-md-3">
+                            <label for="bh_municipality">City/Municipality:</label>
+                            <input type="text" id="bh_municipality" name="bh_municipality" class="form-control" value="<?php echo isset($row['bh_municipality']) ? $row['bh_municipality'] : ''; ?>" readonly required>
 
-        <br>
-        <h4>Name of Owner/Manager</h4>
+                        </div>
 
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <td>First Name: <strong><?php echo isset($row['first_name']) ? $row['first_name'] : ''; ?></strong></td>
-                </tr>
-                <tr>
-                    <td>Middle Name: <strong><?php echo isset($row['middle_name']) ? $row['middle_name'] : ''; ?></strong></td>
-                </tr>
-                <tr>
-                    <td>Last Name: <strong><?php echo isset($row['last_name']) ? $row['last_name'] : ''; ?></strong></td>
-                </tr>
-                <tr>
-                    <td>Suffix: <strong><?php echo isset($row['suffix']) ? $row['suffix'] : ''; ?></strong></td>
-                </tr>
-                <tr>
-                    <td>Address: <strong><?php echo isset($row['bh_address']) ? $row['bh_address'] : ''; ?></strong></td>
-                </tr>
-                <tr>
-                    <td>City/Municipality: <strong><?php echo isset($row['bh_municipality']) ? $row['bh_municipality'] : ''; ?></strong></td>
-                </tr>
-                <tr>
-                    <td colspan="14">
-                        <div style="display: flex; flex-wrap: wrap;">
-                            <span style="margin-right: 10px;">District:</span><br>
+                        <div class="form-group col-md-3">
+                            <label for="bh_district">District:</label>
                             <?php
-                            $districts = isset($row['bh_district']) ? explode(',', $row['bh_district']) : []; // Extract district numbers from $row['bh_district'] or initialize an empty array
+                            $selectedDistricts = isset($row['bh_district']) ? explode(',', $row['bh_district']) : []; // Extract selected district numbers from $row['bh_district'] or initialize an empty array
+
                             $availableDistricts = [
                                 1 => 'Arevalo',
                                 2 => 'Lapaz',
@@ -285,21 +298,21 @@ if (isset($_GET['id'])) {
                                 7 => 'Mandurriao'
                             ];
 
-                            foreach ($availableDistricts as $districtNumber => $districtName) {
-                                $checked = in_array($districtNumber, $districts) ? 'checked disabled' : '';
-
-                                echo "<label style=\"margin-right: 15px;\">
-                        <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_district[]\" value=\"$districtNumber\" $checked>
-                        $districtName
-                      </label>";
+                            $selectedDistrictNames = [];
+                            foreach ($selectedDistricts as $districtNumber) {
+                                if (isset($availableDistricts[$districtNumber])) {
+                                    $selectedDistrictNames[] = $availableDistricts[$districtNumber];
+                                }
                             }
+                            $selectedDistrictNames = implode(', ', $selectedDistrictNames);
                             ?>
+                            <input type="text" id="bh_district" name="bh_district" class="form-control" value="<?php echo $selectedDistrictNames; ?>" readonly>
+                            <input type="hidden" name="bh_district_hidden" value="<?php echo implode(',', $selectedDistricts); ?>">
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Barangay:
-                        <strong>
+
+
+                        <div class="form-group col-md-3">
+                            <label for="bh_barangay">Barangay:</label>
                             <?php
                             $selectedBarangay = isset($row['bh_barangay']) ? $row['bh_barangay'] : null;
                             if ($selectedBarangay !== null) {
@@ -313,561 +326,502 @@ if (isset($_GET['id'])) {
                                     $statement->execute();
                                     $barangay = $statement->fetchColumn();
 
-                                    echo $barangay !== false ? $barangay : "";
+                                    $barangayName = $barangay !== false ? $barangay : "";
                                 } catch (PDOException $e) {
                                     die("Error in executing query: " . $e->getMessage());
                                 }
                             } else {
-                                echo "";
+                                $barangayName = "";
                             }
                             ?>
-                        </strong>
-                    </td>
-                </tr>
+                            <input type="text" id="bh_barangay" name="bh_barangay" class="form-control" value="<?php echo $barangayName; ?>" readonly>
+                            <input type="hidden" name="bh_barangay_hidden" value="<?php echo $selectedBarangay; ?>">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="bh_province">Province:</label>
+                            <input type="text" id="bh_province" name="bh_province" class="form-control" value="<?php echo isset($row['bh_province']) ? $row['bh_province'] : ''; ?>" readonly required>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+
+
+                            <label for="bh_control_no">BH Control No.:</label>
+                            <input type="text" id="bh_control_no" name="bh_control_no" class="form-control" value="<?php echo isset($row['bh_control_no']) ? $row['bh_control_no'] : ''; ?>" readonly required>
+                        </div>
+
+
+                    </div>
+
+                    <h4>Official Receipt</h4>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="bh_or_num">Official Receipt Number:</label>
+                            <input type="text" id="bh_or_num" name="bh_or_num" class="form-control" value="<?php echo isset($row['bh_or_num']) ? $row['bh_or_num'] : ''; ?>" readonly required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="bh_bpn">Business Permit Number:</label>
+                            <input type="text" id="bh_bpn" class="form-control" name="bh_bpn" value="<?php echo isset($row['bh_bpn']) ? $row['bh_bpn'] : ''; ?>" readonly required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="date_issued">Date Issued:</label>
+                            <input type="date" id="date_issued" class="form-control" name="date_issued" value="<?php echo isset($row['date_issued']) ? $row['date_issued'] : ''; ?>" readonly required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <label for="amount_paid">Amount Paid:</label>
+                            <input type="number" id="amount_paid" class="form-control" name="amount_paid" value="<?php echo isset($row['amount_paid']) ? $row['amount_paid'] : ''; ?>" readonly required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="bh_mp">Mode of Payment:</label>
+                            <input type="text" id="bh_mp" class="form-control" name="bh_mp" value="<?php echo isset($row['bh_mp']) ? $row['bh_mp'] : ''; ?>" readonly required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="date_paid">Date Paid:</label>
+                            <input type="date" id="date_paid" class="form-control" name="date_paid" value="<?php echo isset($row['date_paid']) ? $row['date_paid'] : ''; ?>" readonly required>
+                        </div>
+                    </div>
+                    <div class="row">
+
+
+                        <div class="form-group col-md-4">
+                            <label for="bh_period_cover">Period Covered:</label>
+                            <input type="text" id="bh_period_cover" class="form-control" name="bh_period_cover" value="<?php echo isset($row['bh_period_cover']) ? $row['bh_period_cover'] : ''; ?>" readonly required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="bh_complaint">Compliant:</label>
+                            <select id="bh_complaint" class="form-control" name="bh_complaint" disabled required>
+                                <option value="" disabled>-- Select Option --</option>
+                                <option value="yes" <?php echo isset($row['bh_complaint']) && $row['bh_complaint'] === 'yes' ? 'selected' : ''; ?>>Yes</option>
+                                <option value="no" <?php echo isset($row['bh_complaint']) && $row['bh_complaint'] === 'no' ? 'selected' : ''; ?>>No</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+
+                    <br>
+                    <h2>Classification And Rates</h2>
+
+                    <p> Kind Of Construction of the Boarding House:</p>
+                    <div style="margin-left: 5px;" class="row">
+                        <div class="form-group col-md-3">
+                            <label>
+                                <input type="checkbox" class="form-check-input bh_construction_kind" name="bh_construction_kind[]" value="a__made_of_strong_materials" <?php echo isset($row['bh_construction_kind']) && in_array('a__made_of_strong_materials', explode(',', $row['bh_construction_kind'])) ? 'checked' : '';  ?> disabled>
+                                A. Made of Strong Materials
+                            </label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>
+                                <input type="checkbox" class="form-check-input bh_construction_kind" name="bh_construction_kind[]" value="b__made_of_light_materials" <?php echo isset($row['bh_construction_kind']) && in_array('b__made_of_light_materials', explode(',', $row['bh_construction_kind'])) ? 'checked' : ''; ?> disabled>
+                                B. Made of Light Materials
+                            </label>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>
+                                <input type="checkbox" class="form-check-input bh_construction_kind" id="otherSpecifyCheckbox" name="bh_construction_kind[]" value="c__other__specify" <?php echo isset($row['bh_construction_kind']) && in_array('c__other__specify', explode(',', $row['bh_construction_kind'])) ? 'checked' : ''; ?> disabled>
+                                C. Other:
+                            </label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="text" id="bh_specify" name="bh_specify" class="form-control" value=" <?php echo isset($row['bh_specify']) ? $row['bh_specify'] : ''; ?>" readonly>
+                        </div>
 
 
 
-                <tr>
-                    <td>Province: <strong><?php echo isset($row['bh_province']) ? $row['bh_province'] : ''; ?></strong></td>
-                </tr>
-                <tr>
-                    <td>BH Control No.: <strong><?php echo isset($row['bh_control_no']) ? $row['bh_control_no'] : ''; ?></strong></td>
-                </tr>
-                <tr>
-                    <td>OR Number: <strong><?php echo isset($row['bh_or_num']) ? $row['bh_or_num'] : ''; ?></strong></td>
-                </tr>
-                <tr>
-                    <td>Date Issued: <strong><?php echo isset($row['date_issued']) ? $row['date_issued'] : ''; ?></strong></td>
-                </tr>
-                <tr>
-                    <td>Amount Paid: <strong><?php echo isset($row['amount_paid']) ? $row['amount_paid'] : ''; ?></strong></td>
-                </tr>
-                <tr>
-                    <td>Business Permit Number: <strong><?php echo isset($row['bh_bpn']) ? $row['bh_bpn'] : ''; ?></strong></td>
-                </tr>
-                <tr>
-                    <td>Mode of Payment: <strong>
+                    </div>
+
+
+
+                    <p> Class of the Boarding House:</p>
+                    <div style="margin-left: 5px;" class="row">
+                        <div class="form-group col-md-2">
+                            <label>
+                                <input type="checkbox" class="form-check-input bh_class" id="bh_class_a" name="bh_class[]" value="class_a" <?php echo isset($row['bh_class']) && in_array('class_a', explode(',', $row['bh_class'])) ? 'checked' : ''; ?> disabled>
+                                Class A
+                            </label>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>
+                                <input type="checkbox" class="form-check-input bh_class" id="bh_class_b" name="bh_class[]" value="class_b" <?php echo isset($row['bh_class']) && in_array('class_b', explode(',', $row['bh_class'])) ? 'checked' : ''; ?> disabled>
+                                Class B
+                            </label>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>
+                                <input type="checkbox" class="form-check-input bh_class" id="bh_class_c" name="bh_class[]" value="class_c" <?php echo isset($row['bh_class']) && in_array('class_c', explode(',', $row['bh_class'])) ? 'checked' : ''; ?> disabled>
+                                Class C
+                            </label>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>
+                                <input type="checkbox" class="form-check-input bh_class" id="bh_class_d" name="bh_class[]" value="class_d" <?php echo isset($row['bh_class']) && in_array('class_d', explode(',', $row['bh_class'])) ? 'checked' : ''; ?> disabled>
+                                Class D
+                            </label>
+                        </div>
+                    </div>
+
+                    <script>
+                        $(document).ready(function() {
+                            $('.bh_class').click(function() {
+                                $('.bh_class').not(this).prop('checked', false);
+
+                            });
+                        });
+                    </script>
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <label for="bh_room">Number Of Rooms:</label>
+                            <input type="number" id="bh_room" class="form-control" name="bh_room" value="<?php echo isset($row['bh_room']) ? $row['bh_room'] : ''; ?>" disabled required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="bh_occupants">Num. of Occupants:</label>
+                            <input type="number" id="bh_occupants" class="form-control" name="bh_occupants" value="<?php echo isset($row['bh_occupants']) ? $row['bh_occupants'] : ''; ?>" disabled required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="bh_overcrowded">Overcrowded:</label>
+                            <select id="bh_overcrowded" class="form-control" name="bh_overcrowded" disabled required>
+                                <option value="" disabled>-- Select Option --</option>
+                                <option value="yes" <?php echo isset($row['bh_overcrowded']) && $row['bh_overcrowded'] === 'yes' ? 'selected' : ''; ?>>Yes</option>
+                                <option value="no" <?php echo isset($row['bh_overcrowded']) && $row['bh_overcrowded'] === 'no' ? 'selected' : ''; ?>>No</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class=" row">
+                        <div class="form-group col-md-3">
+                            <label for="bh_rates_charge">Rates being Charged:</label>
+                            <select id="bh_rates_charge" class="form-control" name="bh_rates_charge" disabled required>
+                                <option value="" disabled>-- Select Rates --</option>
+                                <option value="lodging" <?php echo isset($row['bh_rates_charge']) && $row['bh_rates_charge'] === 'lodging' ? 'selected' : ''; ?>>Lodging</option>
+                                <option value="board" <?php echo isset($row['bh_rates_charge']) && $row['bh_rates_charge'] === 'board' ? 'selected' : ''; ?>>Board</option>
+                                <option value="bed_space" <?php echo isset($row['bh_rates_charge']) && $row['bh_rates_charge'] === 'bed_space' ? 'selected' : ''; ?>>Bed Space</option>
+                                <option value="room_rent" <?php echo isset($row['bh_rates_charge']) && $row['bh_rates_charge'] === 'room_rent' ? 'selected' : ''; ?>>Room Rent</option>
+                                <option value="house_rent" <?php echo isset($row['bh_rates_charge']) && $row['bh_rates_charge'] === 'house_rent' ? 'selected' : ''; ?>>House Rent</option>
+                                <option value="rent_per_unit__apartment" <?php echo isset($row['bh_rates_charge']) && $row['bh_rates_charge'] === 'rent_per_unit__apartment' ? 'selected' : ''; ?>>Rent Per Unit(Apartment)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="bh_rate">Rates:</label>
+                            <input type="number" id="bh_rate" class="form-control" name="bh_rate" value="<?php echo isset($row['bh_rate']) ? $row['bh_rate'] : ''; ?>" disabled required>
+                        </div>
+
+                    </div>
+                    <p> Sources of Water Supply:</p>
+                    <div style="margin-left: 5px;" class="row">
+                        <div class="form-group col-md-2">
+                            <label>
+                                <input type="checkbox" class="form-check-input" id="bh_water_source_nawasa" name="bh_water_source[]" value="nawasa" <?php echo isset($row['bh_water_source']) && in_array('nawasa', explode(',', $row['bh_water_source'])) ? 'checked' : ''; ?> disabled>
+                                NAWASA
+                            </label>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>
+                                <input type="checkbox" class="form-check-input" id="bh_water_source_deepwell" name="bh_water_source[]" value="deep_well" <?php echo isset($row['bh_water_source']) && in_array('deep_well', explode(',', $row['bh_water_source'])) ? 'checked' : ''; ?> disabled>
+                                Deep Well
+                            </label>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <label for="bh_adequate">Adequate:</label>
+                            <select id="bh_adequate" class="form-control" name="bh_adequate" required disabled>
+                                <option value="" disabled>-- Select Option --</option>
+                                <option value="yes" <?php echo isset($row['bh_adequate']) && $row['bh_adequate'] === 'yes' ? 'selected' : ''; ?>>Yes</option>
+                                <option value="no" <?php echo isset($row['bh_adequate']) && $row['bh_adequate'] === 'no' ? 'selected' : ''; ?>>No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="bh_portable">Portable:</label>
+                            <select id="bh_portable" class="form-control" name="bh_portable" disabled required>
+                                <option value="" disabled selected>-- Select Option --</option>
+                                <option value="yes" <?php echo isset($row['bh_portable']) && $row['bh_portable'] === 'yes' ? 'selected' : ''; ?>>Yes</option>
+                                <option value="no" <?php echo isset($row['bh_portable']) && $row['bh_portable'] === 'no' ? 'selected' : ''; ?>>No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="bh_toilet_type">Toilet Facilities Type:</label>
+                            <input type="text" id="bh_toilet_type" class="form-control" name="bh_toilet_type" value="<?php echo isset($row['bh_toilet_type']) ? $row['bh_toilet_type'] : ''; ?>" disabled required>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="bh_toilet_cond">Sanitary Condition:</label>
+                            <select id="bh_toilet_cond" class="form-control" name="bh_toilet_cond" disabled required>
+                                <option value="" disabled selected>-- Select Option --</option>
+                                <option value="good" <?php echo isset($row['bh_toilet_cond']) && $row['bh_toilet_cond'] === 'good' ? 'selected' : ''; ?>>Good</option>
+                                <option value="fair" <?php echo isset($row['bh_toilet_cond']) && $row['bh_toilet_cond'] === 'fair' ? 'selected' : ''; ?>>Fair</option>
+                                <option value="poor" <?php echo isset($row['bh_toilet_cond']) && $row['bh_toilet_cond'] === 'poor' ? 'selected' : ''; ?>>Poor</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="bh_bath_type">Bath Facilities Type:</label>
+                            <input type="text" id="bh_bath_type" class="form-control" name="bh_bath_type" value="<?php echo isset($row['bh_bath_type']) ? $row['bh_bath_type'] : ''; ?>" disabled required>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="bh_bath_cond">Sanitary Condition:</label>
+                            <select id="bh_bath_cond" class="form-control" name="bh_bath_cond" disabled required>
+                                <option value="" disabled selected>-- Select Option --</option>
+                                <option value="good" <?php echo isset($row['bh_bath_cond']) && $row['bh_bath_cond'] === 'good' ? 'selected' : ''; ?>>Good</option>
+                                <option value="fair" <?php echo isset($row['bh_bath_cond']) && $row['bh_bath_cond'] === 'fair' ? 'selected' : ''; ?>>Fair</option>
+                                <option value="poor" <?php echo isset($row['bh_bath_cond']) && $row['bh_bath_cond'] === 'poor' ? 'selected' : ''; ?>>Poor</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="bh_cr_num">Num of CR:</label>
+                            <input type="number" id="bh_cr_num" class="form-control" name="bh_cr_num" value="<?php echo isset($row['bh_cr_num']) ? $row['bh_cr_num'] : ''; ?>" disabled required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="bh_bathroom_num">Num of Bath Room:</label>
+                            <input type="number" id="bh_bathroom_num" class="form-control" name="bh_bathroom_num" value="<?php echo isset($row['bh_bathroom_num']) ? $row['bh_bathroom_num'] : ''; ?>" disabled required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <label for="bh_premises_cond">Sanitary Condition Of The Premises:</label>
+                            <select id="bh_premises_cond" class="form-control" name="bh_premises_cond" disabled required>
+                                <option value="" disabled selected>-- Select Option --</option>
+                                <option value="good" <?php echo isset($row['bh_premises_cond']) && $row['bh_premises_cond'] === 'good' ? 'selected' : ''; ?>>Good</option>
+                                <option value="fair" <?php echo isset($row['bh_premises_cond']) && $row['bh_premises_cond'] === 'fair' ? 'selected' : ''; ?>>Fair</option>
+                                <option value="poor" <?php echo isset($row['bh_premises_cond']) && $row['bh_premises_cond'] === 'poor' ? 'selected' : ''; ?>>Poor</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="bh_garbage_disposal">1. Types of Garbage Disposal:</label>
+                            <select id="bh_garbage_disposal" class="form-control" name="bh_garbage_disposal" disabled required>
+                                <option value="" disabled selected>-- Select Option --</option>
+                                <option value=""> </option>
+                                <option value="dps" <?php echo isset($row['bh_garbage_disposal']) && $row['bh_garbage_disposal'] === 'dps' ? 'selected' : ''; ?>>DPS</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="bh_sewage_disposal">2. Types of Sewage Disposal:</label>
+                            <select id="bh_sewage_disposal" class="form-control" name="bh_sewage_disposal" disabled required>
+                                <option value="" disabled selected>-- Select Option --</option>
+                                <option value=""> </option>
+                                <option value="dps" <?php echo isset($row['bh_sewage_disposal']) && $row['bh_sewage_disposal'] === 'dps' ? 'selected' : ''; ?>>DPS</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="bh_rodent_disposal">3. Types of Rodent / Vermin Disposal:</label>
+                            <select id="bh_rodent_disposal" class="form-control" name="bh_rodent_disposal" disabled required>
+                                <option value="" disabled selected>-- Select Option --</option>
+                                <option value=""> </option>
+                                <option value="dps" <?php echo isset($row['bh_rodent_disposal']) && $row['bh_rodent_disposal'] === 'dps' ? 'selected' : ''; ?>>DPS</option>
+                            </select>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="light_ventilation">Lightning and Ventilation:</label>
+                            <select id="light_ventilation" class="form-control" name="light_ventilation" disabled required>
+                                <option value="" disabled selected>-- Select Option --</option>
+                                <option value="natural" <?php echo isset($row['light_ventilation']) && $row['light_ventilation'] === 'natural' ? 'selected' : ''; ?>>Natural</option>
+                                <option value="artificial" <?php echo isset($row['light_ventilation']) && $row['light_ventilation'] === 'artificial' ? 'selected' : ''; ?>>Artificial</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="natural_artificial">Natural/Artificial:</label>
+                            <select id="natural_artificial" class="form-control" name="natural_artificial" disabled required>
+                                <option value="" disabled selected>-- Select Option --</option>
+                                <option value="satisfactory" <?php echo isset($row['natural_artificial']) && $row['natural_artificial'] === 'satisfactory' ? 'selected' : ''; ?>>Satisfactory</option>
+                                <option value="unsatisfactory" <?php echo isset($row['natural_artificial']) && $row['natural_artificial'] === 'unsatisfactory' ? 'selected' : ''; ?>>Unsatisfactory</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="establishment_extension">Is there any extension or additional construction in the establishment?:</label>
+                            <select id="establishment_extension" class="form-control" name="establishment_extension" disabled required>
+                                <option value="" disabled selected>-- Select Option --</option>
+                                <option value="yes" <?php echo isset($row['establishment_extension']) && $row['establishment_extension'] === 'yes' ? 'selected' : ''; ?>>Yes</option>
+                                <option value="no" <?php echo isset($row['establishment_extension']) && $row['establishment_extension'] === 'no' ? 'selected' : ''; ?>>No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="specify_txt">Specify if Yes:</label>
+                            <textarea type="text" id="specify_txt" class="form-control" name="specify_txt" rows="1" value="<?php echo isset($row['specify_txt']) ? $row['specify_txt'] : ''; ?>" required disabled></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <label for="with_permit">With Permit?:</label>
+                            <select id="with_permit" class="form-control" name="with_permit" disabled required>
+                                <option value="" disabled selected>-- Select Option --</option>
+                                <option value="yes" <?php echo isset($row['with_permit']) && $row['with_permit'] === 'yes' ? 'selected' : ''; ?>>Yes</option>
+                                <option value="no" <?php echo isset($row['with_permit']) && $row['with_permit'] === 'no' ? 'selected' : ''; ?>>No</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group col-md-9">
+                            <label for="bh_remarks">Remarks & Recommendations:</label>
+                            <textarea id="bh_remarks" class="form-control" name="bh_remarks" disabled required><?php echo isset($row['bh_remarks']) ? $row['bh_remarks'] : ''; ?> </textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="office_required">You are hereby requested to appear before this office:</label>
                             <?php
-                            $payments = isset($row['bh_mp']) ? explode(',', $row['bh_mp']) : [];
-                            $available_payment = ['Annual', 'Quarterly', 'Semi-Annual'];
-                            foreach ($available_payment as $payment) {
-                                $checked = in_array(strtolower($payment), $payments) ? 'checked disabled' : 'disabled';
-                                echo "<label style=\"margin-right: 15px;\">
-                    <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_mp[]\" value=\"$payment\" $checked>
-                    $payment
-                </label>";
+                            // Check if office_required date is set and not empty
+                            if (isset($row['office_required']) && !empty($row['office_required'])) {
+                                // Parse the date string and format it as YYYY-MM-DD
+                                $formatted_date = date('Y-m-d', strtotime($row['office_required']));
+                            } else {
+                                $formatted_date = '';
                             }
                             ?>
-                        </strong>
-                    </td>
-                </tr>
+                            <input type="date" id="office_required" class="form-control" name="office_required" value="<?php echo $formatted_date; ?>" disabled required>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-5">
+                            <label for="inspected_by">Inspected by:</label>
+                            <input type="text" id="inspected_by" class="form-control" name="inspected_by" value="  <?php echo isset($row['inspected_by']) ? $row['inspected_by'] : ''; ?>" disabled required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-5">
+                            <label for="acknowledge_by">Acknowledge by:</label>
+                            <input type="text" id="acknowledge_by" class="form-control" name="acknowledge_by" value="  <?php echo isset($row['acknowledge_by']) ? $row['acknowledge_by'] : ''; ?>" disabled required>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <h2> Get Current Location </h2>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <h5>GPS: <button type="button" class="btn btn-primary btn-sm my-2 buton"><i class="fa-solid fa-location-dot"></i></button></h5>
+                            <label for="current_loc">Current Location:</label>
+                            <div class="input-group">
+                                <textarea id="current_loc" class="form-control" rows="1" name="current_loc" disabled required><?php echo isset($row['current_loc']) ? $row['current_loc'] : ''; ?></textarea>
+                            </div>
+                        </div>
 
 
-                <tr>
-                    <td>Date Paid: <strong><?php echo isset($row['date_paid']) ? $row['date_paid'] : ''; ?></strong></td>
-                </tr>
-                <tr>
-                    <td>Period Covered: <strong><?php echo isset($row['bh_period_cover']) ? $row['bh_period_cover'] : ''; ?></strong></td>
-                </tr>
-                <tr>
-                    <td>Compliant: <strong>
-                            <?php
-                            $compliant = isset($row['bh_complaint']) ? explode(',', $row['bh_complaint']) : [];
-                            $availableComplaints = ['Yes', 'No'];
-                            foreach ($availableComplaints as $item) {
-                                $checked = in_array(strtolower($item), $compliant) ? 'checked disabled' : 'disabled';
-                                echo "<label style=\"margin-right: 15px;\">
-                    <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_complaint[]\" value=\"$item\" $checked>
-                    $item
-                </label>";
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="bh_longitude">Longitude:</label>
+                            <input id="bh_longitude" class="form-control" type="text" name="bh_longitude" value="<?php echo isset($row['bh_longitude']) ? $row['bh_longitude'] : ''; ?>" required disabled>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="bh_latitude">Latitude:</label>
+                            <input id="bh_latitude" class="form-control" type="text" name="bh_latitude" value="<?php echo isset($row['bh_latitude']) ? $row['bh_latitude'] : ''; ?>" required disabled>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="bh_altitude">Altitude:</label>
+                            <input id="bh_altitude" class="form-control" type="text" name="bh_altitude" value="<?php echo isset($row['bh_altitude']) ? $row['bh_altitude'] : ''; ?>" required disabled>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="bh_precision">Precision:</label>
+                            <input id="bh_precision" class="form-control" type="text" name="bh_precision" value="<?php echo isset($row['bh_precision']) ? $row['bh_precision'] : ''; ?>" required disabled>
+                        </div>
+                    </div>
+
+
+
+
+                    <br>
+                    <h2>Upload Boarding House Picture</h2>
+
+                    <div class="row">
+
+                        <br><br>
+
+                        <div class="imageform" style="height: 100%; width: 100%; display: flex; justify-content: center; border: 1px solid #ccc;">
+                            <img id="selected-image-preview" src="#" alt="Image Preview" style="max-width: 100%; max-height: 100%;">
+                        </div>
+
+                        <?php
+                        if (isset($row['bh_image'])) {
+                            $imagePath = "resources/gallery/" . $row['bh_image'];
+                            if (file_exists($imagePath)) {
+                                echo "<img src='{$imagePath}' alt='Uploaded Image' class='mx-auto d-block' style='max-width: 100%; height: auto;'>";
+                            } else {
+                                echo "<p>{$imagePath}</p>"; // Display the image path if the file doesn't exist
                             }
-                            ?>
-                        </strong>
-                    </td>
-                </tr>
+                        } else {
+                            echo "No image found";
+                        }
+                        ?>
+                    </div>
 
-            </tbody>
-        </table>
+                    <script>
+                        function previewImage(input) {
+                            if (input.files && input.files[0]) {
 
-        <tr>
-            <td colspan="2">
-                <h4>Classification and Rates</h4>
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <td>Kind of Construction of the Boarding House: <strong>
-                                    <br>
-                                    <?php
-                                    $construction_kinds = isset($row['bh_construction_kind']) ? explode(',', $row['bh_construction_kind']) : [];
-                                    $available_construction_kinds = ['A Made of Strong Materials', 'B Made of Light Materials', 'C Other (Specify)'];
-                                    foreach ($available_construction_kinds as $construction_kind) {
-                                        $cleaned_construction_kind = strtolower(str_replace(' ', '_', $construction_kind));
-                                        $alternative_construction_kind = strtolower(str_replace('_', ' ', $construction_kind));
-                                        $checked = in_array($cleaned_construction_kind, array_map('strtolower', $construction_kinds)) ||
-                                            in_array($alternative_construction_kind, array_map('strtolower', $construction_kinds)) ? 'checked disabled' : 'disabled';
-                                        echo "<label style=\"margin-right: 15px;\">
-                <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_construction_kind[]\" value=\"$cleaned_construction_kind\" $checked>
-                $construction_kind
-            </label>";
-                                    }
-                                    ?>
-                                </strong>
-                            </td>
-                        </tr>
+                                if (input.files[0].size <= 5 * 1024 * 1024) { // Limit to 5MB
+                                    var reader = new FileReader();
+                                    reader.onload = function(e) {
+                                        document.getElementById('selected-image-preview').src = e.target.result;
+                                    };
+                                    reader.readAsDataURL(input.files[0]);
+                                } else {
+                                    alert("File size exceeds 5MB. Please select a smaller file.");
+
+                                    input.value = ""; // Reset input field
+                                }
+                            }
+                        }
+                    </script>
+
+                    <br>
+                    <br>
 
 
 
 
 
-                        <tr>
-                            <td>Specify: <strong>
-                                    <p>Kind of construction of the boarding house</p>
-                                    <?php echo isset($row['bh_specify']) ? $row['bh_specify'] : ''; ?>
-                                </strong readonly>
-                            </td>
-                        </tr>
+                </form>
+            </div>
+        </div>
+    </div>
 
-                        <tr>
-                            <td style="margin-right:">
-                                Class of the Boarding House: <strong>
-                                    <br>
-                                    <?php
-                                    $classes = isset($row['bh_class']) ? explode(',', str_replace([' ', '_'], '', $row['bh_class'])) : [];
-                                    $availableClasses = ['Class A', 'Class B', 'Class C', 'Class D'];
-                                    foreach ($availableClasses as $class) {
-                                        $cleaned_class = str_replace([' ', '_'], '', $class);
-                                        $checked = in_array(strtolower($cleaned_class), array_map('strtolower', $classes)) ? 'checked' : '';
-                                        echo "<label style=\"margin-right: 15px;\">
-                <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_class[]\" value=\"$class\" $checked disabled>
-                $class
-            </label>";
-                                    }
-                                    ?>
-                                </strong>
-                            </td>
-                        </tr>
+</section>
+
+</article>
 
 
 
 
 
-                        <tr>
-                            <td>No. of Rooms: <strong><?php echo isset($row['bh_room']) ? $row['bh_room'] : ''; ?></strong readonly></td>
-                        </tr>
-
-                        <tr>
-                            <td>No. of Occupants: <strong><?php echo isset($row['bh_occupants']) ? $row['bh_occupants'] : ''; ?></strong readonly></td>
-                        </tr>
-
-                        <tr>
-                            <td>Overcrowded: <strong>
-                                    <?php
-                                    $overcrowded = isset($row['bh_overcrowded']) ? explode(',', $row['bh_overcrowded']) : [];
-                                    $availableOvercroded = ['Yes', 'No'];
-                                    foreach ($availableOvercroded as $item) {
-                                        $checked = in_array(strtolower($item), $overcrowded) ? 'checked disabled' : 'disabled';
-                                        echo "<label style=\"margin-right: 15px;\">
-                    <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_overcrowded[]\" value=\"$item\" $checked>
-                    $item
-                </label>";
-                                    }
-                                    ?>
-                                </strong>
-                            </td>
-                        </tr>
-
-
-
-                        <tr>
-                            <td>Rates being Charged: <strong>
-                                    <br>
-                                    <?php
-                                    $rates = isset($row['bh_rates_charge']) ? explode(',', $row['bh_rates_charge']) : [];
-                                    $availableRates = ['Lodging', 'Board', 'Bed Space', 'Room Rent', 'House Rent', 'Rent Per Unit(Apartment)'];
-                                    foreach ($availableRates as $rate) {
-                                        $cleaned_rate = strtolower(str_replace(' ', '_', trim($rate)));
-                                        $checked = in_array($cleaned_rate, array_map('strtolower', array_map('trim', $rates))) ? 'checked disabled' : 'disabled';
-                                        echo "<label style=\"margin-right: 15px;\">
-                <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_rates_charge[]\" value=\"$rate\" $checked>
-                $rate
-            </label>";
-                                    }
-                                    ?>
-                                </strong>
-                            </td>
-                        </tr>
-
-
-
-                        <tr>
-                            <td>Rate: <strong><?php echo isset($row['bh_rate']) ? $row['bh_rate'] : ''; ?></strong readonly></td>
-                        </tr>
-
-                    </tbody>
-                </table>
-
-
-
-
-
-                <h4>Facilities and Sanitary</h4>
-
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <td>Source of Water Supply: <strong>
-                                    <br>
-                                    <?php
-                                    $sources = isset($row['bh_water_source']) ? explode(',', str_replace([' ', '_'], '', $row['bh_water_source'])) : [];
-                                    $available_source = ['NAWASA', 'Deep Well'];
-                                    foreach ($available_source as $source) {
-                                        $cleaned_source = str_replace([' ', '_'], '', $source);
-                                        $checked = in_array(strtolower($cleaned_source), array_map('strtolower', $sources)) ? 'checked' : '';
-                                        echo "<label style=\"margin-right: 15px;\">
-                <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_water_source[]\" value=\"$source\" $checked disabled>
-                $source
-            </label>";
-                                    }
-                                    ?>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Adequate: <strong>
-                                    <div style="display: flex;">
-                                        <?php
-                                        $adequate_status = isset($row['bh_adequate']) ? explode(',', $row['bh_adequate']) : [];
-                                        $available_adequate = ['Yes', 'No'];
-                                        foreach ($available_adequate as $status) {
-                                            $checked = in_array(strtolower($status), $adequate_status) ? 'checked disabled' : 'disabled';
-                                            echo "<label style=\"margin-right: 15px;\">
-                        <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_adequate[]\" value=\"$status\" $checked>
-                        $status
-                    </label>";
-                                        }
-                                        ?>
-                                    </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Portable: <strong>
-                                    <div style="display: flex;">
-                                        <?php
-                                        $portable_status = isset($row['bh_portable']) ? explode(',', $row['bh_portable']) : [];
-                                        $available_portable = ['Yes', 'No'];
-                                        foreach ($available_portable as $status) {
-                                            $checked = in_array(strtolower($status), $portable_status) ? 'checked disabled' : 'disabled';
-                                            echo "<label style=\"margin-right: 15px;\">
-                        <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_portable[]\" value=\"$status\" $checked>
-                        $status
-                    </label>";
-                                        }
-                                        ?>
-                                    </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Toilet Facilities Type: <strong>
-                                    <?php echo isset($row['bh_toilet_type']) ? $row['bh_toilet_type'] : ''; ?>
-                                </strong readonly>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Sanitary Condition: <strong>
-                                    <br>
-                                    <?php
-                                    $toilet_conditions = isset($row['bh_toilet_cond']) ? explode(',', $row['bh_toilet_cond']) : [];
-                                    $available_conditions = ['Good', 'Fair', 'Poor'];
-                                    foreach ($available_conditions as $condition) {
-                                        $checked = in_array(strtolower($condition), $toilet_conditions) ? 'checked disabled' : 'disabled';
-                                        echo "<label style=\"margin-right: 15px;\">
-                            <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_toilet_cond[]\" value=\"$condition\" $checked>
-                            $condition
-                        </label>";
-                                    }
-                                    ?>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Bath Facilities Type: <strong>
-                                    <?php echo isset($row['bh_bath_type']) ? $row['bh_bath_type'] : ''; ?>
-                                </strong readonly>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Sanitary Condition: <strong>
-                                    <br>
-                                    <?php
-                                    $bath_conditions = isset($row['bh_bath_cond']) ? explode(',', $row['bh_bath_cond']) : [];
-                                    $available1_conditions = ['Good', 'Fair', 'Poor'];
-                                    foreach ($available1_conditions as $condition) {
-                                        $checked = in_array(strtolower($condition), $bath_conditions) ? 'checked disabled' : 'disabled';
-                                        echo "<label style=\"margin-right: 15px;\">
-                            <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_bath_cond[]\" value=\"$condition\" $checked>
-                            $condition
-                        </label>";
-                                    }
-                                    ?>
-                            </td>
-                        </tr>
-
-
-                        <tr>
-                            <td>Total Number of Comfort Room: <strong>
-                                    <?php echo isset($row['bh_cr_num']) ? $row['bh_cr_num'] : ''; ?>
-                                </strong readonly>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Total Number of Bathroom: <strong>
-                                    <?php echo isset($row['bh_bathroom_num']) ? $row['bh_bathroom_num'] : ''; ?>
-                                </strong readonly>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Sanitary Condition: <strong>
-                                    <br>
-                                    <?php
-                                    $premises_conditions = isset($row['bh_premises_cond']) ? explode(',', $row['bh_premises_cond']) : [];
-                                    $available2_conditions = ['Good', 'Fair', 'Poor'];
-                                    foreach ($available2_conditions as $condition) {
-                                        $checked = in_array(strtolower($condition), $premises_conditions) ? 'checked disabled' : 'disabled';
-                                        echo "<label style=\"margin-right: 15px;\">
-                            <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_premises_cond[]\" value=\"$condition\" $checked>
-                            $condition
-                        </label>";
-                                    }
-                                    ?>
-                                </strong>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>1. Type of Garbage Disposal: <strong>
-                                    <br>
-                                    <?php
-                                    $garbage_disposal = isset($row['bh_garbage_disposal']) ? explode(',', $row['bh_garbage_disposal']) : [];
-                                    $available_disposal_types = ['DPS'];
-                                    foreach ($available_disposal_types as $type) {
-                                        $checked = in_array(strtolower($type), $garbage_disposal) ? 'checked disabled' : 'disabled';
-                                        echo "<label style=\"margin-right: 15px;\">
-                <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_garbage_disposal[]\" value=\"" . strtolower($type) . "\" $checked>
-                $type
-            </label>";
-                                    }
-                                    ?>
-                                </strong>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>2. Type of Sewage Disposal: <strong>
-                                    <br>
-                                    <?php
-                                    $sewage_disposal = isset($row['bh_sewage_disposal']) ? explode(',', $row['bh_sewage_disposal']) : [];
-                                    foreach ($available_disposal_types as $type) {
-                                        $checked = in_array(strtolower($type), $sewage_disposal) ? 'checked disabled' : 'disabled';
-                                        echo "<label style=\"margin-right: 15px;\">
-                <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_sewage_disposal[]\" value=\"" . strtolower($type) . "\" $checked>
-                $type
-            </label>";
-                                    }
-                                    ?>
-                                </strong>
-                            </td>
-                        </tr>
-
-
-                        <tr>
-                            <td>3. Type of Rodent / Vermin Disposal: <strong>
-                                    <br>
-                                    <?php
-                                    $rodent_disposal = isset($row['bh_rodent_disposal']) ? explode(',', $row['bh_rodent_disposal']) : [];
-                                    foreach ($available_disposal_types as $type) {
-                                        $checked = in_array(strtolower($type), $rodent_disposal) ? 'checked disabled' : 'disabled';
-                                        echo "<label style=\"margin-right: 15px;\">
-                <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"bh_rodent_disposal[]\" value=\"$type\" $checked>
-                $type
-            </label>";
-                                    }
-                                    ?>
-                                </strong>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Lightning and Ventilation: <strong>
-                                    <br>
-                                    <?php
-                                    $light_ventilation = isset($row['light_ventilation']) ? explode(',', $row['light_ventilation']) : [];
-                                    $available_ventilation_types = ['Natural', 'Artificial'];
-                                    foreach ($available_ventilation_types as $type) {
-                                        $checked = in_array(strtolower($type), $light_ventilation) ? 'checked disabled' : 'disabled';
-                                        echo "<label style=\"margin-right: 15px;\">
-                <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"light_ventilation[]\" value=\"$type\" $checked>
-                $type
-            </label>";
-                                    }
-                                    ?>
-                                </strong>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Natural Artificial: <strong>
-                                    <br>
-                                    <?php
-                                    $natural_artificial = isset($row['natural_artificial']) ? explode(',', $row['natural_artificial']) : [];
-                                    $available_natural_artificial = ['Satisfactory', 'Unsatisfactory'];
-                                    foreach ($available_natural_artificial as $type) {
-                                        $checked = in_array(strtolower($type), $natural_artificial) ? 'checked disabled' : 'disabled';
-                                        echo "<label style=\"margin-right: 15px;\">
-                <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"natural_artificial[]\" value=\"$type\" $checked>
-                $type
-            </label>";
-                                    }
-                                    ?>
-                                </strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Is there any extension or additional construction in the establishment: <strong>
-                                    <br>
-                                    <?php
-                                    $extension_options = isset($row['with_permit']) ? explode(',', $row['with_permit']) : [];
-                                    $available_extension = ['Yes', 'No'];
-                                    foreach ($available_extension as $extension) {
-                                        $checked = in_array(strtolower($extension), $extension_options) ? 'checked disabled' : 'disabled';
-                                        echo "<label style=\"margin-right: 15px;\">
-                <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"with_permit[]\" value=\"" . strtolower($extension) . "\" $checked>
-                $extension
-            </label>";
-                                    }
-                                    ?>
-                                </strong>
-                            </td>
-                        </tr>
-
-
-                        <tr>
-                            <td>Specify If Yes: <strong>
-                                    <?php echo isset($row['specify_ext']) ? $row['specify_ext'] : ''; ?>
-                                </strong>
-                            </td>
-                        </tr>
-
-                        <tr>
-                        <tr>
-                            <td>With Permit: <strong>
-                                    <br>
-                                    <?php
-                                    $permit_options = isset($row['with_permit']) ? explode(',', $row['with_permit']) : [];
-                                    $available_permits = ['Yes', 'No'];
-                                    foreach ($available_permits as $permit) {
-                                        $checked = in_array(strtolower($permit), $permit_options) ? 'checked disabled' : 'disabled';
-                                        echo "<label style=\"margin-right: 15px;\">
-                <input type=\"checkbox\" style=\"margin-right: 5px;\" name=\"with_permit[]\" value=\"" . strtolower($permit) . "\" $checked>
-                $permit
-            </label>";
-                                    }
-                                    ?>
-                                </strong>
-                            </td>
-                        </tr>
-
-                        </strong>
-            </td>
-        </tr>
-
-        <tr>
-            <td>Remarks and Recommendations: <strong>
-                    <?php echo isset($row['bh_remarks']) ? $row['bh_remarks'] : ''; ?>
-                </strong readonly>
-            </td>
-        </tr>
-
-        <tr>
-            <td>You are hereby requested to appear before this office: <strong>
-                    <p>Failure to do so will compel this commission to file necessary action against your
-                        business establishment.</p>
-                    <?php echo isset($row['office_required']) ? $row['office_required'] : ''; ?>
-                </strong readonly>
-            </td>
-        </tr>
-
-        <tr>
-            <td>Inspected by: <strong>
-                    <?php echo isset($row['inspected_by']) ? $row['inspected_by'] : ''; ?>
-                </strong readonly>
-            </td>
-        </tr>
-
-        <tr>
-            <td>Acknowledge by: <strong>
-                    <?php echo isset($row['acknowledge_by']) ? $row['acknowledge_by'] : ''; ?>
-                </strong readonly>
-            </td>
-        </tr>
-
-        <tr>
-            <td>Get Current Location: <strong>
-                    <?php echo isset($row['current_loc']) ? $row['current_loc'] : ''; ?>
-                </strong readonly>
-            </td>
-        </tr>
-        <tr>
-            <td>Latitude (x.y): <strong>
-                    <?php echo isset($row['bh_latitude']) ? $row['bh_latitude'] : ''; ?>
-                </strong readonly>
-            </td>
-        </tr>
-        <tr>
-            <td>Longitude (x.y): <strong>
-                    <?php echo isset($row['bh_longitude']) ? $row['bh_longitude'] : ''; ?>
-                </strong readonly>
-            </td>
-        </tr>
-
-        <tr>
-            <td>Altitude (m): <strong>
-                    <?php echo isset($row['bh_altitude']) ? $row['bh_altitude'] : ''; ?>
-                </strong readonly>
-            </td>
-        </tr>
-        <tr>
-            <td>Accuracy (m): <strong>
-                    <?php echo isset($row['bh_precision']) ? $row['bh_precision'] : ''; ?>
-                </strong readonly>
-            </td>
-        </tr>
-
-        <tr>
-            <td>Boarding House Picture:
-                <?php
-                if (isset($row['bh_image'])) {
-                    $imagePath = "resources/gallery/" . $row['bh_image'];
-                    if (file_exists($imagePath)) {
-                        echo "<img src='{$imagePath}' alt='Uploaded Image' class='mx-auto d-block' style='max-width: 100%; height: auto;'>";
-                    } else {
-                        echo $row['bh_image'];
-                    }
-                } else {
-                    echo "No image found";
-                }
-                ?>
-            </td>
-        </tr>
-
-
-        </tbody>
-        </table>
-
-    </form>
-</div>
-<?php include 'includes/footer.php'; ?>
+<?php
+include 'includes/footer.php';
+?>

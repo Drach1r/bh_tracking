@@ -47,11 +47,11 @@ include 'includes/header.php';
                         </div>
                         <div class="form-group col-md-3">
                             <label for="middlename">Middle Name:</label>
-                            <input type="text" name="middle_name" id="middle_name" class="form-control" placeholder="Enter Middle Name" >
+                            <input type="text" name="middle_name" id="middle_name" class="form-control" placeholder="Enter Middle Name">
                         </div>
                         <div class="form-group col-md-1">
                             <label for="suffix">Suffix:</label>
-                            <input type="text" name="suffix" id="suffix" class="form-control" placeholder="ex: jr, sr" >
+                            <input type="text" name="suffix" id="suffix" class="form-control" placeholder="ex: jr, sr">
                         </div>
                     </div>
                     <div class="row">
@@ -66,87 +66,87 @@ include 'includes/header.php';
                         <div class="form-group col-md-3">
                             <label for="bh_municipality">City/Municipality:</label>
                             <input type="text" id="bh_municipality" name="bh_municipality" class="form-control" value="ILOILO CITY" disabled required>
-                            <!-- Hidden input field to store the value -->
+
                             <input type="hidden" name="bh_municipality_hidden" value="ILOILO CITY">
                         </div>
 
 
-<!-- District dropdown -->
-<div class="form-group col-md-3">
-    <label for="bh_district">District:</label>
-    <select id="bh_district" name="bh_district" class="form-control" placeholder="Enter City" onchange="populateBarangays()" required>
-        <option value="" disabled selected> -- Select District --</option>
-        <?php
-        // Define an array to map district names to numeric values
-        $districts = array(
-            "Arevalo" => 1,
-            "City proper" => 2,
-            "Jaro" => 3,
-            "Lapaz" => 4,
-            "Lapuz" => 5,
-            "Mandurriao" => 6,
-            "Molo" => 7
-        );
 
-        // Loop through the districts array to generate options
-        foreach ($districts as $district_label => $numeric_value) {
-            // Output the option with the numeric value as the option value
-            echo "<option value='" . $numeric_value . "'>" . $district_label . "</option>";
-        }
-        ?>
-    </select>
-</div>
-<!-- Barangay dropdown -->
-<div class="form-group col-md-3">
-    <label for="bh_barangay">Barangay:</label>
-    <select id="bh_barangay" name="bh_barangay" class="form-control">
-        <option value="" disabled selected> -- Select Barangay --</option>
-    </select>
-</div>
+                        <div class="form-group col-md-3">
+                            <label for="bh_district">District:</label>
+                            <select id="bh_district" name="bh_district" class="form-control" placeholder="Enter City" onchange="populateBarangays()" required>
+                                <option value="" disabled selected> -- Select District --</option>
+                                <?php
 
-<script>
-    function populateBarangays() {
-        var districtId = document.getElementById("bh_district").value;
-        var districtName = getDistrictName(districtId);
+                                $districts = array(
+                                    "Arevalo" => 1,
+                                    "City proper" => 2,
+                                    "Jaro" => 3,
+                                    "Lapaz" => 4,
+                                    "Lapuz" => 5,
+                                    "Mandurriao" => 6,
+                                    "Molo" => 7
+                                );
 
-        // Clear previous options
-        document.getElementById("bh_barangay").innerHTML = "<option value='' disabled selected> -- Select Barangay --</option>";
 
-        // Fetch barangays based on selected district
-        fetch('get_barangays.php?district=' + districtName)
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(barangay => {
-                    var option = document.createElement("option");
-                    option.text = barangay.barangay; // Use barangay name for display
-                    option.value = barangay.id; // Use ID for value
-                    document.getElementById("bh_barangay").add(option);
-                });
-            });
-    }
+                                foreach ($districts as $district_label => $numeric_value) {
 
-    // Function to get district name based on its ID
-    function getDistrictName(districtId) {
-        switch (districtId) {
-            case '1':
-                return "Arevalo";
-            case '2':
-                return "City proper";
-            case '3':
-                return "Jaro";
-            case '4':
-                return "Lapaz";
-            case '5':
-                return "Lapuz";
-            case '6':
-                return "Mandurriao";
-            case '7':
-                return "Molo";
-            default:
-                return "";
-        }
-    }
-</script>
+                                    echo "<option value='" . $numeric_value . "'>" . $district_label . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="bh_barangay">Barangay:</label>
+                            <select id="bh_barangay" name="bh_barangay" class="form-control">
+                                <option value="" disabled selected> -- Select Barangay --</option>
+                            </select>
+                        </div>
+
+                        <script>
+                            function populateBarangays() {
+                                var districtId = document.getElementById("bh_district").value;
+                                var districtName = getDistrictName(districtId);
+
+
+                                document.getElementById("bh_barangay").innerHTML = "<option value='' disabled selected> -- Select Barangay --</option>";
+
+
+                                fetch('get_barangays.php?district=' + districtName)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        data.forEach(barangay => {
+                                            var option = document.createElement("option");
+                                            option.text = barangay.barangay;
+                                            option.value = barangay.id;
+                                            document.getElementById("bh_barangay").add(option);
+                                        });
+                                    });
+                            }
+
+                            // Function to get district name based on its ID
+                            function getDistrictName(districtId) {
+                                switch (districtId) {
+                                    case '1':
+                                        return "Arevalo";
+                                    case '2':
+                                        return "City proper";
+                                    case '3':
+                                        return "Jaro";
+                                    case '4':
+                                        return "Lapaz";
+                                    case '5':
+                                        return "Lapuz";
+                                    case '6':
+                                        return "Mandurriao";
+                                    case '7':
+                                        return "Molo";
+                                    default:
+                                        return "";
+                                }
+                            }
+                        </script>
 
 
                         <div class="form-group col-md-3">
@@ -157,7 +157,7 @@ include 'includes/header.php';
                         </div>
 
                     </div>
-                   
+
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label for="bh_control_no">BH Control No.:</label>
@@ -350,13 +350,13 @@ include 'includes/header.php';
                     <div style="margin-left: 5px;" class="row">
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input" id="bh_water_source_nawasa" name="bh_water_source_nawasa" value="NAWASA">
+                                <input type="checkbox" class="form-check-input" id="bh_water_source_nawasa" name="bh_water_source_nawasa" value="nawasa">
                                 NAWASA
                             </label>
                         </div>
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input" id="bh_water_source_deepwell" name="bh_water_source_deepwell" value="Deep Well">
+                                <input type="checkbox" class="form-check-input" id="bh_water_source_deepwell" name="bh_water_source_deepwell" value="deep_well">
                                 Deep Well
                             </label>
                         </div>
@@ -394,9 +394,9 @@ include 'includes/header.php';
 
                             <select id="bh_toilet_cond" class="form-control" name="bh_toilet_cond" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
-                                <option value="Good"> Good</option>
-                                <option value="Fair"> Fair</option>
-                                <option value="Poor"> Poor</option>
+                                <option value="good"> Good</option>
+                                <option value="fair"> Fair</option>
+                                <option value="poor"> Poor</option>
 
                             </select>
                         </div>
@@ -412,9 +412,9 @@ include 'includes/header.php';
 
                             <select id="bh_bath_cond" class="form-control" name="bh_bath_cond" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
-                                <option value="Good"> Good</option>
-                                <option value="Fair"> Fair</option>
-                                <option value="Poor"> Poor</option>
+                                <option value="good"> Good</option>
+                                <option value="fair"> Fair</option>
+                                <option value="poor"> Poor</option>
 
                             </select>
                         </div>
@@ -433,9 +433,9 @@ include 'includes/header.php';
 
                             <select id="bh_premises_cond" class="form-control" name="bh_premises_cond" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
-                                <option value="Good"> Good</option>
-                                <option value="Fair"> Fair</option>
-                                <option value="Poor"> Poor</option>
+                                <option value="good"> Good</option>
+                                <option value="fair"> Fair</option>
+                                <option value="poor"> Poor</option>
 
                             </select>
                         </div>
@@ -445,7 +445,7 @@ include 'includes/header.php';
                             <select id="bh_garbage_disposal" class="form-control" name="bh_garbage_disposal" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
                                 <option value=""> </option>
-                                <option value="DPS"> DPS</option>
+                                <option value="dps"> DPS</option>
 
 
                             </select>
@@ -456,7 +456,7 @@ include 'includes/header.php';
                             <select id="bh_sewage_disposal" class="form-control" name="bh_sewage_disposal" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
                                 <option value=""> </option>
-                                <option value="DPS"> DPS</option>
+                                <option value="dps"> DPS</option>
 
 
                             </select>
@@ -467,7 +467,7 @@ include 'includes/header.php';
                             <select id="bh_rodent_disposal" class="form-control" name="bh_rodent_disposal" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
                                 <option value=""> </option>
-                                <option value="DPS"> DPS</option>
+                                <option value="dps"> DPS</option>
 
 
                             </select>
@@ -480,8 +480,8 @@ include 'includes/header.php';
 
                             <select id="light_ventilation" class="form-control" name="light_ventilation" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
-                                <option value="Natural">Natural </option>
-                                <option value="Artificial"> Artificial</option>
+                                <option value="natural">Natural </option>
+                                <option value="artificial"> Artificial</option>
 
 
                             </select>
@@ -491,8 +491,8 @@ include 'includes/header.php';
 
                             <select id="natural_artificial" class="form-control" name="natural_artificial" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
-                                <option value="Satisfactory">Satisfactory </option>
-                                <option value="Unsatisfactory"> Unsatisfactory</option>
+                                <option value="satisfactory">Satisfactory </option>
+                                <option value="unsatisfactory"> Unsatisfactory</option>
 
 
                             </select>
