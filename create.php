@@ -47,11 +47,11 @@ include 'includes/header.php';
                         </div>
                         <div class="form-group col-md-3">
                             <label for="middlename">Middle Name:</label>
-                            <input type="text" name="middle_name" id="middle_name" class="form-control" placeholder="Enter Middle Name" required>
+                            <input type="text" name="middle_name" id="middle_name" class="form-control" placeholder="Enter Middle Name" >
                         </div>
                         <div class="form-group col-md-1">
                             <label for="suffix">Suffix:</label>
-                            <input type="text" name="suffix" id="suffix" class="form-control" placeholder="ex: jr, sr" required>
+                            <input type="text" name="suffix" id="suffix" class="form-control" placeholder="ex: jr, sr" >
                         </div>
                     </div>
                     <div class="row">
@@ -70,27 +70,85 @@ include 'includes/header.php';
                             <input type="hidden" name="bh_municipality_hidden" value="ILOILO CITY">
                         </div>
 
-                        <div class="form-group col-md-3">
-                            <label for="bh_district">District:</label>
-                            <select id="bh_district" name="bh_district" class="form-control" placeholder="Enter City" onchange="populateBarangays()" required>
-                                <option value="" disabled selected> -- Select District --</option>
 
-                                <?php
+<!-- District dropdown -->
+<div class="form-group col-md-3">
+    <label for="bh_district">District:</label>
+    <select id="bh_district" name="bh_district" class="form-control" placeholder="Enter City" onchange="populateBarangays()" required>
+        <option value="" disabled selected> -- Select District --</option>
+        <?php
+        // Define an array to map district names to numeric values
+        $districts = array(
+            "Arevalo" => 1,
+            "City proper" => 2,
+            "Jaro" => 3,
+            "Lapaz" => 4,
+            "Lapuz" => 5,
+            "Mandurriao" => 6,
+            "Molo" => 7
+        );
 
-                                $stmt = $pdo->query("SELECT DISTINCT district FROM bh_address");
-                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                    echo "<option value='" . $row['district'] . "'>" . $row['district'] . "</option>";
-                                }
-                                ?>
-                            </select>
-                        </div>
+        // Loop through the districts array to generate options
+        foreach ($districts as $district_label => $numeric_value) {
+            // Output the option with the numeric value as the option value
+            echo "<option value='" . $numeric_value . "'>" . $district_label . "</option>";
+        }
+        ?>
+    </select>
+</div>
+<!-- Barangay dropdown -->
+<div class="form-group col-md-3">
+    <label for="bh_barangay">Barangay:</label>
+    <select id="bh_barangay" name="bh_barangay" class="form-control">
+        <option value="" disabled selected> -- Select Barangay --</option>
+    </select>
+</div>
 
-                        <div class="form-group col-md-3">
-                            <label for="bh_barangay">Barangay:</label>
-                            <select id="bh_barangay" name="bh_barangay" class="form-control" required>
-                                <option value="" disabled selected> -- Select Barangay --</option>
-                            </select>
-                        </div>
+<script>
+    function populateBarangays() {
+        var districtId = document.getElementById("bh_district").value;
+        var districtName = getDistrictName(districtId);
+
+        // Clear previous options
+        document.getElementById("bh_barangay").innerHTML = "<option value='' disabled selected> -- Select Barangay --</option>";
+
+        // Fetch barangays based on selected district
+        fetch('get_barangays.php?district=' + districtName)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(barangay => {
+                    var option = document.createElement("option");
+                    option.text = barangay.barangay; // Use barangay name for display
+                    option.value = barangay.id; // Use ID for value
+                    document.getElementById("bh_barangay").add(option);
+                });
+            });
+    }
+
+    // Function to get district name based on its ID
+    function getDistrictName(districtId) {
+        switch (districtId) {
+            case '1':
+                return "Arevalo";
+            case '2':
+                return "City proper";
+            case '3':
+                return "Jaro";
+            case '4':
+                return "Lapaz";
+            case '5':
+                return "Lapuz";
+            case '6':
+                return "Mandurriao";
+            case '7':
+                return "Molo";
+            default:
+                return "";
+        }
+    }
+</script>
+
+
                         <div class="form-group col-md-3">
                             <label for="bh_province">Province:</label>
                             <input type="text" id="bh_province" name="bh_province" class="form-control" value="ILOILO" disabled required>
@@ -99,38 +157,9 @@ include 'includes/header.php';
                         </div>
 
                     </div>
-                    <script>
-                        function populateBarangays() {
-                            var districtSelect = document.getElementById("bh_district");
-                            var barangaySelect = document.getElementById("bh_barangay");
-                            var district = districtSelect.value;
-
-
-                            barangaySelect.innerHTML = '  <option value="" disabled selected> -- Select Barangay --</option>';
-
-
-                            if (district !== "") {
-                                var xhr = new XMLHttpRequest();
-                                xhr.open("GET", "get_barangays.php?district=" + district, true);
-                                xhr.onreadystatechange = function() {
-                                    if (xhr.readyState == 4 && xhr.status == 200) {
-                                        var barangays = JSON.parse(xhr.responseText);
-                                        barangays.forEach(function(barangay) {
-                                            var option = document.createElement("option");
-                                            option.text = barangay;
-                                            option.value = barangay;
-                                            barangaySelect.add(option);
-                                        });
-                                    }
-                                };
-                                xhr.send();
-                            }
-                        }
-                    </script>
+                   
                     <div class="row">
                         <div class="form-group col-md-4">
-
-
                             <label for="bh_control_no">BH Control No.:</label>
                             <input type="text" id="bh_control_no" name="bh_control_no" class="form-control" placeholder="Enter Control Number" required>
                         </div>
