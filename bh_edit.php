@@ -229,8 +229,9 @@ if (isset($_GET['id'])) {
             <div class="card card-block  col-lg-12" style=" background-color: white; ">
                 <input type="hidden" name="CSRFkey" value="<?php echo $key ?>" id="CSRFkey">
                 <input type="hidden" name="token" value="<?php echo $token ?>" id="CSRFtoken">
+                <form method="POST" action="resources/dr/update_code.php?id=<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>">
 
-                <form action="resources/dr/update_code.php" method="POST" enctype="multipart/form-data">
+
 
 
                     <br>
@@ -873,7 +874,7 @@ if (isset($_GET['id'])) {
 
 
 
-                    <button type="submit" class="btn btn-success btn-sm" onclick="uploadImage()" style="float: right;" name="updateform">Submit</button>
+                    <button type="submit" class="btn btn-success btn-sm" style="float: right;">Submit</button>
 
                 </form>
             </div>

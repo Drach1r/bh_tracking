@@ -10,14 +10,16 @@ try {
     $pdo = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Check if 'id' parameter is set in the URL
+
     if (isset($_GET['id'])) {
-        // Get the 'id' value from the URL parameter
-        $id = $_GET['id'];
+        $record_id = $_GET['id']; // Retrieve the ID from the URL
+
 
         // Prepare SQL statement to select record based on the provided ID
         $stmt = $pdo->prepare("SELECT * FROM boarding_house_tracking WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $record_id, PDO::PARAM_INT);
+
+
         $stmt->execute();
 
         // Check if the record exists
