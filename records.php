@@ -162,7 +162,7 @@ include 'includes/header.php';
                                                     <i class='fas fa-eye' style='color: blue;'></i> View
                                                 </a>
                                                 <br>
-                                                <a style='margin-bottom: 5px; color: green;' href='javascript:void(0);' onclick='editRecord(" . $row['id'] . ")'>
+                                                <a style='margin-bottom: 5px; color: green;' href='bh_edit.php?id=" . $row['id'] . "'>
                                                     <i class='fas fa-edit' style='color: green;'></i> Edit
                                                 </a>
                                                 <br>

@@ -1,10 +1,224 @@
 <?php
 include 'includes/header.php';
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "bh_tracking";
+
+try {
+    $pdo = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $stmt = $pdo->prepare("SELECT * FROM boarding_house_tracking WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+
+
+$account_number = '';
+$establishment_name = '';
+$first_name = '';
+$middle_name = '';
+$last_name = '';
+$suffix = '';
+$bh_address = '';
+$bh_municipality = '';
+$bh_district = '';
+$bh_barangay = '';
+$bh_province = '';
+$bh_control_no = '';
+$bh_or_num = '';
+$date_issued = '';
+$amount_paid = '';
+$bh_bpn = '';
+$bh_mp = '';
+$date_paid = '';
+$bh_period_cover = '';
+$bh_complaint = '';
+$bh_construction_kind = '';
+$bh_specify = '';
+$bh_class = '';
+$bh_room = '';
+$bh_occupants = '';
+$bh_overcrowded = '';
+$bh_rates_charge = '';
+$bh_rate = '';
+$bh_water_source = '';
+$bh_nawasa = '';
+$bh_deepwell = '';
+$bh_adequate = '';
+$bh_portable = '';
+$bh_toilet_type = '';
+$bh_toilet_cond = '';
+$bh_bath_type = '';
+$bh_bath_cond = '';
+$bh_cr_num = '';
+$bh_bathroom_num = '';
+$bh_premises_cond = '';
+$bh_garbage_disposal = '';
+$bh_dps = '';
+$bh_sewage_disposal = '';
+$bh_sd_dps = '';
+$bh_rodent_disposal = '';
+$light_ventilation = '';
+$natural_artificial = '';
+$establishment_extension = '';
+$specify_ext = '';
+$with_permit = '';
+$bh_remarks = '';
+$office_required = '';
+$inspected_by = '';
+$acknowledge_by = '';
+$current_loc = '';
+$bh_latitude = '';
+$bh_longitude = '';
+$bh_altitude = '';
+$bh_precision = '';
+$bh_image = '';
+$bh_permit_control = '';
+$bh_class_rates = '';
+$bh_facilities = '';
+$bh_id = '';
+$bh_uuid = '';
+$submission_time = '';
+$bh_valid_status = '';
+$bh_notes = '';
+$bh_status = '';
+$submitted_by = '';
+$bh_version = '';
+$bh_tags = '';
+
+
+if (isset($_FILES['bh_image']) && $_FILES['bh_image']['error'] === UPLOAD_ERR_OK) {
+    $uploadDir = 'resources/gallery/';
+
+    if (!is_dir($uploadDir) || !is_writable($uploadDir)) {
+        mkdir($uploadDir, 0777);
+    }
+
+    $uploadFile = $uploadDir . basename($_FILES['bh_image']['name']);
+
+    if (move_uploaded_file($_FILES['bh_image']['tmp_name'], $uploadFile)) {
+        $imagePath = $uploadFile;
+
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM boarding_house_tracking WHERE bh_image = :imagePath");
+        $stmt->bindParam(':imagePath', $imagePath);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+
+        if ($count == 0) {
+            $sql = "INSERT INTO boarding_house_tracking (bh_image) VALUES (:imagePath)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':imagePath', $imagePath);
+        }
+    }
+}
+
+if (isset($_GET['id'])) {
+    $record_id = $_GET['id'];
+    try {
+        $pdo = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $sql = "SELECT * FROM boarding_house_tracking WHERE id = :record_id";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(':record_id', $record_id, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        if ($statement->rowCount() > 0) {
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+        } else {
+            echo "No record found";
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+
+        $account_number = $row['account_number'] ?? '';
+        $establishment_name = $row['establishment_name'] ?? '';
+        $first_name = $row['first_name'] ?? '';
+        $middle_name = $row['middle_name'] ?? '';
+        $last_name = $row['last_name'] ?? '';
+        $suffix = $row['suffix'] ?? '';
+        $bh_address = $row['bh_address'] ?? '';
+        $bh_municipality = $row['bh_municipality'] ?? '';
+        $bh_district = $row['bh_district'] ?? '';
+        $bh_barangay = $row['bh_barangay'] ?? '';
+        $bh_province = $row['bh_province'] ?? '';
+        $bh_control_no = $row['bh_control_no'] ?? '';
+        $bh_or_num = $row['bh_or_num'] ?? '';
+        $date_issued = $row['date_issued'] ?? '';
+        $amount_paid = $row['amount_paid'] ?? '';
+        $bh_bpn = $row['bh_bpn'] ?? '';
+        $bh_mp = $row['bh_mp'] ?? '';
+        $date_paid = $row['date_paid'] ?? '';
+        $bh_period_cover = $row['bh_period_cover'] ?? '';
+        $bh_complaint = $row['bh_complaint'] ?? '';
+        $bh_construction_kind = $row['bh_construction_kind'] ?? '';
+        $bh_specify = $row['bh_specify'] ?? '';
+        $bh_class = $row['bh_class'] ?? '';
+        $bh_room = $row['bh_room'] ?? '';
+        $bh_occupants = $row['bh_occupants'] ?? '';
+        $bh_overcrowded = $row['bh_overcrowded'] ?? '';
+        $bh_rates_charge = $row['bh_rates_charge'] ?? '';
+        $bh_rate = $row['bh_rate'] ?? '';
+        $bh_water_source = $row['bh_water_source'] ?? '';
+        $bh_nawasa = $row['bh_nawasa'] ?? '';
+        $bh_deepwell = $row['bh_deepwell'] ?? '';
+        $bh_adequate = $row['bh_adequate'] ?? '';
+        $bh_portable = $row['bh_portable'] ?? '';
+        $bh_toilet_type = $row['bh_toilet_type'] ?? '';
+        $bh_toilet_cond = $row['bh_toilet_cond'] ?? '';
+        $bh_bath_type = $row['bh_bath_type'] ?? '';
+        $bh_bath_cond = $row['bh_bath_cond'] ?? '';
+        $bh_cr_num = $row['bh_cr_num'] ?? '';
+        $bh_bathroom_num = $row['bh_bathroom_num'] ?? '';
+        $bh_premises_cond = $row['bh_premises_cond'] ?? '';
+        $bh_garbage_disposal = $row['bh_garbage_disposal'] ?? '';
+        $bh_dps = $row['bh_dps'] ?? '';
+        $bh_sewage_disposal = $row['bh_sewage_disposal'] ?? '';
+        $bh_sd_dps = $row['bh_sd_dps'] ?? '';
+        $bh_rodent_disposal = $row['bh_rodent_disposal'] ?? '';
+        $light_ventilation = $row['light_ventilation'] ?? '';
+        $natural_artificial = $row['natural_artificial'] ?? '';
+        $establishment_extension = $row['establishment_extension'] ?? '';
+        $specify_ext = $row['specify_ext'] ?? '';
+        $with_permit = $row['with_permit'] ?? '';
+        $bh_remarks = $row['bh_remarks'] ?? '';
+        $office_required = $row['office_required'] ?? '';
+        $inspected_by = $row['inspected_by'] ?? '';
+        $acknowledge_by = $row['acknowledge_by'] ?? '';
+        $current_loc = $row['current_loc'] ?? '';
+        $bh_latitude = $row['bh_latitude'] ?? '';
+        $bh_longitude = $row['bh_longitude'] ?? '';
+        $bh_altitude = $row['bh_altitude'] ?? '';
+        $bh_precision = $row['bh_precision'] ?? '';
+        $bh_image = $row['bh_image'] ?? '';
+        $bh_permit_control = $row['bh_permit_control'] ?? '';
+        $bh_class_rates = $row['bh_class_rates'] ?? '';
+        $bh_facilities = $row['bh_facilities'] ?? '';
+        $bh_id = $row['bh_id'] ?? '';
+        $bh_uuid = $row['bh_uuid'] ?? '';
+        $submission_time = $row['submission_time'] ?? '';
+        $bh_valid_status = $row['bh_valid_status'] ?? '';
+        $bh_notes = $row['bh_notes'] ?? '';
+        $bh_status = $row['bh_status'] ?? '';
+        $submitted_by = $row['submitted_by'] ?? '';
+        $bh_version = $row['bh_version'] ?? '';
+        $bh_tags = $row['bh_tags'] ?? '';
+    }
+}
 ?>
 
 
-
-<h3 style="margin-left: 135px;" class="title">New Record</h3>
+<h3 style="margin-left: 135px;" class="title">Edit Record</h3>
 
 <section class="container">
     <div class="row">
@@ -13,7 +227,7 @@ include 'includes/header.php';
             </div>
             <br>
             <div class="card card-block  col-lg-12" style=" background-color: white; ">
-                <form action="resources/dr/save.php" method="POST" enctype="multipart/form-data">
+                <form action="" method="POST" enctype="multipart/form-data">
 
                     <input type="hidden" name="CSRFkey" value="<?php echo $key ?>" id="CSRFkey">
                     <input type="hidden" name="token" value="<?php echo $token ?>" id="CSRFtoken">
@@ -24,12 +238,12 @@ include 'includes/header.php';
                         <div class="form-group col-md-3">
 
                             <label for="account_number">Account Number:</label>
-                            <input type="text" id="account_number" name="account_number" class="form-control" placeholder="Enter Account Number" required>
+                            <input type="text" id="account_number" name="account_number" class="form-control" value="<?php echo isset($row['account_number']) ? $row['account_number'] : ''; ?>" required>
                         </div>
                         <div class="form-group col-md-5">
 
                             <label for="establishment_name">Name of Establishment:</label>
-                            <input type="text" id="establishment_name" name="establishment_name" class="form-control" placeholder="Enter Name of Establishment" required>
+                            <input type="text" id="establishment_name" name="establishment_name" class="form-control" value="<?php echo isset($row['establishment_name']) ? $row['establishment_name'] : ''; ?>" required>
                         </div>
 
                     </div>
@@ -39,116 +253,71 @@ include 'includes/header.php';
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label for="lastname">Last Name:</label>
-                            <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Enter Last Name" required>
+                            <input type="text" name="last_name" id="last_name" class="form-control" value="<?php echo isset($row['last_name']) ? $row['last_name'] : ''; ?>" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="firstname">First Name:</label>
-                            <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Enter First Name" required>
+                            <input type="text" name="first_name" id="first_name" class="form-control" value="<?php echo isset($row['first_name']) ? $row['first_name'] : ''; ?>" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="middlename">Middle Name:</label>
-                            <input type="text" name="middle_name" id="middle_name" class="form-control" placeholder="Enter Middle Name" >
+                            <input type="text" name="middle_name" id="middle_name" class="form-control" value="<?php echo isset($row['middle_name']) ? $row['middle_name'] : ''; ?>" required>
                         </div>
                         <div class="form-group col-md-1">
                             <label for="suffix">Suffix:</label>
-                            <input type="text" name="suffix" id="suffix" class="form-control" placeholder="ex: jr, sr" >
+                            <input type="text" name="suffix" id="suffix" class="form-control" value="<?php echo isset($row['suffix']) ? $row['suffix'] : ''; ?>" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
 
                             <label for="bh_address">Address:</label>
-                            <input type="text" id="bh_address" name="bh_address" class="form-control" placeholder="Enter Address" required>
+                            <input type="text" id="bh_address" name="bh_address" class="form-control" value="<?php echo isset($row['bh_address']) ? $row['bh_address'] : ''; ?>" required>
                         </div>
                     </div>
                     <div class="row">
 
                         <div class="form-group col-md-3">
                             <label for="bh_municipality">City/Municipality:</label>
-                            <input type="text" id="bh_municipality" name="bh_municipality" class="form-control" value="ILOILO CITY" disabled required>
+                            <input type="text" id="bh_municipality" name="bh_municipality" class="form-control" value="<?php echo isset($row['bh_municipality']) ? $row['bh_municipality'] : ''; ?>" required>
                             <!-- Hidden input field to store the value -->
                             <input type="hidden" name="bh_municipality_hidden" value="ILOILO CITY">
                         </div>
 
+                        <div class="form-group col-md-3">
+                            <label for="bh_district">District:</label>
+                            <?php
+                            $selectedDistricts = isset($row['bh_district']) ? explode(',', $row['bh_district']) : []; // Extract selected district numbers from $row['bh_district'] or initialize an empty array
 
-<!-- District dropdown -->
-<div class="form-group col-md-3">
-    <label for="bh_district">District:</label>
-    <select id="bh_district" name="bh_district" class="form-control" placeholder="Enter City" onchange="populateBarangays()" required>
-        <option value="" disabled selected> -- Select District --</option>
-        <?php
-        // Define an array to map district names to numeric values
-        $districts = array(
-            "Arevalo" => 1,
-            "City proper" => 2,
-            "Jaro" => 3,
-            "Lapaz" => 4,
-            "Lapuz" => 5,
-            "Mandurriao" => 6,
-            "Molo" => 7
-        );
+                            $availableDistricts = [
+                                1 => 'Arevalo',
+                                2 => 'Lapaz',
+                                3 => 'Molo',
+                                4 => 'City Proper',
+                                5 => 'Lapuz',
+                                6 => 'Jaro',
+                                7 => 'Mandurriao'
+                            ];
 
-        // Loop through the districts array to generate options
-        foreach ($districts as $district_label => $numeric_value) {
-            // Output the option with the numeric value as the option value
-            echo "<option value='" . $numeric_value . "'>" . $district_label . "</option>";
-        }
-        ?>
-    </select>
-</div>
-<!-- Barangay dropdown -->
-<div class="form-group col-md-3">
-    <label for="bh_barangay">Barangay:</label>
-    <select id="bh_barangay" name="bh_barangay" class="form-control">
-        <option value="" disabled selected> -- Select Barangay --</option>
-    </select>
-</div>
-
-<script>
-    function populateBarangays() {
-        var districtId = document.getElementById("bh_district").value;
-        var districtName = getDistrictName(districtId);
-
-        // Clear previous options
-        document.getElementById("bh_barangay").innerHTML = "<option value='' disabled selected> -- Select Barangay --</option>";
-
-        // Fetch barangays based on selected district
-        fetch('get_barangays.php?district=' + districtName)
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(barangay => {
-                    var option = document.createElement("option");
-                    option.text = barangay.barangay; // Use barangay name for display
-                    option.value = barangay.id; // Use ID for value
-                    document.getElementById("bh_barangay").add(option);
-                });
-            });
-    }
-
-    // Function to get district name based on its ID
-    function getDistrictName(districtId) {
-        switch (districtId) {
-            case '1':
-                return "Arevalo";
-            case '2':
-                return "City proper";
-            case '3':
-                return "Jaro";
-            case '4':
-                return "Lapaz";
-            case '5':
-                return "Lapuz";
-            case '6':
-                return "Mandurriao";
-            case '7':
-                return "Molo";
-            default:
-                return "";
-        }
-    }
-</script>
+                            $selectedDistrictNames = [];
+                            foreach ($selectedDistricts as $districtNumber) {
+                                if (isset($availableDistricts[$districtNumber])) {
+                                    $selectedDistrictNames[] = $availableDistricts[$districtNumber];
+                                }
+                            }
+                            $selectedDistrictNames = implode(', ', $selectedDistrictNames);
+                            ?>
+                            <input type="text" id="bh_district" name="bh_district" class="form-control" value="<?php echo $selectedDistrictNames; ?>" readonly>
+                            <input type="hidden" name="bh_district_hidden" value="<?php echo implode(',', $selectedDistricts); ?>">
+                        </div>
 
 
+                        <div class="form-group col-md-3">
+                            <label for="bh_barangay">Barangay:</label>
+                            <select id="bh_barangay" name="bh_barangay" class="form-control" required>
+                                <option value="" disabled selected> -- Select Barangay --</option>
+                            </select>
+                        </div>
                         <div class="form-group col-md-3">
                             <label for="bh_province">Province:</label>
                             <input type="text" id="bh_province" name="bh_province" class="form-control" value="ILOILO" disabled required>
@@ -157,11 +326,40 @@ include 'includes/header.php';
                         </div>
 
                     </div>
-                   
+                    <script>
+                        function populateBarangays() {
+                            var districtSelect = document.getElementById("bh_district");
+                            var barangaySelect = document.getElementById("bh_barangay");
+                            var district = districtSelect.value;
+
+
+                            barangaySelect.innerHTML = '  <option value="" disabled selected> -- Select Barangay --</option>';
+
+
+                            if (district !== "") {
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("GET", "get_barangays.php?district=" + district, true);
+                                xhr.onreadystatechange = function() {
+                                    if (xhr.readyState == 4 && xhr.status == 200) {
+                                        var barangays = JSON.parse(xhr.responseText);
+                                        barangays.forEach(function(barangay) {
+                                            var option = document.createElement("option");
+                                            option.text = barangay;
+                                            option.value = barangay;
+                                            barangaySelect.add(option);
+                                        });
+                                    }
+                                };
+                                xhr.send();
+                            }
+                        }
+                    </script>
                     <div class="row">
                         <div class="form-group col-md-4">
+
+
                             <label for="bh_control_no">BH Control No.:</label>
-                            <input type="text" id="bh_control_no" name="bh_control_no" class="form-control" placeholder="Enter Control Number" required>
+                            <input type="text" id="bh_control_no" name="bh_control_no" class="form-control" value="<?php echo isset($row['bh_control_no']) ? $row['bh_control_no'] : ''; ?>" required>
                         </div>
 
 
@@ -171,29 +369,29 @@ include 'includes/header.php';
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label for="bh_or_num">Official Receipt Number:</label>
-                            <input type="text" id="bh_or_num" name="bh_or_num" class="form-control" placeholder="Enter OR Number" required>
+                            <input type="text" id="bh_or_num" name="bh_or_num" class="form-control" value="<?php echo isset($row['bh_or_num']) ? $row['bh_or_num'] : ''; ?>" required>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="bh_bpn">Business Permit Number:</label>
-                            <input type="text" id="bh_bpn" class="form-control" name="bh_bpn" placeholder="Enter BP Number" required>
+                            <input type="text" id="bh_bpn" class="form-control" name="bh_bpn" value="<?php echo isset($row['bh_bpn']) ? $row['bh_bpn'] : ''; ?>" required>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="date_issued">Date Issued:</label>
-                            <input type="date" id="date_issued" class="form-control" name="date_issued" required>
+                            <input type="date" id="date_issued" class="form-control" name="date_issued" value="<?php echo isset($row['date_issued']) ? $row['date_issued'] : ''; ?>" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-2">
                             <label for="amount_paid">Amount Paid:</label>
-                            <input type="number" id="amount_paid" class="form-control" name="amount_paid" placeholder="Enter Amount" required>
+                            <input type="number" id="amount_paid" class="form-control" name="amount_paid" value="<?php echo isset($row['amount_paid']) ? $row['amount_paid'] : ''; ?>" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="bh_mp">Mode of Payment:</label>
-                            <input type="text" id="bh_mp" class="form-control" name="bh_mp" placeholder="Enter Mode" required>
+                            <input type="text" id="bh_mp" class="form-control" name="bh_mp" value="" required>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="date_paid">Date Paid:</label>
-                            <input type="date" id="date_paid" class="form-control" name="date_paid" required>
+                            <input type="date" id="date_paid" class="form-control" name="date_paid" value="" required>
                         </div>
                     </div>
                     <div class="row">
@@ -201,12 +399,12 @@ include 'includes/header.php';
 
                         <div class="form-group col-md-4">
                             <label for="bh_period_cover">Period Covered:</label>
-                            <input type="text" id="bh_period_cover" class="form-control" name="bh_period_cover" placeholder="Enter Period Covered" required>
+                            <input type="text" id="bh_period_cover" class="form-control" name="bh_period_cover" value="" required>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="bh_complaint">Compliant:</label>
 
-                            <select id="bh_complaint" class="form-control" name="bh_complaint" required>>
+                            <select id="bh_complaint" class="form-control" name="bh_complaint" value="" required>>
                                 <option value="" disabled selected>-- Select Option --</option>
                                 <option value="yes"> Yes</option>
                                 <option value="no"> No</option>
