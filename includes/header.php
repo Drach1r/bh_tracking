@@ -44,40 +44,60 @@ if (!isset($_SESSION['user_id'])) {
 
 
 </head>
-<style type="text/css">
-    table tbody tr:hover {
-        cursor: pointer;
+
+<header>
+<style>
+    nav {
+        background-color:#f0c277;
     }
 
-    .normalTr:hover {
-        cursor: default;
+    .topbar-divider {
+        border-left: 1px solid white; /* Add border styling */
+        height: 40px; /* Adjust height as needed */
+        margin-left: -70px; /* Add some spacing */
+        top: 25px;
+        position: fixed;
+    }
+
+    h6{
+        top: 35px;
+        right: 30px; /* Add some spacing */
+        position: fixed;
+    }
+
+    .topbar-divider.d-none {
+        display: none; /* Hide divider on small screens */
+    }
+
+    .logout-link {
+        color: white; /* Set logout link color */
+        text-decoration: none; /* Remove underline */
+        margin-left: 10px; /* Add spacing between divider and link */
+    }
+
+    .logout-link:hover {
+        color: #ffc107; /* Change color on hover */
     }
 </style>
-<header>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <div class="container-fluid">
-            <a href="records.php"><img src="resources/img/iloilo.png" alt="" height="80"></a>
-            <h5 style="color: white; margin-left: 20px; ">Boarding House Tracking Information Management Application</h5>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
+<nav class="navbar navbar-expand-lg navbar-dark bg-red sticky-top">
+    <div class="container-fluid">
+        <a href="records.php"><img src="resources/img/iloilo.png" alt="" height="80"></a>
+        <h5 style="color: black; font-weight: bold; margin-left: 20px;">Boarding House Tracking Information Management Application</h5>
 
-                    </li>
-                </ul>
-                <form class="d-flex" role="">
-                    <button type="submit" class="btn btn-danger"><a class="dropdown-item" href="logout.php">
-                            Logout
-                        </a>
-                    </button>
-                </form>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link logout-link" href="logout.php" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <h6 class="h6 mb-0 text-danger">Logout</h6>
+                </a>
+            </li>
+            <li class="nav-item">
+                <div class="topbar-divider d-none d-sm-block"></div> <!-- Move the divider here -->
+            </li>
+        </ul>
+    </div>
+</nav>
 
-            </div>
-        </div>
-    </nav>
 
 </header>
 

@@ -57,10 +57,7 @@ include 'includes/header.php';
         </button>
     </div>
 
-    <br>
-    <div class="card col-lg-12">
-
-        <div class="card-body">
+    
             <br>
             <div class="card-title-body">
 
@@ -91,27 +88,19 @@ include 'includes/header.php';
 
                     });
                 </script>
-                <style type="text/css">
-                    table tbody tr:hover {
-                        cursor: pointer;
-                    }
-
-                    .normalTr:hover {
-                        cursor: default;
-                    }
-                </style>
+              
 
 
-                <table class="table table-bordered table-hover w-100" id="recordstable">
-                    <thead class="table-dark">
+<table class="table table-bordered" id="recordstable">
+                    <thead>
                         <tr>
 
-                            <th class="text-center">#</th>
-                            <th class="text-center">Name of Establishment</th>
-                            <th class="text-center">Full Name</th>
-                            <th class="text-center">Address</th>
-                            <th class="text-center">City Municipality</th>
-                            <th class="text-center">Action</th>
+                            <th class="text-center" style="color: black; background-color:#f0c277">#</th>
+                            <th class="text-center" style="color: black; background-color:#f0c277">Name of Establishment</th>
+                            <th class="text-center" style="color: black; background-color:#f0c277">Full Name</th>
+                            <th class="text-center" style="color: black; background-color:#f0c277">Address</th>
+                            <th class="text-center" style="color: black; background-color:#f0c277">City Municipality</th>
+                            <th class="text-center" style="color: black; background-color:#f0c277">Action</th>
 
 
 
@@ -189,8 +178,6 @@ include 'includes/header.php';
 
             </div>
         </div>
-    </div>
-</div>
 
 <script>
     function deleteRecord(id) {
