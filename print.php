@@ -235,12 +235,221 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(80, 5, 'Account Number: ' . 'a', 1);
-$pdf->Cell(40, 5, 'Name of Establishment: ' . 'b', 1);
-$pdf->Cell(30, 5, 'Date: ' . 'c', 1);
-$pdf->Cell(30, 5, 'Call Received', 1);
-$pdf->Cell(20, 5, 'd', 1);
+$pdf->Cell(200, 5, 'Account Number: ' . 'a', 1);
 $pdf->Ln();
 
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Establishment Name: ' . 'a', 1);
+$pdf->Ln();
+
+
+$pdf->Cell(1);
+$pdf->SetFont('Arial', 'B', 8);
+$pdf->Cell(62, 5, '', 0, 0, 'C');
+$pdf->Cell(-90, 15, 'Name of Owner/Manager', 0, 0, 'C');
+$pdf->Ln();
+
+
+
+
+$pdf->Cell(1);
+$pdf->SetFont('Arial', '', 8);
+$pdf->Cell(200, 5, 'First Name: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Middle Name: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Last Name: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Suffix: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Address: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'City/Municipality: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Rect(11, 80, 200, 15);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'District: '. $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 60;
+$rect3_x = 100;
+$rect4_x = 140;
+$rect_y = 86;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect3_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect4_x, $rect_y, $rect_size, $rect_size);
+
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 5, '', 0, 0);
+$pdf->Cell(0, 5, 'Arevalo', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 5, '', 0, 0);
+$pdf->Cell(0, 5, 'City Proper', 0, 0);
+$pdf->Cell($rect3_x - $rect2_x - $rect_size);
+$pdf->Cell(-140, 5, '', 0, 0);
+$pdf->Cell(0, 5, 'Jaro', 0, 0);
+$pdf->Cell($rect4_x - $rect3_x - $rect_size);
+$pdf->Cell(-100, 5, '', 0, 0);
+$pdf->Cell(0, 5, 'Lapaz', 0, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 60;
+$rect3_x = 100;
+$rect_y = 91;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect3_x, $rect_y, $rect_size, $rect_size);
+
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 5, '', 0, 0);
+$pdf->Cell(0, 5, 'Lapuz', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 5, '', 0, 0);
+$pdf->Cell(0, 5, 'Mandurriao', 0, 0);
+$pdf->Cell($rect3_x - $rect2_x - $rect_size);
+$pdf->Cell(-140, 5, '', 0, 0);
+$pdf->Cell(0, 5, 'Molo', 0, 0);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Barangay: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Province: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'BH Control No.: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Rect(11, 110, 200, 15);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'OR No.: ' . 'a', 0);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 1, 'Official Receipt',  'a', 0);
+$pdf->Ln();
+
+
+$pdf->Rect(11, 125, 200, 21);
+$pdf->Cell(1);
+$pdf->Cell(200, 25, 'Date Issued: ' . 'a', 0);
+$pdf->Ln();
+$pdf->Cell(1);
+$pdf->Cell(200, -20, 'Official Receipt',  'a', 0);
+$pdf->Ln();
+$pdf->Cell(1);
+$pdf->Cell(200, 25, 'yyyy-mm-dd',  'a', 0);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Amount Paid: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Business Permit Number: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Rect(11, 156, 200, 12);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Mode of Payment: ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 60;
+$rect3_x = 100;
+$rect4_x = 140;
+$rect_y = 162;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect3_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect4_x, $rect_y, $rect_size, $rect_size);
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 5, '', 0, 0);
+$pdf->Cell(0, 5, 'Annual', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 5, '', 0, 0);
+$pdf->Cell(0, 5, 'Semi-Annual', 0, 0);
+$pdf->Cell($rect3_x - $rect2_x - $rect_size);
+$pdf->Cell(-140, 5, '', 0, 0);
+$pdf->Cell(0, 5, 'Monthly', 0, 0);
+$pdf->Cell($rect4_x - $rect3_x - $rect_size);
+$pdf->Cell(-100, 5, '', 0, 0);
+$pdf->Cell(0, 5, 'Quarterly', 0, 0);
+$pdf->Ln();
+
+$pdf->Rect(11, 168, 200, 15);
+$pdf->Cell(1);
+$pdf->Cell(200, 10, 'Date Paid: ' . 'a', 0);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, -5, 'yyyy-mm-dd', 'a', 0); // Adjusted parameter order for border
+$pdf->Ln();
+$pdf->Cell(1);
+$pdf->Cell(200, -5, '', 'a', 0); // Adjusted parameter order for border
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 40, 'Period Covered: ' . 'a', 0);
+$pdf->Ln();
+
+$pdf->Rect(11, 183, 200, 5);
+$pdf->Cell(1);
+$pdf->Cell(200, -30, 'Complaint: ' . 'a', 1); // Adjusted to add border
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 60;
+$rect_y = 195;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 5, '', 0, 0);
+$pdf->Cell(0, 42, 'Yes', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 5, '', 0, 0);
+$pdf->Cell(0, 42, 'No', 0, 0);
+$pdf->Cell(-140, 5, '', 0, 0);
 
 $pdf->Output();
