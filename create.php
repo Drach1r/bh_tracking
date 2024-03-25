@@ -409,7 +409,7 @@ include 'includes/header.php';
                             <input type="number" id="bh_cr_num" class="form-control" name="bh_cr_num" placeholder="Enter no. CR" required>
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="bh_bathroom_num">No. of Bath Room:</label>
+                            <label for="bh_bathroom_num">No. of Bath Rooms:</label>
                             <input type="number" id="bh_bathroom_num" class="form-control" name="bh_bathroom_num" placeholder="Enter no. BR" required>
                         </div>
                     </div>

@@ -220,9 +220,22 @@ if (isset($_GET['id'])) {
 }
 ?>
 
+<div class="row">
+    <h3 style="margin-left: 290px;" class="title">View Record
 
-<h3 style="margin-left: 290px;" class="title">View Record</h3>
 
+
+        <button onclick="printPage()" class='btn btn-primary'>Print</button>
+    </h3>
+</div>
+<script>
+    function printPage() {
+        var currentPageUrl = window.location.href;
+        var pageId = currentPageUrl.split('?')[1];
+        var urlWithId = 'print.php?' + pageId;
+        window.open(urlWithId, '_blank');
+    }
+</script>
 <section class="container">
     <div class="row">
         <div class="card-body">
