@@ -29,4 +29,6 @@ if (isset($_FILES["file"]) && $_FILES["file"]["error"] == 0) {
     exit();
 } else {
     echo "Error: Please select a file to import.";
+    header("Location: records.php");
+    exit();
 }
