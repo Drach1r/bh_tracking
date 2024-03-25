@@ -7,57 +7,68 @@ include 'includes/header.php';
 <div class="container">
     <div class="card-title-body">
         <script>
-            $(document).ready(function () {
-                var table = $('#recordstable').DataTable({
-                    'pageLength': 10,
-                    'scrollY': '40vh',
-                    columnDefs: [{
-                        width: '10%',
-                        targets: 1
-                    },
-                    {
-                        width: '10%',
-                        targets: 3
-                    },
-                    ]
-                });
+           $(document).ready(function () {
+    var table = $('#recordstable').DataTable({
+        'pageLength': 10,
+        'scrollY': '40vh',
+        columnDefs: [{
+                width: '10%',
+                targets: 1
+            },
+            {
+                width: '10%',
+                targets: 3
+            },
+        ]
+    });
 
-                $('.nav-link').click(function () {
-                    table.columns.adjust().draw();
-                });
+    $('.nav-link').click(function () {
+        table.columns.adjust().draw();
+    });
 
-                $('#filterDate').change(function () {
-                    var selectedDate = $(this).val();
-                    filterPieChart(selectedDate);
-                });
+    $(document).ready(function () {
+        var today = new Date().toISOString().slice(0, 10);
+        $('#filterDate').val(today);
+        filterPieChart(today);
 
-                var myChart = null; // Store the chart instance
+        $('#filterDate').change(function () {
+            var selectedDate = $(this).val();
+            filterPieChart(selectedDate);
+        });
+    });
+    $('#filterDate').change(function () {
+        var selectedDate = $(this).val();
+        filterPieChart(selectedDate);
+    });
 
-                function filterPieChart(selectedDate) {
-                    $.ajax({
-                        url: 'fetch_data.php',
-                        type: 'POST',
-                        data: {
-                            selectedDate: selectedDate
-                        },
-                        dataType: 'json',
-                        success: function (response) {
-                            if (myChart) {
-                                myChart.destroy(); // Destroy previous chart instance
-                            }
-                            if (response.labels.length > 0) {
-                                updatePieChart(response.labels, response.data);
-                            } else {
-                                updatePieChart(['No data available'], [0]);
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(xhr.responseText);
-                        }
-                    });
+    var myChart = null; // Store the chart instance
+
+    function filterPieChart(selectedDate) {
+        $.ajax({
+            url: 'fetch_data.php',
+            type: 'POST',
+            data: {
+                selectedDate: selectedDate
+            },
+            dataType: 'json',
+            success: function (response) {
+                if (myChart) {
+                    myChart.destroy(); // Destroy previous chart instance
                 }
+                if (response.labels.length > 0) {
+                    updatePieChart(response.labels, response.data);
+                    updateTableData(response.districts);
+                } else {
+                    updatePieChart(['No data available'], [0]);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
 
-                function updatePieChart(labels, data) {
+    function updatePieChart(labels, data, districts) {
     var ctx = document.getElementById('districtPieChart').getContext('2d');
     myChart = new Chart(ctx, {
         type: 'pie',
@@ -95,22 +106,55 @@ include 'includes/header.php';
     var tableBody = $('#filteredDataTable tbody');
     tableBody.empty(); // Clear previous data
 
-    for (var i = 0; i < labels.length; i++) {
-        // Append a row for each label (district)
-        var district = labels[i];
-        var barangay = ''; // Fetch barangay data for this district
-        var inspector = ''; // Fetch inspector data for this district
+    for (var district in districts) {
+        if (districts.hasOwnProperty(district)) {
+            // Append rows for each barangay under the district
+            for (var barangay in districts[district]) {
+                if (districts[district].hasOwnProperty(barangay)) {
+                    var inspector = districts[district][barangay];
 
-        // Append a row with district, barangay, and inspector
-        var row = '<tr>';
-        row += '<td>' + district + '</td>';
-        row += '<td>' + barangay + '</td>';
-        row += '<td>' + inspector + '</td>';
-        row += '</tr>';
+                    // Append a row with district, barangay, and inspector
+                    var row = '<tr>';
+                    row += '<td>' + district + '</td>';
+                    row += '<td>' + barangay + '</td>';
+                    row += '<td>' + inspector + '</td>';
+                    row += '</tr>';
 
-        tableBody.append(row);
-    }     }
-       });
+                    tableBody.append(row);
+                }
+            }
+        }
+    }
+}
+
+// Assuming the rest of your code remains the same...
+
+
+    function updateTableData(districts) {
+        var tableBody = $('#filteredDataTable tbody');
+        tableBody.empty(); // Clear previous data
+
+        for (var district in districts) {
+            if (districts.hasOwnProperty(district)) {
+                // Append rows for each barangay under the district
+                for (var barangay in districts[district]) {
+                    if (districts[district].hasOwnProperty(barangay)) {
+                        var inspector = districts[district][barangay];
+
+                        // Append a row with district, barangay, and inspector
+                        var row = '<tr>';
+                        row += '<td>' + district + '</td>';
+                        row += '<td>' + barangay + '</td>';
+                        row += '<td>' + inspector + '</td>';
+                        row += '</tr>';
+
+                        tableBody.append(row);
+                    }
+                }
+            }
+        }
+    }
+});
 
         </script>
 
@@ -157,29 +201,38 @@ include 'includes/header.php';
             </tbody>
         </table>
     </div>
-    <br>
 
-    <div class="form-group">
-        <label for="filterDate">Filter by Date:</label>
-        <input type="date" class="form-control" id="filterDate">
+
+<br>
+<br>
+
+<label for="filterDate">Filter by Date:</label>
+
+    <div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <input type="date" class="form-control" id="filterDate">
+        </div>
+        <canvas id="districtPieChart" width="200" height="200"></canvas>
     </div>
-
-    <canvas id="districtPieChart" width="200" height="200"></canvas>
-
-    <table class="table table-bordered" id="filteredDataTable">
-        <thead>
-            <tr>
-                <th>District</th>
-                <th>Barangay</th>
-                <th>Inspector</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- This will be populated dynamically -->
-        </tbody>
-    </table>
-
+    <div class="col-md-6">
+        <div class="table-container">
+            <table class="table table-bordered" id="filteredDataTable">
+                <thead>
+                    <tr>
+                    <th class="text-center" style="background-color:#f0c277; color: black;">District</th>
+                    <th class="text-center" style="background-color:#f0c277; color: black;">Barangay</th>
+                    <th class="text-center" style="background-color:#f0c277; color: black;">Inspector</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- This will be populated dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
 
 <?php
 include 'includes/footer.php';
