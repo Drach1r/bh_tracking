@@ -382,8 +382,15 @@ if (isset($_GET['id'])) {
                         </div>
                         <div class="form-group col-md-3">
                             <label for="bh_mp">Mode of Payment:</label>
-                            <input type="text" id="bh_mp" class="form-control" name="bh_mp" value="<?php echo isset($row['bh_mp']) ? $row['bh_mp'] : ''; ?>" readonly required>
+                            <select id="bh_mp" class="form-control" name="bh_mp" required disabled>
+                                <option value="" disabled> -- Select Mode --</option>
+                                <option value="annual" <?php echo isset($row['bh_mp']) && $row['bh_mp'] == 'annual' ? 'selected' : ''; ?>>Annual</option>
+                                <option value="semi_annual" <?php echo isset($row['bh_mp']) && $row['bh_mp'] == 'semi_annual' ? 'selected' : ''; ?>>Semi-Annual</option>
+                                <option value="monthly" <?php echo isset($row['bh_mp']) && $row['bh_mp'] == 'monthly' ? 'selected' : ''; ?>>Monthly</option>
+                                <option value="quarterly" <?php echo isset($row['bh_mp']) && $row['bh_mp'] == 'quarterly' ? 'selected' : ''; ?>>Quarterly</option>
+                            </select>
                         </div>
+
                         <div class="form-group col-md-2">
                             <label for="date_paid">Date Paid:</label>
                             <input type="date" id="date_paid" class="form-control" name="date_paid" value="<?php echo isset($row['date_paid']) ? $row['date_paid'] : ''; ?>" readonly required>

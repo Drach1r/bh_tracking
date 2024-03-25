@@ -174,6 +174,7 @@ include 'includes/header.php';
                             <select id="bh_mp" class="form-control" name="bh_mp" required>
                                 <option value="" disabled selected> -- Select Mode --</option>
                                 <option value="annual">Annual</option>
+                                <option value="semi_annual">Semi-Annual</option>
                                 <option value="monthly">Monthly</option>
                                 <option value="quarterly">Quarterly</option>
                             </select>
@@ -318,28 +319,11 @@ include 'includes/header.php';
                                 <option value="room_rent">Room Rent</option>
                                 <option value="house_rent">House Rent</option>
                                 <option value="rent_per_unit__apartment">Rent Per Unit(Apartment)</option>
-                                <option value="other">Others</option>
+
                             </select>
                         </div>
 
-                        <div class="form-group col-md-3">
-                            <label for="otherSpecifyRatesCheckbox">Specify Others:</label>
-                            <input type="text" id="otherSpecifyRatesCheckbox" class="form-control" name="otherSpecifyRatesCheckbox" placeholder="Enter Rates" disabled required>
-                        </div>
 
-                        <script>
-                            document.getElementById('bh_rates_charge').addEventListener('change', function() {
-                                var specifyRatesInput = document.getElementById('otherSpecifyRatesCheckbox');
-                                if (this.value === 'other') {
-                                    specifyRatesInput.disabled = false;
-                                    specifyRatesInput.value = '';
-                                    specifyRatesInput.focus();
-                                } else {
-                                    specifyRatesInput.disabled = true;
-                                    specifyRatesInput.value = this.value;
-                                }
-                            });
-                        </script>
 
 
                         <div class="form-group col-md-2">

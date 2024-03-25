@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2024 at 03:56 AM
+-- Generation Time: Mar 25, 2024 at 06:45 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `bh_address` (
   `id` int(11) NOT NULL,
-  `district` varchar(255) NOT NULL,
+  `district_id` int(11) NOT NULL,
   `barangay` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -37,187 +37,211 @@ CREATE TABLE `bh_address` (
 -- Dumping data for table `bh_address`
 --
 
-INSERT INTO `bh_address` (`id`, `district`, `barangay`) VALUES
-(1, 'AREVALO', 'BONIFACIO (AREVALO)'),
-(2, 'AREVALO', 'CALAPARAN'),
-(3, 'AREVALO', 'DULONAN'),
-(4, 'AREVALO', 'MOHON'),
-(5, 'AREVALO', 'QUEZON'),
-(6, 'AREVALO', 'SAN JOSE (AREVALO)'),
-(7, 'AREVALO', 'SANTA CRUZ'),
-(8, 'AREVALO', 'SANTA FILOMENA'),
-(9, 'AREVALO', 'SANTO DOMINGO'),
-(10, 'AREVALO', 'SANTO NI?O NORTE'),
-(11, 'AREVALO', 'SANTO NI?O SUR'),
-(12, 'AREVALO', 'YULO DRIVE'),
-(13, 'CITY PROPER', 'ARSENAL ADUANA'),
-(14, 'CITY PROPER', 'BAYBAY TANZA'),
-(15, 'CITY PROPER', 'BONIFACIO TANZA'),
-(16, 'CITY PROPER', 'CONCEPCION-MONTES'),
-(17, 'CITY PROPER', 'DANAO'),
-(18, 'CITY PROPER', 'DELGADO-JALANDONI-BAGUMBAYAN'),
-(19, 'CITY PROPER', 'EDGANZON'),
-(20, 'CITY PROPER', 'FLORES'),
-(21, 'CITY PROPER', 'GENERAL HUGHES-MONTES'),
-(22, 'CITY PROPER', 'GLORIA'),
-(23, 'CITY PROPER', 'HIPODROMO'),
-(24, 'CITY PROPER', 'INDAY'),
-(25, 'CITY PROPER', 'JALANDONI-WILSON'),
-(26, 'CITY PROPER', 'KAHIRUPAN'),
-(27, 'CITY PROPER', 'KAUSWAGAN'),
-(28, 'CITY PROPER', 'LEGASPI DELA RAMA'),
-(29, 'CITY PROPER', 'LIBERATION'),
-(30, 'CITY PROPER', 'MABOLO-DELGADO'),
-(31, 'CITY PROPER', 'MAGSAYSAY'),
-(32, 'CITY PROPER', 'MALIPAYON-DELGADO'),
-(33, 'CITY PROPER', 'MARIA CLARA'),
-(34, 'CITY PROPER', 'MONICA BLUMENTRITT'),
-(35, 'CITY PROPER', 'MUELLE LONEY-MONTES'),
-(36, 'CITY PROPER', 'NONOY'),
-(37, 'CITY PROPER', 'ORTIZ'),
-(38, 'CITY PROPER', 'OSME?A'),
-(39, 'CITY PROPER', 'PRESIDENT ROXAS'),
-(40, 'CITY PROPER', 'RIMA-RIZAL'),
-(41, 'CITY PROPER', 'RIZAL ESTANZUELA'),
-(42, 'CITY PROPER', 'RIZAL IBARRA'),
-(43, 'CITY PROPER', 'RIZAL PALAPALA I'),
-(44, 'CITY PROPER', 'RIZAL PALAPALA II'),
-(45, 'CITY PROPER', 'ROXAS VILLAGE'),
-(46, 'CITY PROPER', 'SAMPAGUITA'),
-(47, 'CITY PROPER', 'SAN AGUSTIN'),
-(48, 'CITY PROPER', 'SAN FELIX'),
-(49, 'CITY PROPER', 'SAN JOSE (CITY PROPER)'),
-(50, 'CITY PROPER', 'SANTO ROSARIO-DURAN'),
-(51, 'CITY PROPER', 'TANZA-ESPERANZA'),
-(52, 'CITY PROPER', 'TIMAWA TANZA I'),
-(53, 'CITY PROPER', 'TIMAWA TANZA II'),
-(54, 'CITY PROPER', 'VETERANS VILLAGE'),
-(55, 'CITY PROPER', 'VILLA ANITA'),
-(56, 'CITY PROPER', 'YULO-ARROYO'),
-(57, 'CITY PROPER', 'ZAMORA-MELLIZA'),
-(58, 'JARO', 'ARGUELLES'),
-(59, 'JARO', 'BALABAGO'),
-(60, 'JARO', 'BALANTANG'),
-(61, 'JARO', 'BENEDICTO (JARO)'),
-(62, 'JARO', 'BITO-ON'),
-(63, 'JARO', 'BUHANG'),
-(64, 'JARO', 'BUNTATALA'),
-(65, 'JARO', 'CALUBIHAN'),
-(66, 'JARO', 'CAMALIG'),
-(67, 'JARO', 'CUARTERO'),
-(68, 'JARO', 'CUBAY'),
-(69, 'JARO', 'DEMOCRACIA'),
-(70, 'JARO', 'DESAMPARADOS'),
-(71, 'JARO', 'DUNGON A'),
-(72, 'JARO', 'DUNGON B'),
-(73, 'JARO', 'EL 98 CASTILLA (CLAUDIO LOPEZ)'),
-(74, 'JARO', 'FAJARDO'),
-(75, 'JARO', 'JAVELLANA'),
-(76, 'JARO', 'LANIT'),
-(77, 'JARO', 'LIBERTAD, SANTA ISABEL'),
-(78, 'JARO', 'LOPEZ JAENA (JARO)'),
-(79, 'JARO', 'LUNA (JARO)'),
-(80, 'JARO', 'M. V. HECHANOVA'),
-(81, 'JARO', 'MARCELO H. DEL PILAR'),
-(82, 'JARO', 'MARIA CRISTINA'),
-(83, 'JARO', 'MONTINOLA'),
-(84, 'JARO', 'OUR LADY OF FATIMA'),
-(85, 'JARO', 'OUR LADY OF LOURDES'),
-(86, 'JARO', 'QUINTIN SALAS'),
-(87, 'JARO', 'SAMBAG'),
-(88, 'JARO', 'SAN ISIDRO (JARO)'),
-(89, 'JARO', 'SAN JOSE (JARO)'),
-(90, 'JARO', 'SAN PEDRO (JARO)'),
-(91, 'JARO', 'SAN ROQUE'),
-(92, 'JARO', 'SAN VICENTE'),
-(93, 'JARO', 'SEMINARIO (BURGOS JALANDONI)'),
-(94, 'JARO', 'SIMON LEDESMA'),
-(95, 'JARO', 'TABUC SUBA (JARO)'),
-(96, 'JARO', 'TACAS'),
-(97, 'JARO', 'TAGBAC'),
-(98, 'JARO', 'TAYTAY ZONE II'),
-(99, 'JARO', 'UNGKA'),
-(100, 'LAPAZ', 'AGUINALDO'),
-(101, 'LAPAZ', 'BALDOZA'),
-(102, 'LAPAZ', 'BANTUD'),
-(103, 'LAPAZ', 'BANUYAO'),
-(104, 'LAPAZ', 'BURGOS-MABINI-PLAZA'),
-(105, 'LAPAZ', 'CAINGIN'),
-(106, 'LAPAZ', 'DIVINAGRACIA'),
-(107, 'LAPAZ', 'GUSTILO'),
-(108, 'LAPAZ', 'HINACTACAN'),
-(109, 'LAPAZ', 'INGORE'),
-(110, 'LAPAZ', 'JEREOS'),
-(111, 'LAPAZ', 'LAGUDA'),
-(112, 'LAPAZ', 'LOPEZ JAENA NORTE'),
-(113, 'LAPAZ', 'LOPEZ JAENA SUR'),
-(114, 'LAPAZ', 'LUNA (LA PAZ)'),
-(115, 'LAPAZ', 'MACARTHUR'),
-(116, 'LAPAZ', 'MAGDALO'),
-(117, 'LAPAZ', 'MAGSAYSAY VILLAGE'),
-(118, 'LAPAZ', 'NABITASAN'),
-(119, 'LAPAZ', 'RAILWAY'),
-(120, 'LAPAZ', 'RIZAL (LA PAZ)'),
-(121, 'LAPAZ', 'SAN ISIDRO (LA PAZ)'),
-(122, 'LAPAZ', 'SAN NICOLAS'),
-(123, 'LAPAZ', 'TABUC SUBA (LA PAZ)'),
-(124, 'LAPAZ', 'TICUD (LA PAZ)'),
-(125, 'LAPUZ', 'ALALASAN LAPUZ'),
-(126, 'LAPUZ', 'DON ESTEBAN-LAPUZ'),
-(127, 'LAPUZ', 'JALANDONI ESTATE-LAPUZ'),
-(128, 'LAPUZ', 'LAPUZ NORTE'),
-(129, 'LAPUZ', 'LAPUZ SUR'),
-(130, 'LAPUZ', 'LIBERTAD-LAPUZ'),
-(131, 'LAPUZ', 'LOBOC-LAPUZ'),
-(132, 'LAPUZ', 'MANSAYA-LAPUZ'),
-(133, 'LAPUZ', 'OBRERO-LAPUZ'),
-(134, 'LAPUZ', 'PROGRESO-LAPUZ'),
-(135, 'LAPUZ', 'PUNONG-LAPUZ'),
-(136, 'LAPUZ', 'SINIKWAY (BANGKEROHAN LAPUZ)'),
-(137, 'MANDURRIAO', 'ABETO MIRASOL TAFT SOUTH (QUIRINO ABETO)'),
-(138, 'MANDURRIAO', 'AIRPORT (TABUCAN AIRPORT)'),
-(139, 'MANDURRIAO', 'BAKHAW'),
-(140, 'MANDURRIAO', 'BOLILAO'),
-(141, 'MANDURRIAO', 'BUHANG TAFT NORTH'),
-(142, 'MANDURRIAO', 'CALAHUNAN'),
-(143, 'MANDURRIAO', 'DUNGON'),
-(144, 'MANDURRIAO', 'GUZMAN-JESENA'),
-(145, 'MANDURRIAO', 'HIBAO-AN NORTE'),
-(146, 'MANDURRIAO', 'HIBAO-AN SUR'),
-(147, 'MANDURRIAO', 'NAVAIS'),
-(148, 'MANDURRIAO', 'O?ATE DE LEON'),
-(149, 'MANDURRIAO', 'PALE BENEDICTO RIZAL (MANDURRIAO)'),
-(150, 'MANDURRIAO', 'PHHC BLOCK 17'),
-(151, 'MANDURRIAO', 'PHHC BLOCK 22 NHA'),
-(152, 'MANDURRIAO', 'SAN RAFAEL'),
-(153, 'MANDURRIAO', 'SANTA ROSA'),
-(154, 'MANDURRIAO', 'SO-OC'),
-(155, 'MANDURRIAO', 'TABUCAN'),
-(156, 'MOLO', 'CALUMPANG'),
-(157, 'MOLO', 'COCHERO'),
-(158, 'MOLO', 'COMPANIA'),
-(159, 'MOLO', 'EAST BALUARTE'),
-(160, 'MOLO', 'EAST TIMAWA'),
-(161, 'MOLO', 'HABOG-HABOG SALVACION'),
-(162, 'MOLO', 'INFANTE'),
-(163, 'MOLO', 'KASINGKASING'),
-(164, 'MOLO', 'KATILINGBAN'),
-(165, 'MOLO', 'MOLO BOULEVARD'),
-(166, 'MOLO', 'NORTH AVANCE?A'),
-(167, 'MOLO', 'NORTH BALUARTE'),
-(168, 'MOLO', 'NORTH FUNDIDOR'),
-(169, 'MOLO', 'NORTH SAN JOSE'),
-(170, 'MOLO', 'POBLACION MOLO'),
-(171, 'MOLO', 'SAN ANTONIO'),
-(172, 'MOLO', 'SAN JUAN'),
-(173, 'MOLO', 'SAN PEDRO (MOLO)'),
-(174, 'MOLO', 'SOUTH BALUARTE'),
-(175, 'MOLO', 'SOUTH FUNDIDOR'),
-(176, 'MOLO', 'SOUTH SAN JOSE'),
-(177, 'MOLO', 'TAAL'),
-(178, 'MOLO', 'TAP-OC'),
-(179, 'MOLO', 'WEST HABOG-HABOG'),
-(180, 'MOLO', 'WEST TIMAWA');
+INSERT INTO `bh_address` (`id`, `district_id`, `barangay`) VALUES
+(1, 1, 'BONIFACIO (AREVALO)'),
+(2, 1, 'CALAPARAN'),
+(3, 1, 'DULONAN'),
+(4, 1, 'MOHON'),
+(5, 1, 'QUEZON'),
+(6, 1, 'SAN JOSE (AREVALO)'),
+(7, 1, 'SANTA CRUZ'),
+(8, 1, 'SANTA FILOMENA'),
+(9, 1, 'SANTO DOMINGO'),
+(10, 1, 'SANTO NIﾑO NORTE'),
+(11, 1, 'SANTO NIﾑO SUR'),
+(12, 1, 'YULO DRIVE'),
+(13, 2, 'ARSENAL ADUANA'),
+(14, 2, 'BAYBAY TANZA'),
+(15, 2, 'BONIFACIO TANZA'),
+(16, 2, 'CONCEPCION-MONTES'),
+(17, 2, 'DANAO'),
+(18, 2, 'DELGADO-JALANDONI-BAGUMBAYAN'),
+(19, 2, 'EDGANZON'),
+(20, 2, 'FLORES'),
+(21, 2, 'GENERAL HUGHES-MONTES'),
+(22, 2, 'GLORIA'),
+(23, 2, 'HIPODROMO'),
+(24, 2, 'INDAY'),
+(25, 2, 'JALANDONI-WILSON'),
+(26, 2, 'KAHIRUPAN'),
+(27, 2, 'KAUSWAGAN'),
+(28, 2, 'LEGASPI DELA RAMA'),
+(29, 2, 'LIBERATION'),
+(30, 2, 'MABOLO-DELGADO'),
+(31, 2, 'MAGSAYSAY'),
+(32, 2, 'MALIPAYON-DELGADO'),
+(33, 2, 'MARIA CLARA'),
+(34, 2, 'MONICA BLUMENTRITT'),
+(35, 2, 'MUELLE LONEY-MONTES'),
+(36, 2, 'NONOY'),
+(37, 2, 'ORTIZ'),
+(38, 2, 'OSMEﾑA'),
+(39, 2, 'PRESIDENT ROXAS'),
+(40, 2, 'RIMA-RIZAL'),
+(41, 2, 'RIZAL ESTANZUELA'),
+(42, 2, 'RIZAL IBARRA'),
+(43, 2, 'RIZAL PALAPALA I'),
+(44, 2, 'RIZAL PALAPALA II'),
+(45, 2, 'ROXAS VILLAGE'),
+(46, 2, 'SAMPAGUITA'),
+(47, 2, 'SAN AGUSTIN'),
+(48, 2, 'SAN FELIX'),
+(49, 2, 'SAN JOSE (CITY PROPER)'),
+(50, 2, 'SANTO ROSARIO-DURAN'),
+(51, 2, 'TANZA-ESPERANZA'),
+(52, 2, 'TIMAWA TANZA I'),
+(53, 2, 'TIMAWA TANZA II'),
+(54, 2, 'VETERANS VILLAGE'),
+(55, 2, 'VILLA ANITA'),
+(56, 2, 'YULO-ARROYO'),
+(57, 2, 'ZAMORA-MELLIZA'),
+(58, 3, 'ARGUELLES'),
+(59, 3, 'BALABAGO'),
+(60, 3, 'BALANTANG'),
+(61, 3, 'BENEDICTO (JARO)'),
+(62, 3, 'BITO-ON'),
+(63, 3, 'BUHANG'),
+(64, 3, 'BUNTATALA'),
+(65, 3, 'CALUBIHAN'),
+(66, 3, 'CAMALIG'),
+(67, 3, 'CUARTERO'),
+(68, 3, 'CUBAY'),
+(69, 3, 'DEMOCRACIA'),
+(70, 3, 'DESAMPARADOS'),
+(71, 3, 'DUNGON A'),
+(72, 3, 'DUNGON B'),
+(73, 3, 'EL 98 CASTILLA (CLAUDIO LOPEZ)'),
+(74, 3, 'FAJARDO'),
+(75, 3, 'JAVELLANA'),
+(76, 3, 'LANIT'),
+(77, 3, 'LIBERTAD, SANTA ISABEL'),
+(78, 3, 'LOPEZ JAENA (JARO)'),
+(79, 3, 'LUNA (JARO)'),
+(80, 3, 'M. V. HECHANOVA'),
+(81, 3, 'MARCELO H. DEL PILAR'),
+(82, 3, 'MARIA CRISTINA'),
+(83, 3, 'MONTINOLA'),
+(84, 3, 'OUR LADY OF FATIMA'),
+(85, 3, 'OUR LADY OF LOURDES'),
+(86, 3, 'QUINTIN SALAS'),
+(87, 3, 'SAMBAG'),
+(88, 3, 'SAN ISIDRO (JARO)'),
+(89, 3, 'SAN JOSE (JARO)'),
+(90, 3, 'SAN PEDRO (JARO)'),
+(91, 3, 'SAN ROQUE'),
+(92, 3, 'SAN VICENTE'),
+(93, 3, 'SEMINARIO (BURGOS JALANDONI)'),
+(94, 3, 'SIMON LEDESMA'),
+(95, 3, 'TABUC SUBA (JARO)'),
+(96, 3, 'TACAS'),
+(97, 3, 'TAGBAC'),
+(98, 3, 'TAYTAY ZONE II'),
+(99, 3, 'UNGKA'),
+(100, 4, 'AGUINALDO'),
+(101, 4, 'BALDOZA'),
+(102, 4, 'BANTUD'),
+(103, 4, 'BANUYAO'),
+(104, 4, 'BURGOS-MABINI-PLAZA'),
+(105, 4, 'CAINGIN'),
+(106, 4, 'DIVINAGRACIA'),
+(107, 4, 'GUSTILO'),
+(108, 4, 'HINACTACAN'),
+(109, 4, 'INGORE'),
+(110, 4, 'JEREOS'),
+(111, 4, 'LAGUDA'),
+(112, 4, 'LOPEZ JAENA NORTE'),
+(113, 4, 'LOPEZ JAENA SUR'),
+(114, 4, 'LUNA (LA PAZ)'),
+(115, 4, 'MACARTHUR'),
+(116, 4, 'MAGDALO'),
+(117, 4, 'MAGSAYSAY VILLAGE'),
+(118, 4, 'NABITASAN'),
+(119, 4, 'RAILWAY'),
+(120, 4, 'RIZAL (LA PAZ)'),
+(121, 4, 'SAN ISIDRO (LA PAZ)'),
+(122, 4, 'SAN NICOLAS'),
+(123, 4, 'TABUC SUBA (LA PAZ)'),
+(124, 4, 'TICUD (LA PAZ)'),
+(125, 5, 'ALALASAN LAPUZ'),
+(126, 5, 'DON ESTEBAN-LAPUZ'),
+(127, 5, 'JALANDONI ESTATE-LAPUZ'),
+(128, 5, 'LAPUZ NORTE'),
+(129, 5, 'LAPUZ SUR'),
+(130, 5, 'LIBERTAD-LAPUZ'),
+(131, 5, 'LOBOC-LAPUZ'),
+(132, 5, 'MANSAYA-LAPUZ'),
+(133, 5, 'OBRERO-LAPUZ'),
+(134, 5, 'PROGRESO-LAPUZ'),
+(135, 5, 'PUNONG-LAPUZ'),
+(136, 5, 'SINIKWAY (BANGKEROHAN LAPUZ)'),
+(137, 6, 'ABETO MIRASOL TAFT SOUTH (QUIRINO ABETO)'),
+(138, 6, 'AIRPORT (TABUCAN AIRPORT)'),
+(139, 6, 'BAKHAW'),
+(140, 6, 'BOLILAO'),
+(141, 6, 'BUHANG TAFT NORTH'),
+(142, 6, 'CALAHUNAN'),
+(143, 6, 'DUNGON'),
+(144, 6, 'GUZMAN-JESENA'),
+(145, 6, 'HIBAO-AN NORTE'),
+(146, 6, 'HIBAO-AN SUR'),
+(147, 6, 'NAVAIS'),
+(148, 6, 'OﾑATE DE LEON'),
+(149, 6, 'PALE BENEDICTO RIZAL (MANDURRIAO)'),
+(150, 6, 'PHHC BLOCK 17'),
+(151, 6, 'PHHC BLOCK 22 NHA'),
+(152, 6, 'SAN RAFAEL'),
+(153, 6, 'SANTA ROSA'),
+(154, 6, 'SO-OC'),
+(155, 6, 'TABUCAN'),
+(156, 7, 'CALUMPANG'),
+(157, 7, 'COCHERO'),
+(158, 7, 'COMPANIA'),
+(159, 7, 'EAST BALUARTE'),
+(160, 7, 'EAST TIMAWA'),
+(161, 7, 'HABOG-HABOG SALVACION'),
+(162, 7, 'INFANTE'),
+(163, 7, 'KASINGKASING'),
+(164, 7, 'KATILINGBAN'),
+(165, 7, 'MOLO BOULEVARD'),
+(166, 7, 'NORTH AVANCEﾑA'),
+(167, 7, 'NORTH BALUARTE'),
+(168, 7, 'NORTH FUNDIDOR'),
+(169, 7, 'NORTH SAN JOSE'),
+(170, 7, 'POBLACION MOLO'),
+(171, 7, 'SAN ANTONIO'),
+(172, 7, 'SAN JUAN'),
+(173, 7, 'SAN PEDRO (MOLO)'),
+(174, 7, 'SOUTH BALUARTE'),
+(175, 7, 'SOUTH FUNDIDOR'),
+(176, 7, 'SOUTH SAN JOSE'),
+(177, 7, 'TAAL'),
+(178, 7, 'TAP-OC'),
+(179, 7, 'WEST HABOG-HABOG'),
+(180, 7, 'WEST TIMAWA');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bh_district`
+--
+
+CREATE TABLE `bh_district` (
+  `id` int(11) NOT NULL,
+  `district_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bh_district`
+--
+
+INSERT INTO `bh_district` (`id`, `district_name`) VALUES
+(1, 'AREVALO'),
+(2, 'CITY PROPER'),
+(3, 'JARO'),
+(4, 'LAPAZ'),
+(5, 'LAPUZ'),
+(6, 'MANDURRIAO'),
+(7, 'MOLO');
 
 -- --------------------------------------------------------
 
@@ -696,7 +720,10 @@ INSERT INTO `boarding_house_tracking` (`bh_start`, `bh_end`, `bh_today`, `bh_dev
 ('2024-03-13 10:10:51', '2024-03-13 10:21:52', '2024-03-13', 'ee.kobotoolbox.org:gs8bkh7S0XmM6kfD', '', '', 'Bh', 'Jelyn', 'N', 'Colonia', '', 'San juan', 'Iloilocity', '7', '172', '', '', '', '', 0, '', '', '0000-00-00', '', 'no', 'b__made_of_light_materials', '', 'class_a', 4, 4, 'no', 'house_rent', 1000, 'deep_well', 0, 1, 'yes', 'yes', 'Tabo/buhos', 'good', 'Tabo/buhos', 'good', 2, 2, 'good', 'dps', 1, 'dps', 1, 'dps', 'natural', 'satisfactory', 'no', '', 'no', 'No business permit upon inspection', '', 'G,gallon,aj, abastillas,c,cartel', '', '10.688132 122.541845 63.400001525878906 51.44200134277344', '10.688132', '122.541845', '63.400001525878906', '51.44200134277344', 'IMG20240313101729-10_18_0.jpg', '', '', '', 320718075, 'e6f12d69-e44c-48e2-8413-5a05b2d86c14', '2024-03-13 02:22:02', '', '', 'submitted_via_web', 'bhckobo2023', 'vHtk3SFaN6EFabipQ3AVMZ', '', 377),
 ('2024-03-13 10:21:52', '2024-03-13 10:31:38', '2024-03-13', 'ee.kobotoolbox.org:gs8bkh7S0XmM6kfD', '', '', 'Bh', 'Mary joy', 'N', 'Diaz', '', 'San juan', 'Iloilocity', '7', '172', '', '', '', '', 0, '', '', '0000-00-00', '', 'no', 'b__made_of_light_materials', '', 'class_a', 6, 6, 'yes', 'room_rent', 1000, 'deep_well', 0, 1, 'yes', 'yes', 'Tabo /buhos', 'good', 'Tabo/buhos', 'good', 2, 2, 'good', 'dps', 1, 'dps', 1, 'dps', 'natural', 'satisfactory', 'no', '', 'no', 'No business permit upon inspection', '', 'G,gallon,aj, abastillas,c,cartel', '', '10.688 122.54173 63.400001525878906 7.599999904632568', '10.688', '122.54173', '63.400001525878906', '7.599999904632568', 'IMG20240313102820-10_29_16.jpg', '', '', '', 320719490, 'fc3e4da3-5a89-48b2-b9df-4178e2a70d40', '2024-03-13 02:31:52', '', '', 'submitted_via_web', 'bhckobo2023', 'vHtk3SFaN6EFabipQ3AVMZ', '', 378),
 ('2024-03-13 10:18:42', '2024-03-13 10:32:23', '2024-03-13', 'ee.kobotoolbox.org:l8S7UzCicnkFeYbR', '', '', 'Bh', 'Ma. Shiela', 'N/A', 'Savare', '', 'Zone 2 bangga sambag boulevard molo', 'iloilo', '7', '165', 'Iloilo', '', '', '', 0, '', '', '0000-00-00', '', 'no', 'b__made_of_light_materials', '', 'class_c', 4, 4, 'no', 'room_rent', 1500, 'nawasa', 1, 0, 'yes', 'yes', 'Buhos', 'fair', 'Tabo', 'fair', 2, 2, 'fair', 'dps', 1, 'dps', 1, 'dps', 'natural', 'satisfactory', 'no', '', 'no', 'No bus permit presented upon inspection', '', 'A. Pico, J. Tijam, F. Espino, J. Ilaud', 'caretaker', '10.688517 122.548018 63.69999694824219 22.94099998474121', '10.688517', '122.548018', '63.69999694824219', '22.94099998474121', '17102968699873656576601884985355-10_28_9.jpg', '', '', '', 320719540, 'a2a4a0fa-ba5c-4ea3-9c04-ba2916e48a2e', '2024-03-13 02:32:30', '', '', 'submitted_via_web', 'bhckobo2023', 'vHtk3SFaN6EFabipQ3AVMZ', '', 379),
-('2024-03-13 10:32:24', '2024-03-13 10:47:06', '2024-03-13', 'ee.kobotoolbox.org:l8S7UzCicnkFeYbR', '', '', 'Bh', 'Jean', 'Paca', 'Borgonia', '', 'zone2 bouleverd molo', 'iloilo', '7', '165', 'Iloilo', '2152', '', '', 0, '04069', '', '0000-00-00', '', 'no', 'c__other__specify', 'Semi concrete', 'class_c', 5, 4, 'no', 'room_rent', 1500, 'nawasa', 1, 0, 'yes', 'yes', 'Buhos', 'good', 'Tabo', 'good', 2, 2, 'good', 'dps', 1, 'dps', 1, 'dps', 'natural', 'satisfactory', 'no', '', 'yes', '', '', 'A. Pico, J. Tijam, F. Espino, J. Ilaud', 'Owner', '10.689253 122.546983 62.5 24.722000122070312', '10.689253', '122.546983', '62.5', '24.722000122070312', '17102972268746307865801773043904-10_34_32.jpg', '', '', '', 320720527, 'f33ef1ac-0fe7-47d3-9a01-5750733b7446', '2024-03-13 02:47:10', '', '', 'submitted_via_web', 'bhckobo2023', 'vHtk3SFaN6EFabipQ3AVMZ', '', 380);
+('2024-03-13 10:32:24', '2024-03-13 10:47:06', '2024-03-13', 'ee.kobotoolbox.org:l8S7UzCicnkFeYbR', '', '', 'Bh', 'Jean', 'Paca', 'Borgonia', '', 'zone2 bouleverd molo', 'iloilo', '7', '165', 'Iloilo', '2152', '', '', 0, '04069', '', '0000-00-00', '', 'no', 'c__other__specify', 'Semi concrete', 'class_c', 5, 4, 'no', 'room_rent', 1500, 'nawasa', 1, 0, 'yes', 'yes', 'Buhos', 'good', 'Tabo', 'good', 2, 2, 'good', 'dps', 1, 'dps', 1, 'dps', 'natural', 'satisfactory', 'no', '', 'yes', '', '', 'A. Pico, J. Tijam, F. Espino, J. Ilaud', 'Owner', '10.689253 122.546983 62.5 24.722000122070312', '10.689253', '122.546983', '62.5', '24.722000122070312', '17102972268746307865801773043904-10_34_32.jpg', '', '', '', 320720527, 'f33ef1ac-0fe7-47d3-9a01-5750733b7446', '2024-03-13 02:47:10', '', '', 'submitted_via_web', 'bhckobo2023', 'vHtk3SFaN6EFabipQ3AVMZ', '', 380),
+(NULL, NULL, NULL, NULL, NULL, '123123', 'test', 'test', 'test', 'test', 'sr', 'test', 'ILOILO CITY', '3', '65', 'ILOILO', '123123qwe', '123123', '2024-03-25', 123, '1223123', 'test', '2024-03-25', 'test', 'yes', 'c__other__specify', 'test', 'class_a', 12, 12, 'yes', 'bed_space', 2500, 'nawasa deep_well', 1, 1, 'yes', 'yes', 'test', 'fair', 'test', 'fair', 12, 12, 'fair', 'dps', NULL, 'dps', NULL, 'dps', 'natural', 'unsatisfactory', 'yes', 'test', 'yes', 'teqweqweqw', '2024-03-25', 'test', 'test', '122.573509,10.693234,0,213', '10.693234', '122.573509', '0', '213', '../../resources/gallery/353910988_1390843061485944_4062178990490837656_n (1).jpg', NULL, NULL, NULL, NULL, NULL, '2024-03-25 10:41:33', NULL, NULL, NULL, NULL, NULL, NULL, 384),
+(NULL, NULL, NULL, NULL, NULL, '123', 'test', 'test', 'test', 'test', 'srr', 'test', 'ILOILO CITY', '1', '1', 'ILOILO', '1223', '123123', '2024-03-25', 123, '1223123', 'semi_annual', '2024-03-25', 'test', 'yes', 'c__other__specify', 'test', 'class_a', 12, 12, 'no', 'other', 12331, 'nawasa deep_well', 1, 1, 'yes', 'no', 'test', 'good', 'test', 'fair', 12, 12, 'good', 'dps', NULL, 'dps', NULL, 'dps', 'artificial', 'unsatisfactory', 'yes', 'test', 'yes', 'test', '2024-03-25', 'test', 'test', '122.573507,10.693226,0,10', '10.693226', '122.573507', '0', '10', '../../resources/gallery/423944103_381722868145125_2709240020914346012_n.jpg', NULL, NULL, NULL, NULL, NULL, '2024-03-25 11:31:18', NULL, NULL, NULL, NULL, NULL, NULL, 385),
+(NULL, NULL, NULL, NULL, NULL, '123', 'test', 'test', 'test', 'test', 'srr', 'test', 'ILOILO CITY', '1', '4', 'ILOILO', '1223', '123123', '2024-03-25', 12, '1223123', 'monthly', '2024-03-25', 'test', 'yes', 'c__other__specify', 'test', 'class_b', 12, 12, 'yes', 'other', 12331, 'deep_well', 0, 1, 'yes', 'yes', 'test', 'fair', 'test', 'fair', 12, 12, 'poor', 'dps', NULL, 'dps', NULL, 'dps', 'natural', 'unsatisfactory', 'yes', 'test', 'yes', 'testest', '2024-03-25', 'test', 'test', '122.578255,10.691201,0,744', '10.691201', '122.578255', '0', '744', '../../resources/gallery/423147624_941172180863423_5250448904780473073_n.jpg', NULL, NULL, NULL, NULL, NULL, '2024-03-25 11:39:39', NULL, NULL, NULL, NULL, NULL, NULL, 386);
 
 -- --------------------------------------------------------
 
@@ -730,6 +757,13 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `regi
 -- Indexes for table `bh_address`
 --
 ALTER TABLE `bh_address`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_address_district` (`district_id`);
+
+--
+-- Indexes for table `bh_district`
+--
+ALTER TABLE `bh_district`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -755,16 +789,32 @@ ALTER TABLE `bh_address`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
 
 --
+-- AUTO_INCREMENT for table `bh_district`
+--
+ALTER TABLE `bh_district`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `boarding_house_tracking`
 --
 ALTER TABLE `boarding_house_tracking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=383;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=387;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `bh_address`
+--
+ALTER TABLE `bh_address`
+  ADD CONSTRAINT `fk_address_district` FOREIGN KEY (`district_id`) REFERENCES `bh_district` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
