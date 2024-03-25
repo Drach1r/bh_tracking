@@ -4,7 +4,7 @@ include 'includes/header.php';
 
 
 
-<h3 style="margin-left: 135px;" class="title">New Record</h3>
+<h3 style="margin-left: 290px;" class="title">New Record</h3>
 
 <section class="container">
     <div class="row">
@@ -77,21 +77,22 @@ include 'includes/header.php';
                             <select id="bh_district" name="bh_district" class="form-control" placeholder="Enter City" onchange="populateBarangays()" required>
                                 <option value="" disabled selected> -- Select District --</option>
                                 <?php
+                                try {
+                                    $pdo = new PDO('mysql:host=localhost;dbname=bh_tracking', 'root', '');
+                                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                $districts = array(
-                                    "Arevalo" => 1,
-                                    "City proper" => 2,
-                                    "Jaro" => 3,
-                                    "Lapaz" => 4,
-                                    "Lapuz" => 5,
-                                    "Mandurriao" => 6,
-                                    "Molo" => 7
-                                );
+                                    $query = "SELECT id, district_name FROM bh_district";
+                                    $stmt = $pdo->query($query);
 
-
-                                foreach ($districts as $district_label => $numeric_value) {
-
-                                    echo "<option value='" . $numeric_value . "'>" . $district_label . "</option>";
+                                    if ($stmt->rowCount() > 0) {
+                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                            echo "<option value='" . $row['id'] . "'>" . $row['district_name'] . "</option>";
+                                        }
+                                    } else {
+                                        echo "<option value=''>No districts found</option>";
+                                    }
+                                } catch (PDOException $e) {
+                                    echo "Error: " . $e->getMessage();
                                 }
                                 ?>
                             </select>
@@ -105,48 +106,29 @@ include 'includes/header.php';
                         </div>
 
                         <script>
-    function populateBarangays() {
-        var districtId = document.getElementById("bh_district").value;
+                            function populateBarangays() {
+                                var districtId = document.getElementById("bh_district").value;
+                                var selectBarangay = document.getElementById("bh_barangay");
+                                selectBarangay.innerHTML = '<option value="" disabled selected> -- Select Barangay --</option>';
 
-        // Clear previous options
-        document.getElementById("bh_barangay").innerHTML = "<option value='' disabled selected> -- Select Barangay --</option>";
+                                if (districtId !== "") {
+                                    fetch('fetch_barangays.php?district_id=' + districtId)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            data.forEach(barangay => {
+                                                var option = document.createElement('option');
+                                                option.value = barangay.id;
+                                                option.textContent = barangay.barangay; // Ensure this matches your database field name
+                                                selectBarangay.appendChild(option);
+                                            });
+                                        })
+                                        .catch(error => console.error('Error fetching barangays:', error));
+                                }
+                            }
+                        </script>
 
-        // Fetch barangays based on selected district ID
-        fetch('get_barangays.php?district=' + districtId)
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(barangay => {
-                    var option = document.createElement("option");
-                    option.text = barangay.barangay;
-                    option.value = barangay.id;
-                    document.getElementById("bh_barangay").add(option);
-                });
-            })
-            .catch(error => console.error('Error fetching barangays:', error));
-    }
 
-    // Function to get district name based on its ID (You can remove this function if not used elsewhere)
-    function getDistrictName(districtId) {
-        switch (districtId) {
-            case '1':
-                return "Arevalo";
-            case '2':
-                return "City proper";
-            case '3':
-                return "Jaro";
-            case '4':
-                return "Lapaz";
-            case '5':
-                return "Lapuz";
-            case '6':
-                return "Mandurriao";
-            case '7':
-                return "Molo";
-            default:
-                return "";
-        }
-    }
-</script>
+
 
 
                         <div class="form-group col-md-3">
@@ -188,14 +170,14 @@ include 'includes/header.php';
                             <input type="number" id="amount_paid" class="form-control" name="amount_paid" placeholder="Enter Amount" required>
                         </div>
                         <div class="form-group col-md-3">
-    <label for="bh_mp">Mode of Payment:</label>
-    <select id="bh_mp" class="form-control" name="bh_mp" required>
-        <option value="" disabled selected> -- Select Mode --</option>
-        <option value="annual">Annual</option>
-        <option value="monthly">Monthly</option>
-        <option value="quarterly">Quarterly</option>
-    </select>
-</div>
+                            <label for="bh_mp">Mode of Payment:</label>
+                            <select id="bh_mp" class="form-control" name="bh_mp" required>
+                                <option value="" disabled selected> -- Select Mode --</option>
+                                <option value="annual">Annual</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="quarterly">Quarterly</option>
+                            </select>
+                        </div>
 
                         <div class="form-group col-md-2">
                             <label for="date_paid">Date Paid:</label>
@@ -310,7 +292,7 @@ include 'includes/header.php';
                             <input type="number" id="bh_room" class="form-control" name="bh_room" placeholder="No. Rooms" required>
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="bh_occupants">Num. of Occupants:</label>
+                            <label for="bh_occupants">No. of Occupants:</label>
                             <input type="number" id="bh_occupants" class="form-control" name="bh_occupants" placeholder="No. Occupants" required>
                         </div>
                         <div class="form-group col-md-2">
@@ -326,36 +308,39 @@ include 'includes/header.php';
 
                     </div>
                     <div class="row">
-    <div class="form-group col-md-3">
-        <label for="bh_rates_charge">Rates being Charged:</label>
-        <select id="bh_rates_charge_select" class="form-control" name="bh_rates_charge" required>
-            <option value="" disabled selected>-- Select Rates --</option>
-            <option value="lodging">Lodging</option>
-            <option value="board">Board</option>
-            <option value="bed_space">Bed Space</option>
-            <option value="room_rent">Room Rent</option>
-            <option value="house_rent">House Rent</option>
-            <option value="rent_per_unit__apartment">Rent Per Unit (Apartment)</option>
-            <option value="others">Others</option>
-        </select>
-    </div>
-    <div class="form-group col-md-3">
-        <input type="text" id="bh_rates_charge_other" name="bh_rates_charge_other" class="form-control" placeholder="Specify other" disabled>
-    </div>
-</div>
+                        <div class="form-group col-md-3">
+                            <label for="bh_rates_charge">Rates being Charged:</label>
+                            <select id="bh_rates_charge" class="form-control" name="bh_rates_charge" required>
+                                <option value="" disabled selected>-- Select Rates --</option>
+                                <option value="lodging">Lodging</option>
+                                <option value="board">Board</option>
+                                <option value="bed_space">Bed Space</option>
+                                <option value="room_rent">Room Rent</option>
+                                <option value="house_rent">House Rent</option>
+                                <option value="rent_per_unit__apartment">Rent Per Unit(Apartment)</option>
+                                <option value="other">Others</option>
+                            </select>
+                        </div>
 
-<script>
-    document.getElementById('bh_rates_charge_select').addEventListener('change', function() {
-        var SpecifyOtherInput = document.getElementById('bh_rates_charge_other');
-        if (this.value === 'others') {
-            SpecifyOtherInput.disabled = false;
-            SpecifyOtherInput.focus();
-        } else {
-            SpecifyOtherInput.disabled = true;
-            SpecifyOtherInput.value = '';
-        }
-    });
-</script>
+                        <div class="form-group col-md-3">
+                            <label for="otherSpecifyRatesCheckbox">Specify Others:</label>
+                            <input type="text" id="otherSpecifyRatesCheckbox" class="form-control" name="otherSpecifyRatesCheckbox" placeholder="Enter Rates" disabled required>
+                        </div>
+
+                        <script>
+                            document.getElementById('bh_rates_charge').addEventListener('change', function() {
+                                var specifyRatesInput = document.getElementById('otherSpecifyRatesCheckbox');
+                                if (this.value === 'other') {
+                                    specifyRatesInput.disabled = false;
+                                    specifyRatesInput.value = '';
+                                    specifyRatesInput.focus();
+                                } else {
+                                    specifyRatesInput.disabled = true;
+                                    specifyRatesInput.value = this.value;
+                                }
+                            });
+                        </script>
+
 
                         <div class="form-group col-md-2">
                             <label for="bh_rate">Rates:</label>
@@ -436,11 +421,11 @@ include 'includes/header.php';
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="bh_cr_num">Num of CR:</label>
+                            <label for="bh_cr_num">No. of CR:</label>
                             <input type="number" id="bh_cr_num" class="form-control" name="bh_cr_num" placeholder="Enter no. CR" required>
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="bh_bathroom_num">Num of Bath Room:</label>
+                            <label for="bh_bathroom_num">No. of Bath Room:</label>
                             <input type="number" id="bh_bathroom_num" class="form-control" name="bh_bathroom_num" placeholder="Enter no. BR" required>
                         </div>
                     </div>

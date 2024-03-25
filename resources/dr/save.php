@@ -10,13 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addform'])) {
         $bh_deepwell = 0;
 
         if (isset($_POST['bh_water_source_nawasa'])) {
-            $bh_water_source .= 'NAWASA/';
+            $bh_water_source .= 'nawasa ';
             $bh_nawasa = 1;
         }
 
-
         if (isset($_POST['bh_water_source_deepwell'])) {
-            $bh_water_source .= 'Deep Well';
+            $bh_water_source .= 'deep_well';
             $bh_deepwell = 1;
         }
 

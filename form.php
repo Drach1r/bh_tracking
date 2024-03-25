@@ -121,6 +121,8 @@ if (isset($_FILES['bh_image']) && $_FILES['bh_image']['error'] === UPLOAD_ERR_OK
     }
 }
 
+
+
 if (isset($_GET['id'])) {
     $record_id = $_GET['id'];
     try {
@@ -140,6 +142,7 @@ if (isset($_GET['id'])) {
         }
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
+
 
         $account_number = $row['account_number'] ?? '';
         $establishment_name = $row['establishment_name'] ?? '';
@@ -218,7 +221,7 @@ if (isset($_GET['id'])) {
 ?>
 
 
-<h3 style="margin-left: 135px;" class="title">View Record</h3>
+<h3 style="margin-left: 290px;" class="title">View Record</h3>
 
 <section class="container">
     <div class="row">
@@ -517,13 +520,13 @@ if (isset($_GET['id'])) {
                     <div style="margin-left: 5px;" class="row">
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input" id="bh_water_source_nawasa" name="bh_water_source[]" value="nawasa" <?php echo isset($row['bh_water_source']) && in_array('nawasa', explode(',', $row['bh_water_source'])) ? 'checked' : ''; ?> disabled>
+                                <input type="checkbox" class="form-check-input" id="bh_water_source_nawasa" name="bh_water_source[]" value="nawasa" <?php echo isset($row['bh_water_source']) && in_array('nawasa', explode(' ', $row['bh_water_source'])) ? 'checked' : ''; ?> disabled>
                                 NAWASA
                             </label>
                         </div>
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input" id="bh_water_source_deepwell" name="bh_water_source[]" value="deep_well" <?php echo isset($row['bh_water_source']) && in_array('deep_well', explode(',', $row['bh_water_source'])) ? 'checked' : ''; ?> disabled>
+                                <input type="checkbox" class="form-check-input" id="bh_water_source_deepwell" name="bh_water_source[]" value="deep_well" <?php echo isset($row['bh_water_source']) && in_array('deep_well', explode(' ', $row['bh_water_source'])) ? 'checked' : ''; ?> disabled>
                                 Deep Well
                             </label>
                         </div>
@@ -664,7 +667,8 @@ if (isset($_GET['id'])) {
 
                         <div class="form-group col-md-4">
                             <label for="specify_txt">Specify if Yes:</label>
-                            <textarea type="text" id="specify_txt" class="form-control" name="specify_txt" rows="1" value="<?php echo isset($row['specify_txt']) ? $row['specify_txt'] : ''; ?>" required disabled></textarea>
+                            <textarea id="specify_txt" class="form-control" name="specify_txt" rows="1" required disabled><?php echo isset($row['specify_txt']) ? $row['specify_txt'] : ''; ?></textarea>
+
                         </div>
                     </div>
 
@@ -766,21 +770,21 @@ if (isset($_GET['id'])) {
                         <br><br>
 
                         <div class="imageform" style="height: 100%; width: 100%; display: flex; justify-content: center; border: 1px solid #ccc;">
-                            <img id="selected-image-preview" src="#" alt="Image Preview" style="max-width: 100%; max-height: 100%;">
+                            <?php
+                            if (isset($row['bh_image'])) {
+                                $imagePath = "resources/gallery/" . $row['bh_image'];
+                                if (file_exists($imagePath)) {
+                                    echo "<img src='{$imagePath}' alt='Uploaded Image' class='mx-auto d-block' style='max-width: 100%; height: auto;'>";
+                                } else {
+                                    echo "<p>{$imagePath}</p>"; // Display the image path if the file doesn't exist
+                                }
+                            } else {
+                                echo "No image found";
+                            }
+                            ?>
                         </div>
 
-                        <?php
-                        if (isset($row['bh_image'])) {
-                            $imagePath = "resources/gallery/" . $row['bh_image'];
-                            if (file_exists($imagePath)) {
-                                echo "<img src='{$imagePath}' alt='Uploaded Image' class='mx-auto d-block' style='max-width: 100%; height: auto;'>";
-                            } else {
-                                echo "<p>{$imagePath}</p>"; // Display the image path if the file doesn't exist
-                            }
-                        } else {
-                            echo "No image found";
-                        }
-                        ?>
+
                     </div>
 
                     <script>

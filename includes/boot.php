@@ -1,5 +1,3 @@
-<link rel="icon" type="image/x-icon" href="resources/img/iloilo.png">
-
 <?php
 session_start();
 date_default_timezone_set("Asia/Manila");

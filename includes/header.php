@@ -14,10 +14,8 @@ if (!isset($_SESSION['user_id'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BH Tracking</title>
-    <link rel="stylesheet" type="text/css" href="resources/css/style.css">
-    <link rel="stylesheet" type="text/css" href="resources/fontawesome-free-6.5.1-web/css/fontawesome.css">
 
-    <link rel="stylesheet" type="text/css" href="resources/fontawesome-free-6.5.1-web/css/solid.css">
+
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -46,51 +44,66 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 
 <header>
-<style>
-    nav {
-        background-color:#f0c277;
-    }
+    <style>
+        nav {
+            background-color: #f0c277;
+        }
 
-  
+        .topbar-divider {
+            border-left: 1px solid white;
+            /* Add border styling */
+            height: 40px;
+            /* Adjust height as needed */
+            margin-left: -70px;
+            /* Add some spacing */
+            top: 25px;
+            position: fixed;
+        }
 
-    h6{
-        top: 0px;
-        right: 20px; /* Add some spacing */
-        position: relative;
-    }
+        h6 {
+            top: 35px;
+            right: 30px;
+            /* Add some spacing */
+            position: fixed;
+        }
 
-    .topbar-divider.d-none {
-        display: none; /* Hide divider on small screens */
-    }
+        .topbar-divider.d-none {
+            display: none;
+            /* Hide divider on small screens */
+        }
 
-    .logout-link {
-        color: white; /* Set logout link color */
-        text-decoration: none; /* Remove underline */
-        margin-left: 10px; /* Add spacing between divider and link */
-    }
+        .logout-link {
+            color: white;
+            /* Set logout link color */
+            text-decoration: none;
+            /* Remove underline */
+            margin-left: 10px;
+            /* Add spacing between divider and link */
+        }
 
-    .logout-link:hover {
-        color: #ffc107; /* Change color on hover */
-    }
-</style>
+        .logout-link:hover {
+            color: #ffc107;
+            /* Change color on hover */
+        }
+    </style>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-red sticky-top">
-    <div class="container-fluid">
-        <a href="records.php"><img src="resources/img/iloilo.png" alt="" height="80"></a>
-        <h5 style="color: black; font-weight: bold; margin-left: 20px;">Boarding House Tracking Information Management Application</h5>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-red sticky-top">
+        <div class="container-fluid">
+            <a href="records.php"><img src="resources/img/iloilo.png" alt="" height="80"></a>
+            <h5 style="color: black; font-weight: bold; margin-left: 20px;">Boarding House Tracking Information Management Application</h5>
 
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link logout-link" href="logout.php" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <h6 class="h6 mb-0 text-danger">Logout</h6>
-                </a>
-            </li>
-            <li class="nav-item">
-                <div class="topbar-divider d-none d-sm-block"></div> <!-- Move the divider here -->
-            </li>
-        </ul>
-    </div>
-</nav>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link logout-link" href="logout.php" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <h6 class="h6 mb-0 text-danger">Logout</h6>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <div class="topbar-divider d-none d-sm-block"></div> <!-- Move the divider here -->
+                </li>
+            </ul>
+        </div>
+    </nav>
 
 
 </header>
