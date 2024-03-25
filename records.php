@@ -26,8 +26,11 @@ include 'includes/header.php';
     ?>
 
     <br>
-    <h3 class="title">Records List <a href="create.php" class="btn btn-primary  btn-sm rounded-s"> Add New Record</a></h3>
-
+    <h3 class="title">Records List 
+        <a href="create.php" class="btn btn-primary  btn-sm rounded-s"> Add New Record</a>
+        <a href="generate_report.php" class="btn btn-success btn-sm rounded-s"><i class="fas fa-download"></i> Generate Report</a>
+    </h3>
+    
     <form action="import_csv.php" method="post" enctype="multipart/form-data">
         <div class="form-row align-items-center">
             <div class="col-auto">
@@ -147,18 +150,17 @@ include 'includes/header.php';
                                     echo "<td class='text-center'>" . $row['bh_municipality'] . "</td>";
 
                                     echo "<td class='text-center'>
-                                                <a style='margin-bottom: 5px; color: blue;' href='form.php?id=" . $row['id'] . "'>
-                                                    <i class='fas fa-eye' style='color: blue;'></i> View
-                                                </a>
-                                                <br>
-                                                <a style='margin-bottom: 5px; color: green;' href='bh_edit.php?id=" . $row['id'] . "'>
-                                                    <i class='fas fa-edit' style='color: green;'></i> Edit
-                                                </a>
-                                                <br>
-                                                <a style='margin-bottom: 5px; color: red;' href='javascript:void(0);' onclick='deleteRecord(" . $row['id'] . ")'>
-                                                    <i class='fas fa-trash' style='color: red;'></i> Delete
-                                                </a>
-                                            </td>";
+                                    <a class='btn btn-primary btn-sm rounded-s' style='margin-bottom: 5px;' href='form.php?id=" . $row['id'] . "'>
+                                        View
+                                    </a>
+                                    <a class='btn btn-success btn-sm rounded-s' style='margin-bottom: 5px;' href='bh_edit.php?id=" . $row['id'] . "'>
+                                        Edit
+                                    </a>
+                                    <a class='btn btn-danger btn-sm rounded-s' style='margin-bottom: 5px;' onclick='deleteRecord(" . $row['id'] . ")'>
+                                        Delete
+                                    </a>
+                                </td>";
+                            
 
 
                                     echo "</tr>";

@@ -105,48 +105,48 @@ include 'includes/header.php';
                         </div>
 
                         <script>
-                            function populateBarangays() {
-                                var districtId = document.getElementById("bh_district").value;
-                                var districtName = getDistrictName(districtId);
+    function populateBarangays() {
+        var districtId = document.getElementById("bh_district").value;
 
+        // Clear previous options
+        document.getElementById("bh_barangay").innerHTML = "<option value='' disabled selected> -- Select Barangay --</option>";
 
-                                document.getElementById("bh_barangay").innerHTML = "<option value='' disabled selected> -- Select Barangay --</option>";
+        // Fetch barangays based on selected district ID
+        fetch('get_barangays.php?district=' + districtId)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(barangay => {
+                    var option = document.createElement("option");
+                    option.text = barangay.barangay;
+                    option.value = barangay.id;
+                    document.getElementById("bh_barangay").add(option);
+                });
+            })
+            .catch(error => console.error('Error fetching barangays:', error));
+    }
 
-
-                                fetch('get_barangays.php?district=' + districtName)
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        data.forEach(barangay => {
-                                            var option = document.createElement("option");
-                                            option.text = barangay.barangay;
-                                            option.value = barangay.id;
-                                            document.getElementById("bh_barangay").add(option);
-                                        });
-                                    });
-                            }
-
-                            // Function to get district name based on its ID
-                            function getDistrictName(districtId) {
-                                switch (districtId) {
-                                    case '1':
-                                        return "Arevalo";
-                                    case '2':
-                                        return "City proper";
-                                    case '3':
-                                        return "Jaro";
-                                    case '4':
-                                        return "Lapaz";
-                                    case '5':
-                                        return "Lapuz";
-                                    case '6':
-                                        return "Mandurriao";
-                                    case '7':
-                                        return "Molo";
-                                    default:
-                                        return "";
-                                }
-                            }
-                        </script>
+    // Function to get district name based on its ID (You can remove this function if not used elsewhere)
+    function getDistrictName(districtId) {
+        switch (districtId) {
+            case '1':
+                return "Arevalo";
+            case '2':
+                return "City proper";
+            case '3':
+                return "Jaro";
+            case '4':
+                return "Lapaz";
+            case '5':
+                return "Lapuz";
+            case '6':
+                return "Mandurriao";
+            case '7':
+                return "Molo";
+            default:
+                return "";
+        }
+    }
+</script>
 
 
                         <div class="form-group col-md-3">
@@ -188,17 +188,22 @@ include 'includes/header.php';
                             <input type="number" id="amount_paid" class="form-control" name="amount_paid" placeholder="Enter Amount" required>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="bh_mp">Mode of Payment:</label>
-                            <input type="text" id="bh_mp" class="form-control" name="bh_mp" placeholder="Enter Mode" required>
-                        </div>
+    <label for="bh_mp">Mode of Payment:</label>
+    <select id="bh_mp" class="form-control" name="bh_mp" required>
+        <option value="" disabled selected> -- Select Mode --</option>
+        <option value="annual">Annual</option>
+        <option value="monthly">Monthly</option>
+        <option value="quarterly">Quarterly</option>
+    </select>
+</div>
+
                         <div class="form-group col-md-2">
                             <label for="date_paid">Date Paid:</label>
                             <input type="date" id="date_paid" class="form-control" name="date_paid" required>
                         </div>
                     </div>
+
                     <div class="row">
-
-
                         <div class="form-group col-md-4">
                             <label for="bh_period_cover">Period Covered:</label>
                             <input type="text" id="bh_period_cover" class="form-control" name="bh_period_cover" placeholder="Enter Period Covered" required>
@@ -210,7 +215,6 @@ include 'includes/header.php';
                                 <option value="" disabled selected>-- Select Option --</option>
                                 <option value="yes"> Yes</option>
                                 <option value="no"> No</option>
-
                             </select>
                         </div>
                     </div>
@@ -218,7 +222,6 @@ include 'includes/header.php';
 
                     <br>
                     <h2>Classification And Rates</h2>
-
                     <p> Kind Of Construction of the Boarding House:</p>
                     <div style="margin-left: 5px;" class="row">
                         <div class="form-group col-md-3">
@@ -244,8 +247,6 @@ include 'includes/header.php';
 
 
                         </div>
-
-
                     </div>
 
 
@@ -325,20 +326,36 @@ include 'includes/header.php';
 
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-3">
-                            <label for="bh_rates_charge">Rates being Charged:</label>
+    <div class="form-group col-md-3">
+        <label for="bh_rates_charge">Rates being Charged:</label>
+        <select id="bh_rates_charge_select" class="form-control" name="bh_rates_charge" required>
+            <option value="" disabled selected>-- Select Rates --</option>
+            <option value="lodging">Lodging</option>
+            <option value="board">Board</option>
+            <option value="bed_space">Bed Space</option>
+            <option value="room_rent">Room Rent</option>
+            <option value="house_rent">House Rent</option>
+            <option value="rent_per_unit__apartment">Rent Per Unit (Apartment)</option>
+            <option value="others">Others</option>
+        </select>
+    </div>
+    <div class="form-group col-md-3">
+        <input type="text" id="bh_rates_charge_other" name="bh_rates_charge_other" class="form-control" placeholder="Specify other" disabled>
+    </div>
+</div>
 
-                            <select id="bh_rates_charge" class="form-control" name="bh_rates_charge" required>>
-                                <option value="" disabled selected>-- Select Rates --</option>
-                                <option value="lodging">Lodging</option>
-                                <option value="board">Board</option>
-                                <option value="bed_space">Bed Space</option>
-                                <option value="room_rent">Room Rent</option>
-                                <option value="house_rent">House Rent </option>
-                                <option value="rent_per_unit__apartment">Rent Per Unit(Apartment)</option>
-
-                            </select>
-                        </div>
+<script>
+    document.getElementById('bh_rates_charge_select').addEventListener('change', function() {
+        var SpecifyOtherInput = document.getElementById('bh_rates_charge_other');
+        if (this.value === 'others') {
+            SpecifyOtherInput.disabled = false;
+            SpecifyOtherInput.focus();
+        } else {
+            SpecifyOtherInput.disabled = true;
+            SpecifyOtherInput.value = '';
+        }
+    });
+</script>
 
                         <div class="form-group col-md-2">
                             <label for="bh_rate">Rates:</label>
