@@ -49,22 +49,13 @@ if (!isset($_SESSION['user_id'])) {
             background-color: #f0c277;
         }
 
-        .topbar-divider {
-            border-left: 1px solid white;
-            /* Add border styling */
-            height: 40px;
-            /* Adjust height as needed */
-            margin-left: -70px;
-            /* Add some spacing */
-            top: 25px;
-            position: fixed;
-        }
+      
 
         h6 {
-            top: 35px;
+            top: 0px;
             right: 30px;
             /* Add some spacing */
-            position: fixed;
+            position: relative;
         }
 
         .topbar-divider.d-none {
