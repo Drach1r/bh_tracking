@@ -49,6 +49,7 @@ $bh_room = '';
 $bh_occupants = '';
 $bh_overcrowded = '';
 $bh_rates_charge = '';
+$bh_ratescharge_other = '';
 $bh_rate = '';
 $bh_water_source = '';
 $bh_nawasa = '';
@@ -63,10 +64,13 @@ $bh_cr_num = '';
 $bh_bathroom_num = '';
 $bh_premises_cond = '';
 $bh_garbage_disposal = '';
+$bh_garbage_other = '';
 $bh_dps = '';
 $bh_sewage_disposal = '';
+$bh_sewage_other = '';
 $bh_sd_dps = '';
 $bh_rodent_disposal = '';
+$bh_rodent_other = '';
 $light_ventilation = '';
 $natural_artificial = '';
 $establishment_extension = '';
@@ -171,6 +175,7 @@ if (isset($_GET['id'])) {
         $bh_occupants = $row['bh_occupants'] ?? '';
         $bh_overcrowded = $row['bh_overcrowded'] ?? '';
         $bh_rates_charge = $row['bh_rates_charge'] ?? '';
+        $bh_ratescharge_other = $row['bh_ratescharge_other'] ?? '';
         $bh_rate = $row['bh_rate'] ?? '';
         $bh_water_source = $row['bh_water_source'] ?? '';
         $bh_nawasa = $row['bh_nawasa'] ?? '';
@@ -185,10 +190,13 @@ if (isset($_GET['id'])) {
         $bh_bathroom_num = $row['bh_bathroom_num'] ?? '';
         $bh_premises_cond = $row['bh_premises_cond'] ?? '';
         $bh_garbage_disposal = $row['bh_garbage_disposal'] ?? '';
+        $bh_garbage_other = $row['bh_garbage_other'] ?? '';
         $bh_dps = $row['bh_dps'] ?? '';
         $bh_sewage_disposal = $row['bh_sewage_disposal'] ?? '';
+        $bh_sewage_other = $row['bh_sewage_other'] ?? '';
         $bh_sd_dps = $row['bh_sd_dps'] ?? '';
         $bh_rodent_disposal = $row['bh_rodent_disposal'] ?? '';
+        $bh_rodent_other = $row['bh_rodent_other'] ?? '';
         $light_ventilation = $row['light_ventilation'] ?? '';
         $natural_artificial = $row['natural_artificial'] ?? '';
         $establishment_extension = $row['establishment_extension'] ?? '';
@@ -527,8 +535,16 @@ if (isset($_GET['id'])) {
                                 <option value="room_rent" <?php echo isset($row['bh_rates_charge']) && $row['bh_rates_charge'] === 'room_rent' ? 'selected' : ''; ?>>Room Rent</option>
                                 <option value="house_rent" <?php echo isset($row['bh_rates_charge']) && $row['bh_rates_charge'] === 'house_rent' ? 'selected' : ''; ?>>House Rent</option>
                                 <option value="rent_per_unit__apartment" <?php echo isset($row['bh_rates_charge']) && $row['bh_rates_charge'] === 'rent_per_unit__apartment' ? 'selected' : ''; ?>>Rent Per Unit(Apartment)</option>
+                                <option value="other" <?php echo isset($row['bh_rates_charge']) && $row['bh_rates_charge'] === 'other' ? 'selected' : ''; ?>>Others:</option>
                             </select>
                         </div>
+
+
+                        <div class="form-group col-md-3">
+                            <label for="bh_ratescharge_other">Specify Others:</label>
+                            <input type="text" id="bh_ratescharge_other" class="form-control" name="bh_ratescharge_other" value="<?php echo isset($row['bh_ratescharge_other']) ? $row['bh_ratescharge_other'] : ''; ?>" disabled required>
+                        </div>
+
 
                         <div class="form-group col-md-2">
                             <label for="bh_rate">Rates:</label>
@@ -573,6 +589,8 @@ if (isset($_GET['id'])) {
                                 <option value="no" <?php echo isset($row['bh_portable']) && $row['bh_portable'] === 'no' ? 'selected' : ''; ?>>No</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="row">
 
                         <div class="form-group col-md-4">
                             <label for="bh_toilet_type">Toilet Facilities Type:</label>
@@ -587,6 +605,10 @@ if (isset($_GET['id'])) {
                                 <option value="fair" <?php echo isset($row['bh_toilet_cond']) && $row['bh_toilet_cond'] === 'fair' ? 'selected' : ''; ?>>Fair</option>
                                 <option value="poor" <?php echo isset($row['bh_toilet_cond']) && $row['bh_toilet_cond'] === 'poor' ? 'selected' : ''; ?>>Poor</option>
                             </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="bh_cr_num">Num of CR:</label>
+                            <input type="number" id="bh_cr_num" class="form-control" name="bh_cr_num" value="<?php echo isset($row['bh_cr_num']) ? $row['bh_cr_num'] : ''; ?>" disabled required>
                         </div>
 
                     </div>
@@ -606,17 +628,14 @@ if (isset($_GET['id'])) {
                             </select>
                         </div>
 
-                        <div class="form-group col-md-2">
-                            <label for="bh_cr_num">Num of CR:</label>
-                            <input type="number" id="bh_cr_num" class="form-control" name="bh_cr_num" value="<?php echo isset($row['bh_cr_num']) ? $row['bh_cr_num'] : ''; ?>" disabled required>
-                        </div>
+
                         <div class="form-group col-md-2">
                             <label for="bh_bathroom_num">Num of Bath Room:</label>
                             <input type="number" id="bh_bathroom_num" class="form-control" name="bh_bathroom_num" value="<?php echo isset($row['bh_bathroom_num']) ? $row['bh_bathroom_num'] : ''; ?>" disabled required>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-4">
                             <label for="bh_premises_cond">Sanitary Condition Of The Premises:</label>
                             <select id="bh_premises_cond" class="form-control" name="bh_premises_cond" disabled required>
                                 <option value="" disabled selected>-- Select Option --</option>
@@ -625,8 +644,10 @@ if (isset($_GET['id'])) {
                                 <option value="poor" <?php echo isset($row['bh_premises_cond']) && $row['bh_premises_cond'] === 'poor' ? 'selected' : ''; ?>>Poor</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="row">
 
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label for="bh_garbage_disposal">1. Types of Garbage Disposal:</label>
                             <select id="bh_garbage_disposal" class="form-control" name="bh_garbage_disposal" disabled required>
                                 <option value="" disabled selected>-- Select Option --</option>
@@ -635,7 +656,15 @@ if (isset($_GET['id'])) {
                             </select>
                         </div>
 
-                        <div class="form-group col-md-2">
+
+                        <div class="form-group col-md-3">
+                            <label for="bh_garbage_other">Specify:</label>
+                            <input type="text" id="bh_garbage_other" class="form-control" name="bh_garbage_other" rows="1" value="<?php echo isset($row['bh_garbage_other']) ? $row['bh_garbage_other'] : ''; ?>" required disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="form-group col-md-3">
                             <label for="bh_sewage_disposal">2. Types of Sewage Disposal:</label>
                             <select id="bh_sewage_disposal" class="form-control" name="bh_sewage_disposal" disabled required>
                                 <option value="" disabled selected>-- Select Option --</option>
@@ -644,7 +673,16 @@ if (isset($_GET['id'])) {
                             </select>
                         </div>
 
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
+                            <label for="bh_sewage_other">Specify:</label>
+                            <input type="text" id="bh_sewage_other" class="form-control" name="bh_sewage_other" rows="1" value="<?php echo isset($row['bh_sewage_other']) ? $row['bh_sewage_other'] : ''; ?>" required disabled>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group col-md-3">
                             <label for="bh_rodent_disposal">3. Types of Rodent / Vermin Disposal:</label>
                             <select id="bh_rodent_disposal" class="form-control" name="bh_rodent_disposal" disabled required>
                                 <option value="" disabled selected>-- Select Option --</option>
@@ -653,8 +691,14 @@ if (isset($_GET['id'])) {
                             </select>
                         </div>
 
-
+                        <div class="form-group col-md-4">
+                            <label for="bh_rodent_other">Specify:</label>
+                            <input type="text" id="bh_rodent_other" class="form-control" name="bh_rodent_other" rows="1" value="<?php echo isset($row['bh_rodent_other']) ? $row['bh_rodent_other'] : ''; ?>" required disabled>
+                        </div>
                     </div>
+
+
+
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label for="light_ventilation">Lightning and Ventilation:</label>
@@ -806,36 +850,39 @@ if (isset($_GET['id'])) {
 
 
                     </div>
-
-                    <script>
-                        function previewImage(input) {
-                            if (input.files && input.files[0]) {
-
-                                if (input.files[0].size <= 5 * 1024 * 1024) { // Limit to 5MB
-                                    var reader = new FileReader();
-                                    reader.onload = function(e) {
-                                        document.getElementById('selected-image-preview').src = e.target.result;
-                                    };
-                                    reader.readAsDataURL(input.files[0]);
-                                } else {
-                                    alert("File size exceeds 5MB. Please select a smaller file.");
-
-                                    input.value = ""; // Reset input field
-                                }
-                            }
-                        }
-                    </script>
-
-                    <br>
-                    <br>
-
-
-
-
-
                 </form>
             </div>
         </div>
+
+        <script>
+            function previewImage(input) {
+                if (input.files && input.files[0]) {
+
+                    if (input.files[0].size <= 5 * 1024 * 1024) { // Limit to 5MB
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.getElementById('selected-image-preview').src = e.target.result;
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                    } else {
+                        alert("File size exceeds 5MB. Please select a smaller file.");
+
+                        input.value = ""; // Reset input field
+                    }
+                }
+            }
+        </script>
+
+        <br>
+        <br>
+
+
+
+
+
+        </form>
+    </div>
+    </div>
     </div>
 
 </section>

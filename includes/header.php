@@ -49,7 +49,7 @@ if (!isset($_SESSION['user_id'])) {
             background-color: #f0c277;
         }
 
-      
+
 
         h6 {
             top: 0px;
@@ -85,6 +85,12 @@ if (!isset($_SESSION['user_id'])) {
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
+
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </li>
+
+                <li class="nav-item">
+
                     <a class="nav-link logout-link" href="logout.php" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <h6 class="h6 mb-0 text-danger">Logout</h6>
                     </a>

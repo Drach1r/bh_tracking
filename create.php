@@ -319,9 +319,28 @@ include 'includes/header.php';
                                 <option value="room_rent">Room Rent</option>
                                 <option value="house_rent">House Rent</option>
                                 <option value="rent_per_unit__apartment">Rent Per Unit(Apartment)</option>
-
+                                <option value="other">Others:</option>
                             </select>
                         </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="bh_ratescharge_other">Specify Others:</label>
+                            <input type="text" id="bh_ratescharge_other" class="form-control" name="bh_ratescharge_other" placeholder="Enter Rates" disabled required>
+                        </div>
+
+                        <script>
+                            document.getElementById('bh_rates_charge').addEventListener('change', function() {
+                                var specifyRatesInput = document.getElementById('bh_ratescharge_other');
+                                if (this.value === 'other') {
+                                    specifyRatesInput.disabled = false;
+                                    specifyRatesInput.value = '';
+                                    specifyRatesInput.focus();
+                                } else {
+                                    specifyRatesInput.disabled = true;
+                                    specifyRatesInput.value = ''; // Clear the input field value
+                                }
+                            });
+                        </script>
 
 
 
@@ -360,6 +379,7 @@ include 'includes/header.php';
 
                             </select>
                         </div>
+
                         <div class="form-group col-md-2">
                             <label for="bh_portable">Portable:</label>
 
@@ -370,6 +390,8 @@ include 'includes/header.php';
 
                             </select>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group col-md-4">
                             <label for="bh_toilet_type">Toilet Facilities Type:</label>
                             <input type="text" id="bh_toilet_type" class="form-control" name="bh_toilet_type" placeholder="Enter Toilet Type" required>
@@ -385,6 +407,10 @@ include 'includes/header.php';
                                 <option value="poor"> Poor</option>
 
                             </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="bh_cr_num">No. of CR:</label>
+                            <input type="number" id="bh_cr_num" class="form-control" name="bh_cr_num" placeholder="Enter no. CR" required>
                         </div>
                     </div>
                     <div class="row">
@@ -404,17 +430,14 @@ include 'includes/header.php';
 
                             </select>
                         </div>
-                        <div class="form-group col-md-2">
-                            <label for="bh_cr_num">No. of CR:</label>
-                            <input type="number" id="bh_cr_num" class="form-control" name="bh_cr_num" placeholder="Enter no. CR" required>
-                        </div>
+
                         <div class="form-group col-md-2">
                             <label for="bh_bathroom_num">No. of Bath Rooms:</label>
                             <input type="number" id="bh_bathroom_num" class="form-control" name="bh_bathroom_num" placeholder="Enter no. BR" required>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-4">
                             <label for="bh_premises_cond">Sanitary Condition Of The Premises:</label>
 
                             <select id="bh_premises_cond" class="form-control" name="bh_premises_cond" required>>
@@ -425,66 +448,71 @@ include 'includes/header.php';
 
                             </select>
                         </div>
-                        <div class="form-group col-md-2">
-    <label for="bh_garbage_disposal">1. Types of Garbage Disposal:</label>
-    <select id="bh_garbage_disposal" class="form-control" name="bh_garbage_disposal" required onchange="toggleInput('bh_garbage_disposal', 'bh_garbage_disposal_others')">
-        <option value="" disabled selected>-- Select Option --</option>
-        <option value=""> </option>
-        <option value="dps"> DPS</option>
-        <option value="others"> Others</option>
-    </select>
-</div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="bh_garbage_disposal">1. Types of Garbage Disposal:</label>
+                            <select id="bh_garbage_disposal" class="form-control" name="bh_garbage_disposal" required onchange="toggleInput('bh_garbage_disposal', 'bh_garbage_other')">
+                                <option value="" disabled selected>-- Select Option --</option>
+                                <option value=""> </option>
+                                <option value="dps"> DPS</option>
+                                <option value="others"> Others:</option>
+                            </select>
+                        </div>
 
-<div class="form-group col-md-4">
-    <label for="bh_garbage_disposal_others">Specify:</label>
-    <input type="text" id="bh_garbage_disposal_others" class="form-control" name="bh_garbage_disposal_others" rows="1" placeholder="Specify" required disabled>
-</div>
+                        <div class="form-group col-md-3">
+                            <label for="bh_garbage_other">Specify:</label>
+                            <input type="text" id="bh_garbage_other" class="form-control" name="bh_garbage_other" rows="1" placeholder="Specify other" required disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label for="bh_sewage_disposal">2. Types of Sewage Disposal:</label>
+                            <select id="bh_sewage_disposal" class="form-control" name="bh_sewage_disposal" required onchange="toggleInput('bh_sewage_disposal', 'bh_sewage_other')">
+                                <option value="" disabled selected>-- Select Option --</option>
+                                <option value=""> </option>
+                                <option value="dps"> DPS</option>
+                                <option value="others"> Others:</option>
+                            </select>
+                        </div>
 
-<div class="form-group col-md-2">
-    <label for="bh_sewage_disposal">2. Types of Sewage Disposal:</label>
-    <select id="bh_sewage_disposal" class="form-control" name="bh_sewage_disposal" required onchange="toggleInput('bh_sewage_disposal', 'bh_sewage_disposal_others')">
-        <option value="" disabled selected>-- Select Option --</option>
-        <option value=""> </option>
-        <option value="dps"> DPS</option>
-        <option value="others"> Others</option>
-    </select>
-</div>
+                        <div class="form-group col-md-3">
+                            <label for="bh_sewage_other">Specify:</label>
+                            <input type="text" id="bh_sewage_other" class="form-control" name="bh_sewage_other" rows="1" placeholder="Specify other" required disabled>
+                        </div>
+                    </div>
+                    <div Class="row">
+                        <div class="form-group col-md-4">
+                            <label for="bh_rodent_disposal">3. Types of Rodent / Vermin Disposal:</label>
+                            <select id="bh_rodent_disposal" class="form-control" name="bh_rodent_disposal" required onchange="toggleInput('bh_rodent_disposal', 'bh_rodent_other')">
+                                <option value="" disabled selected>-- Select Option --</option>
+                                <option value=""> </option>
+                                <option value="dps"> DPS</option>
+                                <option value="others"> Others:</option>
+                            </select>
+                        </div>
 
-<div class="form-group col-md-4">
-    <label for="bh_sewage_disposal_others">Specify:</label>
-    <input type="text" id="bh_sewage_disposal_others" class="form-control" name="bh_sewage_disposal_others" rows="1" placeholder="Specify" required disabled>
-</div>
+                        <div class="form-group col-md-4">
+                            <label for="bh_rodent_other">Specify:</label>
+                            <input type="text" id="bh_rodent_other" class="form-control" name="bh_rodent_other" rows="1" placeholder="Specify other" required disabled>
+                        </div>
+                    </div>
+                    <script>
+                        function toggleInput(selectId, inputId) {
+                            var selectElement = document.getElementById(selectId);
+                            var input = document.getElementById(inputId);
 
-<div class="form-group col-md-2">
-    <label for="bh_rodent_disposal">3. Types of Rodent / Vermin Disposal:</label>
-    <select id="bh_rodent_disposal" class="form-control" name="bh_rodent_disposal" required onchange="toggleInput('bh_rodent_disposal', 'bh_rodent_disposal_others')">
-        <option value="" disabled selected>-- Select Option --</option>
-        <option value=""> </option>
-        <option value="dps"> DPS</option>
-        <option value="others"> Others</option>
-    </select>
-</div>
+                            if (selectElement.value === "others") {
+                                input.disabled = false;
+                                input.required = true;
+                            } else {
+                                input.disabled = true;
+                                input.required = false;
+                                input.value = "";
+                            }
+                        }
+                    </script>
 
-<div class="form-group col-md-4">
-    <label for="bh_rodent_disposal_others">Specify:</label>
-    <input type="text" id="bh_rodent_disposal_others" class="form-control" name="bh_rodent_disposal_others" rows="1" placeholder="Specify" required disabled>
-</div>
-
-<script>
-    function toggleInput(selectId, inputId) {
-        var selectElement = document.getElementById(selectId);
-        var input = document.getElementById(inputId);
-
-        if (selectElement.value === "others") {
-            input.disabled = false; // Enable input field if "others" is selected
-            input.required = true; // Make input field required if enabled
-        } else {
-            input.disabled = true; // Disable input field if other option is selected
-            input.required = false; // Make input field not required if disabled
-            input.value = ""; // Clear input field value if disabled
-        }
-    }
-</script>
 
                     <div class="row">
                         <div class="form-group col-md-3">
@@ -530,12 +558,12 @@ include 'includes/header.php';
                             var textArea = document.getElementById("specify_txt");
 
                             if (selectElement.value === "yes") {
-                                textArea.disabled = false; // Enable textarea if "yes" is selected
-                                textArea.required = true; // Make textarea required if enabled
+                                textArea.disabled = false;
+                                textArea.required = true;
                             } else {
-                                textArea.disabled = true; // Disable textarea if "no" is selected
-                                textArea.required = false; // Make textarea not required if disabled
-                                textArea.value = ""; // Clear textarea value if disabled
+                                textArea.disabled = true;
+                                textArea.required = false;
+                                textArea.value = "";
                             }
                         }
                         // Call toggleTextArea function on select change
@@ -565,7 +593,7 @@ include 'includes/header.php';
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label for="office_required">You are hereby requested to appear before this office:</label>
-                            <input type="date" id="office_required" class="form-control" name="office_required" required>
+                            <input type="date" id="office_required" class="form-control" name="office_required">
                         </div>
                     </div>
                     <div class="row">
