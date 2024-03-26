@@ -84,7 +84,11 @@ if (!isset($_SESSION['user_id'])) {
             <h5 style="color: black; font-weight: bold; margin-left: 20px;">Boarding House Tracking Information Management Application</h5>
 
             <ul class="navbar-nav ml-auto">
-  
+                <li class="nav-item">
+
+                    <a href="records.php" style="margin-right: 20px;" class="btn btn-outline-primary">Home</a>
+
+                </li>
 
                 <li class="nav-item">
 

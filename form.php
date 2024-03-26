@@ -651,8 +651,9 @@ if (isset($_GET['id'])) {
                             <label for="bh_garbage_disposal">1. Types of Garbage Disposal:</label>
                             <select id="bh_garbage_disposal" class="form-control" name="bh_garbage_disposal" disabled required>
                                 <option value="" disabled selected>-- Select Option --</option>
-                                <option value=""> </option>
+                                <option value=""> <?php echo isset($row['bh_garbage_disposal']) && $row['bh_garbage_disposal'] === '' ? 'selected' : ''; ?> </option>
                                 <option value="dps" <?php echo isset($row['bh_garbage_disposal']) && $row['bh_garbage_disposal'] === 'dps' ? 'selected' : ''; ?>>DPS</option>
+                                <option value="others" <?php echo isset($row['bh_garbage_disposal']) && $row['bh_garbage_disposal'] === 'others' ? 'selected' : ''; ?>>Others:</option>
                             </select>
                         </div>
 
@@ -670,6 +671,7 @@ if (isset($_GET['id'])) {
                                 <option value="" disabled selected>-- Select Option --</option>
                                 <option value=""> </option>
                                 <option value="dps" <?php echo isset($row['bh_sewage_disposal']) && $row['bh_sewage_disposal'] === 'dps' ? 'selected' : ''; ?>>DPS</option>
+                                <option value="others" <?php echo isset($row['bh_sewage_disposal']) && $row['bh_sewage_disposal'] === 'others' ? 'selected' : ''; ?>>Others:</option>
                             </select>
                         </div>
 
@@ -682,16 +684,17 @@ if (isset($_GET['id'])) {
 
                     <div class="row">
 
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label for="bh_rodent_disposal">3. Types of Rodent / Vermin Disposal:</label>
                             <select id="bh_rodent_disposal" class="form-control" name="bh_rodent_disposal" disabled required>
                                 <option value="" disabled selected>-- Select Option --</option>
                                 <option value=""> </option>
                                 <option value="dps" <?php echo isset($row['bh_rodent_disposal']) && $row['bh_rodent_disposal'] === 'dps' ? 'selected' : ''; ?>>DPS</option>
+                                <option value="others" <?php echo isset($row['bh_rodent_disposal']) && $row['bh_rodent_disposal'] === 'others' ? 'selected' : ''; ?>>Others:</option>
                             </select>
                         </div>
 
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label for="bh_rodent_other">Specify:</label>
                             <input type="text" id="bh_rodent_other" class="form-control" name="bh_rodent_other" rows="1" value="<?php echo isset($row['bh_rodent_other']) ? $row['bh_rodent_other'] : ''; ?>" required disabled>
                         </div>

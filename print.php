@@ -21,8 +21,10 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
+
 $pdf = new FPDF('P', 'mm', 'legal');
 $pdf->AddPage();
+
 
 $account_number = '';
 $establishment_name = '';
@@ -51,6 +53,7 @@ $bh_room = '';
 $bh_occupants = '';
 $bh_overcrowded = '';
 $bh_rates_charge = '';
+$bh_ratescharge_other = '';
 $bh_rate = '';
 $bh_water_source = '';
 $bh_nawasa = '';
@@ -65,10 +68,13 @@ $bh_cr_num = '';
 $bh_bathroom_num = '';
 $bh_premises_cond = '';
 $bh_garbage_disposal = '';
+$bh_garbage_other = '';
 $bh_dps = '';
 $bh_sewage_disposal = '';
+$bh_sewage_other = '';
 $bh_sd_dps = '';
 $bh_rodent_disposal = '';
+$bh_rodent_other = '';
 $light_ventilation = '';
 $natural_artificial = '';
 $establishment_extension = '';
@@ -97,7 +103,6 @@ $submitted_by = '';
 $bh_version = '';
 $bh_tags = '';
 
-
 if (isset($_FILES['bh_image']) && $_FILES['bh_image']['error'] === UPLOAD_ERR_OK) {
     $uploadDir = 'resources/gallery/';
 
@@ -122,7 +127,6 @@ if (isset($_FILES['bh_image']) && $_FILES['bh_image']['error'] === UPLOAD_ERR_OK
         }
     }
 }
-
 
 
 if (isset($_GET['id'])) {
@@ -173,6 +177,7 @@ if (isset($_GET['id'])) {
         $bh_occupants = $row['bh_occupants'] ?? '';
         $bh_overcrowded = $row['bh_overcrowded'] ?? '';
         $bh_rates_charge = $row['bh_rates_charge'] ?? '';
+        $bh_ratescharge_other = $row['bh_ratescharge_other'] ?? '';
         $bh_rate = $row['bh_rate'] ?? '';
         $bh_water_source = $row['bh_water_source'] ?? '';
         $bh_nawasa = $row['bh_nawasa'] ?? '';
@@ -187,10 +192,13 @@ if (isset($_GET['id'])) {
         $bh_bathroom_num = $row['bh_bathroom_num'] ?? '';
         $bh_premises_cond = $row['bh_premises_cond'] ?? '';
         $bh_garbage_disposal = $row['bh_garbage_disposal'] ?? '';
+        $bh_garbage_other = $row['bh_garbage_other'] ?? '';
         $bh_dps = $row['bh_dps'] ?? '';
         $bh_sewage_disposal = $row['bh_sewage_disposal'] ?? '';
+        $bh_sewage_other = $row['bh_sewage_other'] ?? '';
         $bh_sd_dps = $row['bh_sd_dps'] ?? '';
         $bh_rodent_disposal = $row['bh_rodent_disposal'] ?? '';
+        $bh_rodent_other = $row['bh_rodent_other'] ?? '';
         $light_ventilation = $row['light_ventilation'] ?? '';
         $natural_artificial = $row['natural_artificial'] ?? '';
         $establishment_extension = $row['establishment_extension'] ?? '';
@@ -235,11 +243,11 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'Account Number: ' .$account_number, 1);
+$pdf->Cell(200, 5, 'Account Number: ' . $account_number, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Establishment Name: ' .$establishment_name, 1);
+$pdf->Cell(200, 5, 'Establishment Name: ' . $establishment_name, 1);
 $pdf->Ln();
 
 
@@ -254,32 +262,32 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'First Name: ' .$first_name, 1);
+$pdf->Cell(200, 5, 'First Name: ' . $first_name, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Middle Name: ' .$middle_name, 1);
+$pdf->Cell(200, 5, 'Middle Name: ' . $middle_name, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Last Name: ' .$last_name, 1);
+$pdf->Cell(200, 5, 'Last Name: ' . $last_name, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Suffix: ' .$suffix, 1);
+$pdf->Cell(200, 5, 'Suffix: ' . $suffix, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Address: ' .$bh_address, 1);
+$pdf->Cell(200, 5, 'Address: ' . $bh_address, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'City/Municipality: ' .$bh_municipality, 1);
+$pdf->Cell(200, 5, 'City/Municipality: ' . $bh_municipality, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 80, 200, 15);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'District: '. $bh_district, 0);
+$pdf->Cell(200, 5, 'District: ' . $bh_district, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -338,20 +346,20 @@ $pdf->Cell(0, 5, 'Molo', 0, 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Barangay: ' .$bh_barangay, 1);
+$pdf->Cell(200, 5, 'Barangay: ' . $bh_barangay, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Province: ' .$bh_province, 1);
+$pdf->Cell(200, 5, 'Province: ' . $bh_province, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'BH Control No.: ' .$bh_control_no, 1);
+$pdf->Cell(200, 5, 'BH Control No.: ' . $bh_control_no, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 110, 200, 15);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'OR No.: ' .$bh_or_num, 0);
+$pdf->Cell(200, 5, 'OR No.: ' . $bh_or_num, 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
@@ -361,7 +369,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 125, 200, 21);
 $pdf->Cell(1);
-$pdf->Cell(200, 25, 'Date Issued: ' .$date_issued, 0);
+$pdf->Cell(200, 25, 'Date Issued: ' . $date_issued, 0);
 $pdf->Ln();
 $pdf->Cell(1);
 $pdf->Cell(200, -20, 'Official Receipt',  'a', 0);
@@ -371,11 +379,11 @@ $pdf->Cell(200, 25, 'yyyy-mm-dd',  'a', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Amount Paid: ' .$amount_paid, 1);
+$pdf->Cell(200, 5, 'Amount Paid: ' . $amount_paid, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Business Permit Number: ' .$bh_bpn, 1);
+$pdf->Cell(200, 5, 'Business Permit Number: ' . $bh_bpn, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 156, 200, 15);
@@ -428,12 +436,12 @@ $pdf->Ln();
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 4, 'Period Covered: ' .$bh_period_cover, 1);
+$pdf->Cell(200, 4, 'Period Covered: ' . $bh_period_cover, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 186, 200, 15);
 $pdf->Cell(1);
-$pdf->Cell(200, 10, 'Complaint: ' .$bh_complaint, 0); // Adjusted to add border
+$pdf->Cell(200, 10, 'Complaint: ' . $bh_complaint, 0); // Adjusted to add border
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -498,7 +506,7 @@ $pdf->Cell(1);
 $pdf->Cell(200, 10, 'Specify: ', 0);
 $pdf->Ln();
 $pdf->Cell(1);
-$pdf->Cell(200, -5, 'Kind of Construction of the Boarding House' .$bh_class, 0);
+$pdf->Cell(200, -5, 'Kind of Construction of the Boarding House' . $bh_class, 0);
 $pdf->Ln();
 $pdf->Cell(1);
 $pdf->Cell(200, 5, '', 0); // Adjusted to add border
@@ -545,11 +553,11 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'No. of Rooms: ' .$bh_room, 1);
+$pdf->Cell(200, 5, 'No. of Rooms: ' . $bh_room, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'No. of Occupants: ' .$bh_occupants, 1);
+$pdf->Cell(200, 5, 'No. of Occupants: ' . $bh_occupants, 1);
 $pdf->Ln();
 
 
@@ -620,7 +628,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 295, 200, 5);
 $pdf->Cell(1);
-$pdf->Cell(200, 15, 'Rates:' .$bh_rate, 0, 1);
+$pdf->Cell(200, 15, 'Rates:' . $bh_rate, 0, 1);
 $pdf->Ln();
 
 
@@ -713,7 +721,7 @@ $pdf->AddPage(); //create new page
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'Toilet Facilities Type: ' .$bh_toilet_type, 1);
+$pdf->Cell(200, 5, 'Toilet Facilities Type: ' . $bh_toilet_type, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 15, 200, 10);
@@ -748,7 +756,7 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'Bath Facilities Type: ' .$bh_bath_type, 1);
+$pdf->Cell(200, 5, 'Bath Facilities Type: ' . $bh_bath_type, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 30, 200, 10);
@@ -782,12 +790,12 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'Total Number of Comfort Room: ' .$bh_cr_num, 1);
+$pdf->Cell(200, 5, 'Total Number of Comfort Room: ' . $bh_cr_num, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'Total Number of Bathroom: ' .$bh_bathroom_num, 1);
+$pdf->Cell(200, 5, 'Total Number of Bathroom: ' . $bh_bathroom_num, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 50, 200, 10);
@@ -966,7 +974,7 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'Specify if yes: ' .$specify_txt, 1);
+$pdf->Cell(200, 5, 'Specify if yes: ' . $specify_txt, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 120, 200, 15);
@@ -995,7 +1003,7 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'Remarks and Recommendations: ' .$bh_remarks, 1);
+$pdf->Cell(200, 5, 'Remarks and Recommendations: ' . $bh_remarks, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 140, 200, 25);
@@ -1017,11 +1025,11 @@ $pdf->Cell(200, 10, $office_required, 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Inspected by:' .$inspected_by, 1);
+$pdf->Cell(200, 5, 'Inspected by:' . $inspected_by, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Acknowledge by:' .$acknowledge_by, 1);
+$pdf->Cell(200, 5, 'Acknowledge by:' . $acknowledge_by, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 175, 200, 60);
@@ -1030,13 +1038,13 @@ $pdf->Cell(200, 5, 'Get Current Location:' . $current_loc, 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(100, 5, 'Latitude (x.y):' .$bh_latitude, 1);
-$pdf->Cell(100, 5, 'Longitutde (x.y):' .$bh_longitude, 1);
+$pdf->Cell(100, 5, 'Latitude (x.y):' . $bh_latitude, 1);
+$pdf->Cell(100, 5, 'Longitutde (x.y):' . $bh_longitude, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(100, 5, 'Altitude (m):' .$bh_altitude, 1);
-$pdf->Cell(100, 5, 'Accuracy (m):' .$bh_precision, 1);
+$pdf->Cell(100, 5, 'Altitude (m):' . $bh_altitude, 1);
+$pdf->Cell(100, 5, 'Accuracy (m):' . $bh_precision, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
