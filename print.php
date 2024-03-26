@@ -235,11 +235,11 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'Account Number: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Account Number: ' .$account_number, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Establishment Name: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Establishment Name: ' .$establishment_name, 1);
 $pdf->Ln();
 
 
@@ -254,27 +254,27 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'First Name: ' . 'a', 1);
+$pdf->Cell(200, 5, 'First Name: ' .$first_name, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Middle Name: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Middle Name: ' .$middle_name, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Last Name: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Last Name: ' .$last_name, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Suffix: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Suffix: ' .$suffix, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Address: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Address: ' .$bh_address, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'City/Municipality: ' . 'a', 1);
+$pdf->Cell(200, 5, 'City/Municipality: ' .$bh_municipality, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 80, 200, 15);
@@ -338,30 +338,30 @@ $pdf->Cell(0, 5, 'Molo', 0, 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Barangay: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Barangay: ' .$bh_barangay, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Province: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Province: ' .$bh_province, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'BH Control No.: ' . 'a', 1);
+$pdf->Cell(200, 5, 'BH Control No.: ' .$bh_control_no, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 110, 200, 15);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'OR No.: ' . 'a', 0);
+$pdf->Cell(200, 5, 'OR No.: ' .$bh_or_num, 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 1, 'Official Receipt',  'a', 0);
+$pdf->Cell(200, 1, 'Official Receipt',  '', 0);
 $pdf->Ln();
 
 
 $pdf->Rect(11, 125, 200, 21);
 $pdf->Cell(1);
-$pdf->Cell(200, 25, 'Date Issued: ' . 'a', 0);
+$pdf->Cell(200, 25, 'Date Issued: ' .$date_issued, 0);
 $pdf->Ln();
 $pdf->Cell(1);
 $pdf->Cell(200, -20, 'Official Receipt',  'a', 0);
@@ -371,16 +371,16 @@ $pdf->Cell(200, 25, 'yyyy-mm-dd',  'a', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Amount Paid: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Amount Paid: ' .$amount_paid, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Business Permit Number: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Business Permit Number: ' .$bh_bpn, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 156, 200, 15);
 $pdf->Cell(1);
-$pdf->Cell(200, 10, 'Mode of Payment: ' . $bh_district, 0);
+$pdf->Cell(200, 10, 'Mode of Payment: ' . $bh_mp, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -415,25 +415,25 @@ $pdf->Ln();
 
 $pdf->Rect(11, 171, 200, 15);
 $pdf->Cell(1);
-$pdf->Cell(200, 15, 'Date Paid: ' . 'a', 0);
+$pdf->Cell(200, 15, 'Date Paid: ', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, -10, 'yyyy-mm-dd', 'a', 0); // Adjusted parameter order for border
+$pdf->Cell(200, -10, 'yyyy-mm-dd', 0); // Adjusted parameter order for border
 $pdf->Ln();
 $pdf->Cell(1);
-$pdf->Cell(200, 5, '', 'a', 0); // Adjusted parameter order for border
+$pdf->Cell(200, 5, $date_paid, 0); // Adjusted parameter order for border
 $pdf->Ln();
 
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 4, 'Period Covered: ' . 'a', 1);
+$pdf->Cell(200, 4, 'Period Covered: ' .$bh_period_cover, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 186, 200, 15);
 $pdf->Cell(1);
-$pdf->Cell(200, 10, 'Complaint: ' . 'a', 0); // Adjusted to add border
+$pdf->Cell(200, 10, 'Complaint: ' .$bh_complaint, 0); // Adjusted to add border
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -495,10 +495,10 @@ $pdf->Ln();
 
 $pdf->Rect(11, 235, 200, 20);
 $pdf->Cell(1);
-$pdf->Cell(200, 10, 'Specify: ' . 'a', 0);
+$pdf->Cell(200, 10, 'Specify: ', 0);
 $pdf->Ln();
 $pdf->Cell(1);
-$pdf->Cell(200, -5, 'Kind of Construction of the Boarding House',  'a', 0);
+$pdf->Cell(200, -5, 'Kind of Construction of the Boarding House' .$bh_class, 0);
 $pdf->Ln();
 $pdf->Cell(1);
 $pdf->Cell(200, 5, '', 0); // Adjusted to add border
@@ -507,7 +507,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 255, 200, 10);
 $pdf->Cell(1);
-$pdf->Cell(200, 20, 'Class of the Boarding House: ' . $bh_district, 0);
+$pdf->Cell(200, 20, 'Class of the Boarding House: ', 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -545,17 +545,17 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'No. of Rooms: ' . 'a', 1);
+$pdf->Cell(200, 5, 'No. of Rooms: ' .$bh_room, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'No. of Occupants: ' . 'a', 1);
+$pdf->Cell(200, 5, 'No. of Occupants: ' .$bh_occupants, 1);
 $pdf->Ln();
 
 
 $pdf->Rect(11, 275, 200, 20);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Rates being Charges: ' . $bh_district, 0);
+$pdf->Cell(200, 5, 'Rates being Charges: ' . $bh_rates_charge, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -620,7 +620,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 295, 200, 5);
 $pdf->Cell(1);
-$pdf->Cell(200, 15, 'Rates:', 0, 1);
+$pdf->Cell(200, 15, 'Rates:' .$bh_rate, 0, 1);
 $pdf->Ln();
 
 
@@ -633,7 +633,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 315, 200, 10);
 $pdf->Cell(1);
-$pdf->Cell(200, 35, 'Source of Water Supply: ' . $bh_district, 0);
+$pdf->Cell(200, 35, 'Source of Water Supply: ' . $bh_water_source, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -658,7 +658,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 325, 200, 10);
 $pdf->Cell(1);
-$pdf->Cell(200, 40, 'Adequate: ' . $bh_district, 0);
+$pdf->Cell(200, 40, 'Adequate: ' . $bh_adequate, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -685,7 +685,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 335, 200, 10);
 $pdf->Cell(1);
-$pdf->Cell(200, 45, 'Portable: ' . $bh_district, 0);
+$pdf->Cell(200, 45, 'Portable: ' . $bh_portable, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -713,12 +713,12 @@ $pdf->AddPage(); //create new page
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'Toilet Facilities Type: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Toilet Facilities Type: ' .$bh_toilet_type, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 15, 200, 10);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Sanitary Condition (Toilet Facilities): ' . $bh_district, 0);
+$pdf->Cell(200, 5, 'Sanitary Condition (Toilet Facilities): ' . $bh_toilet_cond, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -748,12 +748,12 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'Bath Facilities Type: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Bath Facilities Type: ' .$bh_bath_type, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 30, 200, 10);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Sanitary Condition (Bath Facilities): ' . $bh_district, 0);
+$pdf->Cell(200, 5, 'Sanitary Condition (Bath Facilities): ' . $bh_bath_cond, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -782,17 +782,17 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'Total Number of Comfort Room: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Total Number of Comfort Room: ' .$bh_cr_num, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'Total Number of Bathroom: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Total Number of Bathroom: ' .$bh_bathroom_num, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 50, 200, 10);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Sanitary Condition of the Premises: ' . $bh_district, 0);
+$pdf->Cell(200, 5, 'Sanitary Condition of the Premises: ' . $bh_premises_cond, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -821,7 +821,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 60, 200, 10);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, '1. Type of Garbage Disposal: ' . $bh_district, 0);
+$pdf->Cell(200, 5, '1. Type of Garbage Disposal: ' . $bh_garbage_disposal, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -845,7 +845,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 70, 200, 10);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, '2. Type of Sewage Disposal: ' . $bh_district, 0);
+$pdf->Cell(200, 5, '2. Type of Sewage Disposal: ' . $bh_sewage_disposal, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -869,7 +869,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 80, 200, 10);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, '3. Type of Rodent/Vermin Disposal: ' . $bh_district, 0);
+$pdf->Cell(200, 5, '3. Type of Rodent/Vermin Disposal: ' . $bh_rodent_disposal, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -893,7 +893,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 90, 200, 10);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Lightning and Ventilation: ' . $bh_district, 0);
+$pdf->Cell(200, 5, 'Lightning and Ventilation: ' . $light_ventilation, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -917,7 +917,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 100, 200, 10);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Natural/Artificial: ' . $bh_district, 0);
+$pdf->Cell(200, 5, 'Natural/Artificial: ' . $natural_artificial, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -942,7 +942,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 110, 200, 10);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Is there any extension or additional construction in the establishment? ' . $bh_district, 0);
+$pdf->Cell(200, 5, 'Is there any extension or additional construction in the establishment? ' . $establishment_extension, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -966,12 +966,12 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'Specify if yes: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Specify if yes: ' .$specify_txt, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 120, 200, 15);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'With Permit' . $bh_district, 0);
+$pdf->Cell(200, 5, 'With Permit' . $with_permit, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -995,17 +995,17 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'Remarks and Recommendations: ' . 'a', 1);
+$pdf->Cell(200, 5, 'Remarks and Recommendations: ' .$bh_remarks, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 140, 200, 25);
 $pdf->Cell(1);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell(200, 5, 'You are hereby requested to appear before this office: ' . 'a', 0);
+$pdf->Cell(200, 5, 'You are hereby requested to appear before this office: ', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Failure to do so will conpel this commission t file necessary action againts your business establishment' . 'a', 0);
+$pdf->Cell(200, 5, 'Failure to do so will conpel this commission t file necessary action againts your business establishment', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
@@ -1013,30 +1013,30 @@ $pdf->Cell(200, 5, 'yyyy-mm-dd', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 10, '', 0);
+$pdf->Cell(200, 10, $office_required, 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Inspected by:', 1);
+$pdf->Cell(200, 5, 'Inspected by:' .$inspected_by, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Acknowledge by:', 1);
+$pdf->Cell(200, 5, 'Acknowledge by:' .$acknowledge_by, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 175, 200, 60);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Get Current Location:', 0);
+$pdf->Cell(200, 5, 'Get Current Location:' . $current_loc, 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(100, 5, 'Latitude (x.y):', 1);
-$pdf->Cell(100, 5, 'Longitutde (x.y):', 1);
+$pdf->Cell(100, 5, 'Latitude (x.y):' .$bh_latitude, 1);
+$pdf->Cell(100, 5, 'Longitutde (x.y):' .$bh_longitude, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(100, 5, 'Altitude (m):', 1);
-$pdf->Cell(100, 5, 'Accuracy (m):', 1);
+$pdf->Cell(100, 5, 'Altitude (m):' .$bh_altitude, 1);
+$pdf->Cell(100, 5, 'Accuracy (m):' .$bh_precision, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
@@ -1046,6 +1046,7 @@ $pdf->Ln();
 $pdf->Rect(11, 240, 200, 100);
 $pdf->Cell(1);
 $pdf->Cell(200, 5, 'Boarding House Picture:', 1);
+$pdf->Cell(200, 5, $bh_image, 1);
 $pdf->Ln();
 
 
