@@ -4,7 +4,7 @@ include 'includes/header.php';
 
 
 
-<h3 style="margin-left: 290px;" class="title">New Record</h3>
+<h3 class="title">New Record</h3>
 
 <section class="container">
     <div class="row">

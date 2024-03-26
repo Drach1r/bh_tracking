@@ -228,11 +228,7 @@ if (isset($_GET['id'])) {
 }
 ?>
 
-<div class="row">
-    <h3 style="margin-left: 290px;" class="title">View Record
-
-
-
+    <h3 style="margin-left: 80px;" class="title">View Record
         <button onclick="printPage()" class='btn btn-primary'>Print</button>
     </h3>
 </div>

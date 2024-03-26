@@ -106,6 +106,8 @@ include 'includes/header.php';
     var tableBody = $('#filteredDataTable tbody');
     tableBody.empty(); // Clear previous data
 
+    
+
     for (var district in districts) {
         if (districts.hasOwnProperty(district)) {
             // Append rows for each barangay under the district
@@ -127,7 +129,6 @@ include 'includes/header.php';
     }
 }
 
-// Assuming the rest of your code remains the same...
 
 
     function updateTableData(districts) {

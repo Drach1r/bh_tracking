@@ -24,13 +24,12 @@ include 'includes/header.php';
         unset($_SESSION['success']);
     }
     ?>
+        <a style = "display:relative; float: right;" href="generate_report.php" class="btn btn-success btn-sm rounded-s"><i class="fas fa-download"></i> Generate Report</a>
+        <a href="create.php" class="btn btn-primary  btn-sm rounded-s"> Add New Record</a>
+
 
     <br>
-    <h3 class="title">Records List 
-        <a href="create.php" class="btn btn-primary  btn-sm rounded-s"> Add New Record</a>
-        <a href="generate_report.php" class="btn btn-success btn-sm rounded-s"><i class="fas fa-download"></i> Generate Report</a>
-    </h3>
-    
+    <br>
     <form action="import_csv.php" method="post" enctype="multipart/form-data">
         <div class="form-row align-items-center">
             <div class="col-auto">

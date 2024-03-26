@@ -25,6 +25,7 @@ try {
     $stmt->bindParam(':selectedDate', $selectedDate);
     $stmt->execute();
 
+
     // Fetch data and store it in arrays
     $labels = [];
     $data = [];
@@ -62,6 +63,7 @@ try {
         'data' => $data,
         'districts' => $districts // Include districts data for the table
     );
+
 
     // Send JSON response
     header('Content-Type: application/json');

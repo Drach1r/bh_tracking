@@ -82,7 +82,7 @@ try {
                 specify_txt = :specify_txt, 
                 with_permit = :with_permit, 
                 bh_remarks = :bh_remarks, 
-                office_required = :office_required, 
+                office_ = :office_, 
                 inspected_by = :inspected_by, 
                 acknowledge_by = :acknowledge_by, 
                 current_loc = :current_loc, 
@@ -102,6 +102,8 @@ try {
                 bh_status = :bh_status, 
                 submitted_by = :submitted_by
                 WHERE id = :id");
+
+
             $updateStmt->bindParam(':account_number', $_POST['account_number']);
             $updateStmt->bindParam(':establishment_name', $_POST['establishment_name']);
             $updateStmt->bindParam(':first_name', $_POST['first_name']);
@@ -150,7 +152,7 @@ try {
             $updateStmt->bindParam(':specify_txt', $_POST['specify_txt']);
             $updateStmt->bindParam(':with_permit', $_POST['with_permit']);
             $updateStmt->bindParam(':bh_remarks', $_POST['bh_remarks']);
-            $updateStmt->bindParam(':office_required', $_POST['office_required']);
+            $updateStmt->bindParam(':office_', $_POST['office_']);
             $updateStmt->bindParam(':inspected_by', $_POST['inspected_by']);
             $updateStmt->bindParam(':acknowledge_by', $_POST['acknowledge_by']);
             $updateStmt->bindParam(':current_loc', $_POST['current_loc']);
@@ -197,7 +199,7 @@ try {
             $updateStmt->execute();
 
             // Redirect after updating
-            header("Location: ../../bh_edit.php?id=$id");
+            header("Location: bh_edit.php?id=$id");
             exit();
         }
     }
@@ -229,12 +231,12 @@ try {
                         <div class="form-group col-md-3">
 
                             <label for="account_number">Account Number:</label>
-                            <input type="text" id="account_number" name="account_number" class="form-control" value="<?php echo isset($row['account_number']) ? $row['account_number'] : ''; ?>">
+                            <input type="text" id="account_number" name="account_number" class="form-control" value="<?php echo isset($row['account_number']) ? $row['account_number'] : '';?> ">
                         </div>
                         <div class="form-group col-md-5">
 
                             <label for="establishment_name">Name of Establishment:</label>
-                            <input type="text" id="establishment_name" name="establishment_name" class="form-control" value="<?php echo isset($row['establishment_name']) ? $row['establishment_name'] : ''; ?>">
+                            <input type="text" id="establishment_name" name="establishment_name" class="form-control" value="<?php echo isset($row['establishment_name']) ? $row['establishment_name'] : ''; ?>" >
                         </div>
 
                     </div>
@@ -277,7 +279,7 @@ try {
 
                         <div class="form-group col-md-3">
                             <label for="bh_district">District:</label>
-                            <select id="bh_district" name="bh_district" class="form-control" onchange="populateBarangays()" required>
+                            <select id="bh_district" name="bh_district" class="form-control" onchange="populateBarangays()" >
                                 <option value="" disabled selected> -- Select District --</option>
                                 <?php
                                 $districts = array(
@@ -353,7 +355,7 @@ try {
 
                         <div class="form-group col-md-3">
                             <label for="bh_province">Province:</label>
-                            <input type="text" id="bh_province" name="bh_province" class="form-control" value="<?php echo isset($row['bh_province']) ? $row['bh_province'] : ''; ?>" required>
+                            <input type="text" id="bh_province" name="bh_province" class="form-control" value="<?php echo isset($row['bh_province']) ? $row['bh_province'] : ''; ?>" >
                         </div>
 
 
@@ -362,7 +364,7 @@ try {
 
 
                                 <label for="bh_control_no">BH Control No.:</label>
-                                <input type="text" id="bh_control_no" name="bh_control_no" class="form-control" value="<?php echo isset($row['bh_control_no']) ? $row['bh_control_no'] : ''; ?>" required>
+                                <input type="text" id="bh_control_no" name="bh_control_no" class="form-control" value="<?php echo isset($row['bh_control_no']) ? $row['bh_control_no'] : '';?> ">
                             </div>
 
 
@@ -372,29 +374,29 @@ try {
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label for="bh_or_num">Official Receipt Number:</label>
-                                <input type="text" id="bh_or_num" name="bh_or_num" class="form-control" value="<?php echo isset($row['bh_or_num']) ? $row['bh_or_num'] : ''; ?>" required>
+                                <input type="text" id="bh_or_num" name="bh_or_num" class="form-control" value="<?php echo isset($row['bh_or_num']) ? $row['bh_or_num'] : ''; ?>" >
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="bh_bpn">Business Permit Number:</label>
-                                <input type="text" id="bh_bpn" class="form-control" name="bh_bpn" value="<?php echo isset($row['bh_bpn']) ? $row['bh_bpn'] : ''; ?>" required>
+                                <input type="text" id="bh_bpn" class="form-control" name="bh_bpn" value="<?php echo isset($row['bh_bpn']) ? $row['bh_bpn'] : ''; ?>" >
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="date_issued">Date Issued:</label>
-                                <input type="date" id="date_issued" class="form-control" name="date_issued" value="<?php echo isset($row['date_issued']) ? $row['date_issued'] : ''; ?>" required>
+                                <input type="date" id="date_issued" class="form-control" name="date_issued" value="<?php echo isset($row['date_issued']) ? $row['date_issued'] : ''; ?>" >
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-2">
                                 <label for="amount_paid">Amount Paid:</label>
-                                <input type="number" id="amount_paid" class="form-control" name="amount_paid" value="<?php echo isset($row['amount_paid']) ? $row['amount_paid'] : ''; ?>" required>
+                                <input type="number" id="amount_paid" class="form-control" name="amount_paid" value="<?php echo isset($row['amount_paid']) ? $row['amount_paid'] : ''; ?>" >
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="bh_mp">Mode of Payment:</label>
-                                <input type="text" id="bh_mp" class="form-control" name="bh_mp" value="<?php echo isset($row['bh_mp']) ? $row['bh_mp'] : ''; ?>" required>
+                                <input type="text" id="bh_mp" class="form-control" name="bh_mp" value="<?php echo isset($row['bh_mp']) ? $row['bh_mp'] : ''; ?>" >
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="date_paid">Date Paid:</label>
-                                <input type="date" id="date_paid" class="form-control" name="date_paid" value="<?php echo isset($row['date_paid']) ? $row['date_paid'] : ''; ?>" required>
+                                <input type="date" id="date_paid" class="form-control" name="date_paid" value="<?php echo isset($row['date_paid']) ? $row['date_paid'] : ''; ?>" >
                             </div>
                         </div>
                         <div class="row">
@@ -402,11 +404,11 @@ try {
 
                             <div class="form-group col-md-4">
                                 <label for="bh_period_cover">Period Covered:</label>
-                                <input type="text" id="bh_period_cover" class="form-control" name="bh_period_cover" value="<?php echo isset($row['bh_period_cover']) ? $row['bh_period_cover'] : ''; ?>" required>
+                                <input type="text" id="bh_period_cover" class="form-control" name="bh_period_cover" value="<?php echo isset($row['bh_period_cover']) ? $row['bh_period_cover'] : ''; ?>" >
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="bh_complaint">Compliant:</label>
-                                <select id="bh_complaint" class="form-control" name="bh_complaint" required>
+                                <select id="bh_complaint" class="form-control" name="bh_complaint" >
                                     <option value="" disabled>-- Select Option --</option>
                                     <option value="yes" <?php echo isset($row['bh_complaint']) && $row['bh_complaint'] === 'yes' ? 'selected' : ''; ?>>Yes</option>
                                     <option value="no" <?php echo isset($row['bh_complaint']) && $row['bh_complaint'] === 'no' ? 'selected' : ''; ?>>No</option>
@@ -505,15 +507,15 @@ try {
                         <div class="row">
                             <div class="form-group col-md-2">
                                 <label for="bh_room">Number Of Rooms:</label>
-                                <input type="number" id="bh_room" class="form-control" name="bh_room" value="<?php echo isset($row['bh_room']) ? $row['bh_room'] : ''; ?>" required>
+                                <input type="number" id="bh_room" class="form-control" name="bh_room" value="<?php echo isset($row['bh_room']) ? $row['bh_room'] : ''; ?>" >
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="bh_occupants">Num. of Occupants:</label>
-                                <input type="number" id="bh_occupants" class="form-control" name="bh_occupants" value="<?php echo isset($row['bh_occupants']) ? $row['bh_occupants'] : ''; ?>" required>
+                                <input type="number" id="bh_occupants" class="form-control" name="bh_occupants" value="<?php echo isset($row['bh_occupants']) ? $row['bh_occupants'] : ''; ?>" >
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="bh_overcrowded">Overcrowded:</label>
-                                <select id="bh_overcrowded" class="form-control" name="bh_overcrowded" required>
+                                <select id="bh_overcrowded" class="form-control" name="bh_overcrowded" >
                                     <option value="" disabled>-- Select Option --</option>
                                     <option value="yes" <?php echo isset($row['bh_overcrowded']) && $row['bh_overcrowded'] === 'yes' ? 'selected' : ''; ?>>Yes</option>
                                     <option value="no" <?php echo isset($row['bh_overcrowded']) && $row['bh_overcrowded'] === 'no' ? 'selected' : ''; ?>>No</option>
@@ -524,7 +526,7 @@ try {
                         <div class=" row">
                             <div class="form-group col-md-3">
                                 <label for="bh_rates_charge">Rates being Charged:</label>
-                                <select id="bh_rates_charge" class="form-control" name="bh_rates_charge" required>
+                                <select id="bh_rates_charge" class="form-control" name="bh_rates_charge" >
                                     <option value="" disabled>-- Select Rates --</option>
                                     <option value="lodging" <?php echo isset($row['bh_rates_charge']) && $row['bh_rates_charge'] === 'lodging' ? 'selected' : ''; ?>>Lodging</option>
                                     <option value="board" <?php echo isset($row['bh_rates_charge']) && $row['bh_rates_charge'] === 'board' ? 'selected' : ''; ?>>Board</option>
@@ -537,7 +539,7 @@ try {
 
                             <div class="form-group col-md-2">
                                 <label for="bh_rate">Rates:</label>
-                                <input type="number" id="bh_rate" class="form-control" name="bh_rate" value="<?php echo isset($row['bh_rate']) ? $row['bh_rate'] : ''; ?>" required>
+                                <input type="number" id="bh_rate" class="form-control" name="bh_rate" value="<?php echo isset($row['bh_rate']) ? $row['bh_rate'] : ''; ?>" >
                             </div>
 
                         </div>
@@ -563,7 +565,7 @@ try {
                         <div class="row">
                             <div class="form-group col-md-2">
                                 <label for="bh_adequate">Adequate:</label>
-                                <select id="bh_adequate" class="form-control" name="bh_adequate" required>
+                                <select id="bh_adequate" class="form-control" name="bh_adequate" >
                                     <option value="" disabled>-- Select Option --</option>
                                     <option value="yes" <?php echo isset($row['bh_adequate']) && $row['bh_adequate'] === 'yes' ? 'selected' : ''; ?>>Yes</option>
                                     <option value="no" <?php echo isset($row['bh_adequate']) && $row['bh_adequate'] === 'no' ? 'selected' : ''; ?>>No</option>
@@ -572,7 +574,7 @@ try {
 
                             <div class="form-group col-md-2">
                                 <label for="bh_portable">Portable:</label>
-                                <select id="bh_portable" class="form-control" name="bh_portable" required>
+                                <select id="bh_portable" class="form-control" name="bh_portable" >
                                     <option value="" disabled selected>-- Select Option --</option>
                                     <option value="yes" <?php echo isset($row['bh_portable']) && $row['bh_portable'] === 'yes' ? 'selected' : ''; ?>>Yes</option>
                                     <option value="no" <?php echo isset($row['bh_portable']) && $row['bh_portable'] === 'no' ? 'selected' : ''; ?>>No</option>
@@ -581,12 +583,12 @@ try {
 
                             <div class="form-group col-md-4">
                                 <label for="bh_toilet_type">Toilet Facilities Type:</label>
-                                <input type="text" id="bh_toilet_type" class="form-control" name="bh_toilet_type" value="<?php echo isset($row['bh_toilet_type']) ? $row['bh_toilet_type'] : ''; ?>" required>
+                                <input type="text" id="bh_toilet_type" class="form-control" name="bh_toilet_type" value="<?php echo isset($row['bh_toilet_type']) ? $row['bh_toilet_type'] : ''; ?>" >
                             </div>
 
                             <div class="form-group col-md-2">
                                 <label for="bh_toilet_cond">Sanitary Condition:</label>
-                                <select id="bh_toilet_cond" class="form-control" name="bh_toilet_cond" required>
+                                <select id="bh_toilet_cond" class="form-control" name="bh_toilet_cond" >
                                     <option value="" disabled selected>-- Select Option --</option>
                                     <option value="good" <?php echo isset($row['bh_toilet_cond']) && $row['bh_toilet_cond'] === 'good' ? 'selected' : ''; ?>>Good</option>
                                     <option value="fair" <?php echo isset($row['bh_toilet_cond']) && $row['bh_toilet_cond'] === 'fair' ? 'selected' : ''; ?>>Fair</option>
@@ -598,12 +600,12 @@ try {
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label for="bh_bath_type">Bath Facilities Type:</label>
-                                <input type="text" id="bh_bath_type" class="form-control" name="bh_bath_type" value="<?php echo isset($row['bh_bath_type']) ? $row['bh_bath_type'] : ''; ?>" required>
+                                <input type="text" id="bh_bath_type" class="form-control" name="bh_bath_type" value="<?php echo isset($row['bh_bath_type']) ? $row['bh_bath_type'] : ''; ?>" >
                             </div>
 
                             <div class="form-group col-md-2">
                                 <label for="bh_bath_cond">Sanitary Condition:</label>
-                                <select id="bh_bath_cond" class="form-control" name="bh_bath_cond" required>
+                                <select id="bh_bath_cond" class="form-control" name="bh_bath_cond" >
                                     <option value="" disabled selected>-- Select Option --</option>
                                     <option value="good" <?php echo isset($row['bh_bath_cond']) && $row['bh_bath_cond'] === 'good' ? 'selected' : ''; ?>>Good</option>
                                     <option value="fair" <?php echo isset($row['bh_bath_cond']) && $row['bh_bath_cond'] === 'fair' ? 'selected' : ''; ?>>Fair</option>
@@ -613,17 +615,17 @@ try {
 
                             <div class="form-group col-md-2">
                                 <label for="bh_cr_num">Num of CR:</label>
-                                <input type="number" id="bh_cr_num" class="form-control" name="bh_cr_num" value="<?php echo isset($row['bh_cr_num']) ? $row['bh_cr_num'] : ''; ?>" required>
+                                <input type="number" id="bh_cr_num" class="form-control" name="bh_cr_num" value="<?php echo isset($row['bh_cr_num']) ? $row['bh_cr_num'] : ''; ?>" >
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="bh_bathroom_num">Num of Bath Room:</label>
-                                <input type="number" id="bh_bathroom_num" class="form-control" name="bh_bathroom_num" value="<?php echo isset($row['bh_bathroom_num']) ? $row['bh_bathroom_num'] : ''; ?>" required>
+                                <input type="number" id="bh_bathroom_num" class="form-control" name="bh_bathroom_num" value="<?php echo isset($row['bh_bathroom_num']) ? $row['bh_bathroom_num'] : ''; ?>" >
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-2">
                                 <label for="bh_premises_cond">Sanitary Condition Of The Premises:</label>
-                                <select id="bh_premises_cond" class="form-control" name="bh_premises_cond" required>
+                                <select id="bh_premises_cond" class="form-control" name="bh_premises_cond" >
                                     <option value="" disabled selected>-- Select Option --</option>
                                     <option value="good" <?php echo isset($row['bh_premises_cond']) && $row['bh_premises_cond'] === 'good' ? 'selected' : ''; ?>>Good</option>
                                     <option value="fair" <?php echo isset($row['bh_premises_cond']) && $row['bh_premises_cond'] === 'fair' ? 'selected' : ''; ?>>Fair</option>
@@ -633,7 +635,7 @@ try {
 
                             <div class="form-group col-md-2">
                                 <label for="bh_garbage_disposal">1. Types of Garbage Disposal:</label>
-                                <select id="bh_garbage_disposal" class="form-control" name="bh_garbage_disposal" required>
+                                <select id="bh_garbage_disposal" class="form-control" name="bh_garbage_disposal" >
                                     <option value="" disabled selected>-- Select Option --</option>
                                     <option value=""> </option>
                                     <option value="dps" <?php echo isset($row['bh_garbage_disposal']) && $row['bh_garbage_disposal'] === 'dps' ? 'selected' : ''; ?>>DPS</option>
@@ -642,7 +644,7 @@ try {
 
                             <div class="form-group col-md-2">
                                 <label for="bh_sewage_disposal">2. Types of Sewage Disposal:</label>
-                                <select id="bh_sewage_disposal" class="form-control" name="bh_sewage_disposal" required>
+                                <select id="bh_sewage_disposal" class="form-control" name="bh_sewage_disposal" >
                                     <option value="" disabled selected>-- Select Option --</option>
                                     <option value=""> </option>
                                     <option value="dps" <?php echo isset($row['bh_sewage_disposal']) && $row['bh_sewage_disposal'] === 'dps' ? 'selected' : ''; ?>>DPS</option>
@@ -651,7 +653,7 @@ try {
 
                             <div class="form-group col-md-2">
                                 <label for="bh_rodent_disposal">3. Types of Rodent / Vermin Disposal:</label>
-                                <select id="bh_rodent_disposal" class="form-control" name="bh_rodent_disposal" required>
+                                <select id="bh_rodent_disposal" class="form-control" name="bh_rodent_disposal" >
                                     <option value="" disabled selected>-- Select Option --</option>
                                     <option value=""> </option>
                                     <option value="dps" <?php echo isset($row['bh_rodent_disposal']) && $row['bh_rodent_disposal'] === 'dps' ? 'selected' : ''; ?>>DPS</option>
@@ -663,7 +665,7 @@ try {
                         <div class="row">
                             <div class="form-group col-md-3">
                                 <label for="light_ventilation">Lightning and Ventilation:</label>
-                                <select id="light_ventilation" class="form-control" name="light_ventilation" required>
+                                <select id="light_ventilation" class="form-control" name="light_ventilation" >
                                     <option value="" disabled selected>-- Select Option --</option>
                                     <option value="natural" <?php echo isset($row['light_ventilation']) && $row['light_ventilation'] === 'natural' ? 'selected' : ''; ?>>Natural</option>
                                     <option value="artificial" <?php echo isset($row['light_ventilation']) && $row['light_ventilation'] === 'artificial' ? 'selected' : ''; ?>>Artificial</option>
@@ -672,7 +674,7 @@ try {
 
                             <div class="form-group col-md-2">
                                 <label for="natural_artificial">Natural/Artificial:</label>
-                                <select id="natural_artificial" class="form-control" name="natural_artificial" required>
+                                <select id="natural_artificial" class="form-control" name="natural_artificial" >
                                     <option value="" disabled selected>-- Select Option --</option>
                                     <option value="satisfactory" <?php echo isset($row['natural_artificial']) && $row['natural_artificial'] === 'satisfactory' ? 'selected' : ''; ?>>Satisfactory</option>
                                     <option value="unsatisfactory" <?php echo isset($row['natural_artificial']) && $row['natural_artificial'] === 'unsatisfactory' ? 'selected' : ''; ?>>Unsatisfactory</option>
@@ -683,7 +685,7 @@ try {
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="establishment_extension">Is there any extension or additional construction in the establishment?:</label>
-                                <select id="establishment_extension" class="form-control" name="establishment_extension" required>
+                                <select id="establishment_extension" class="form-control" name="establishment_extension" >
                                     <option value="" disabled selected>-- Select Option --</option>
                                     <option value="yes" <?php echo isset($row['establishment_extension']) && $row['establishment_extension'] === 'yes' ? 'selected' : ''; ?>>Yes</option>
                                     <option value="no" <?php echo isset($row['establishment_extension']) && $row['establishment_extension'] === 'no' ? 'selected' : ''; ?>>No</option>
@@ -692,7 +694,7 @@ try {
 
                             <div class="form-group col-md-4">
                                 <label for="specify_txt">Specify if Yes:</label>
-                                <textarea id="specify_txt" class="form-control" name="specify_txt" rows="1" required><?php echo isset($row['specify_txt']) ? $row['specify_txt'] : ''; ?></textarea>
+                                <textarea id="specify_txt" class="form-control" name="specify_txt" rows="1" ><?php echo isset($row['specify_txt']) ? $row['specify_txt'] : ''; ?></textarea>
                             </div>
 
                         </div>
@@ -703,10 +705,10 @@ try {
 
                                 if (selectElement.value === "yes") {
                                     textArea.disabled = false; // Enable textarea if "yes" is selected
-                                    textArea.required = true; // Make textarea required if enabled
+                                    textArea. = true; // Make textarea  if enabled
                                 } else {
                                     textArea.disabled = true; // Disable textarea if "no" is selected
-                                    textArea.required = false; // Make textarea not required if disabled
+                                    textArea. = false; // Make textarea not  if disabled
                                     textArea.value = ""; // Clear textarea value if disabled
                                 }
                             }
@@ -716,7 +718,7 @@ try {
                         <div class="row">
                             <div class="form-group col-md-2">
                                 <label for="with_permit">With Permit?:</label>
-                                <select id="with_permit" class="form-control" name="with_permit" required>
+                                <select id="with_permit" class="form-control" name="with_permit" >
                                     <option value="" disabled selected>-- Select Option --</option>
                                     <option value="yes" <?php echo isset($row['with_permit']) && $row['with_permit'] === 'yes' ? 'selected' : ''; ?>>Yes</option>
                                     <option value="no" <?php echo isset($row['with_permit']) && $row['with_permit'] === 'no' ? 'selected' : ''; ?>>No</option>
@@ -728,37 +730,37 @@ try {
                         <div class="row">
                             <div class="form-group col-md-9">
                                 <label for="bh_remarks">Remarks & Recommendations:</label>
-                                <textarea id="bh_remarks" class="form-control" name="bh_remarks" required><?php echo isset($row['bh_remarks']) ? $row['bh_remarks'] : ''; ?></textarea>
+                                <textarea id="bh_remarks" class="form-control" name="bh_remarks" ><?php echo isset($row['bh_remarks']) ? $row['bh_remarks'] : ''; ?></textarea>
                             </div>
 
                         </div>
 
                         <div class="row">
                             <div class="form-group col-md-3">
-                                <label for="office_required">You are hereby requested to appear before this office:</label>
+                                <label for="office_">You are hereby requested to appear before this office:</label>
                                 <?php
-                                // Check if office_required date is set and not empty
-                                if (isset($row['office_required']) && !empty($row['office_required'])) {
+                                // Check if office_ date is set and not empty
+                                if (isset($row['office_']) && !empty($row['office_'])) {
                                     // Parse the date string and format it as YYYY-MM-DD
-                                    $formatted_date = date('Y-m-d', strtotime($row['office_required']));
+                                    $formatted_date = date('Y-m-d', strtotime($row['office_']));
                                 } else {
                                     $formatted_date = '';
                                 }
                                 ?>
-                                <input type="date" id="office_required" class="form-control" name="office_required" value="<?php echo $formatted_date; ?>" required>
+                                <input type="date" id="office_" class="form-control" name="office_" value="<?php echo $formatted_date; ?>" >
                             </div>
 
                         </div>
                         <div class="row">
                             <div class="form-group col-md-5">
                                 <label for="inspected_by">Inspected by:</label>
-                                <input type="text" id="inspected_by" class="form-control" name="inspected_by" value="  <?php echo isset($row['inspected_by']) ? $row['inspected_by'] : ''; ?>" required>
+                                <input type="text" id="inspected_by" class="form-control" name="inspected_by" value="  <?php echo isset($row['inspected_by']) ? $row['inspected_by'] : ''; ?>" >
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-5">
                                 <label for="acknowledge_by">Acknowledge by:</label>
-                                <input type="text" id="acknowledge_by" class="form-control" name="acknowledge_by" value="  <?php echo isset($row['acknowledge_by']) ? $row['acknowledge_by'] : ''; ?>" required>
+                                <input type="text" id="acknowledge_by" class="form-control" name="acknowledge_by" value="  <?php echo isset($row['acknowledge_by']) ? $row['acknowledge_by'] : ''; ?>" >
                             </div>
                         </div>
                         <br>
@@ -773,7 +775,7 @@ try {
                                 <h5>GPS: <button type="button" class="btn btn-primary btn-sm my-2 buton"><i class="fa-solid fa-location-dot"></i></button></h5>
                                 <label for="current_loc">Current Location:</label>
                                 <div class="input-group">
-                                    <textarea id="current_loc" class="form-control" rows="1" name="current_loc" required readonly><?php echo isset($row['current_loc']) ? $row['current_loc'] : ''; ?></textarea>
+                                    <textarea id="current_loc" class="form-control" rows="1" name="current_loc"  readonly><?php echo isset($row['current_loc']) ? $row['current_loc'] : ''; ?></textarea>
                                 </div>
                             </div>
 
@@ -784,19 +786,19 @@ try {
                         <div class="row">
                             <div class="form-group col-md-3">
                                 <label for="bh_longitude">Longitude:</label>
-                                <input id="bh_longitude" class="form-control" type="text" name="bh_longitude" value="<?php echo isset($row['bh_longitude']) ? $row['bh_longitude'] : ''; ?>" required readonly>
+                                <input id="bh_longitude" class="form-control" type="text" name="bh_longitude" value="<?php echo isset($row['bh_longitude']) ? $row['bh_longitude'] : ''; ?>"  >
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="bh_latitude">Latitude:</label>
-                                <input id="bh_latitude" class="form-control" type="text" name="bh_latitude" value="<?php echo isset($row['bh_latitude']) ? $row['bh_latitude'] : ''; ?>" required readonly>
+                                <input id="bh_latitude" class="form-control" type="text" name="bh_latitude" value="<?php echo isset($row['bh_latitude']) ? $row['bh_latitude'] : ''; ?>"  >
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="bh_altitude">Altitude:</label>
-                                <input id="bh_altitude" class="form-control" type="text" name="bh_altitude" value="<?php echo isset($row['bh_altitude']) ? $row['bh_altitude'] : ''; ?>" required readonly>
+                                <input id="bh_altitude" class="form-control" type="text" name="bh_altitude" value="<?php echo isset($row['bh_altitude']) ? $row['bh_altitude'] : ''; ?>"  readonly>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="bh_precision">Precision:</label>
-                                <input id="bh_precision" class="form-control" type="text" name="bh_precision" value="<?php echo isset($row['bh_precision']) ? $row['bh_precision'] : ''; ?>" required readonly>
+                                <input id="bh_precision" class="form-control" type="text" name="bh_precision" value="<?php echo isset($row['bh_precision']) ? $row['bh_precision'] : ''; ?>"  readonly>
                             </div>
                         </div>
 
@@ -806,7 +808,6 @@ try {
                         <br>
                         <h2>Upload Boarding House Picture</h2>
 
-                        <div class="row">
                             <br><br>
                             <input type="file" name="bh_image" accept="image/*" capture="camera" id="image-input" onchange="previewImage(this)">
 
@@ -851,16 +852,13 @@ try {
                         <br>
                         <br>
 
-
-
-
-
-
                         <button type="submit" class="btn btn-success btn-sm" style="float: right;">Submit</button>
+                        <br>
 
                 </form>
             </div>
         </div>
+
     </div>
 
 </section>
