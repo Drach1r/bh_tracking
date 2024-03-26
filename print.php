@@ -378,9 +378,9 @@ $pdf->Cell(1);
 $pdf->Cell(200, 5, 'Business Permit Number: ' . 'a', 1);
 $pdf->Ln();
 
-$pdf->Rect(11, 156, 200, 12);
+$pdf->Rect(11, 156, 200, 15);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Mode of Payment: ' . $bh_district, 0);
+$pdf->Cell(200, 10, 'Mode of Payment: ' . $bh_district, 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -390,7 +390,7 @@ $rect1_x = 20;
 $rect2_x = 60;
 $rect3_x = 100;
 $rect4_x = 140;
-$rect_y = 162;
+$rect_y = 165;
 $rect_size = 3;
 
 $pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
@@ -399,38 +399,41 @@ $pdf->Rect($rect3_x, $rect_y, $rect_size, $rect_size);
 $pdf->Rect($rect4_x, $rect_y, $rect_size, $rect_size);
 
 $pdf->Cell(1);
-$pdf->Cell(-63, 5, '', 0, 0);
-$pdf->Cell(0, 5, 'Annual', 0, 0);
+$pdf->Cell(-63, 15, '', 0, 0);
+$pdf->Cell(0, 1, 'Annual', 0, 0);
 $pdf->Cell($rect2_x - $rect1_x - $rect_size);
 $pdf->Cell(-180, 5, '', 0, 0);
-$pdf->Cell(0, 5, 'Semi-Annual', 0, 0);
+$pdf->Cell(0, 1, 'Semi-Annual', 0, 0);
 $pdf->Cell($rect3_x - $rect2_x - $rect_size);
 $pdf->Cell(-140, 5, '', 0, 0);
-$pdf->Cell(0, 5, 'Monthly', 0, 0);
+$pdf->Cell(0, 1, 'Monthly', 0, 0);
 $pdf->Cell($rect4_x - $rect3_x - $rect_size);
 $pdf->Cell(-100, 5, '', 0, 0);
-$pdf->Cell(0, 5, 'Quarterly', 0, 0);
+$pdf->Cell(0, 1, 'Quarterly', 0, 0);
 $pdf->Ln();
 
-$pdf->Rect(11, 168, 200, 15);
-$pdf->Cell(1);
-$pdf->Cell(200, 10, 'Date Paid: ' . 'a', 0);
-$pdf->Ln();
 
+$pdf->Rect(11, 171, 200, 15);
 $pdf->Cell(1);
-$pdf->Cell(200, -5, 'yyyy-mm-dd', 'a', 0); // Adjusted parameter order for border
-$pdf->Ln();
-$pdf->Cell(1);
-$pdf->Cell(200, -5, '', 'a', 0); // Adjusted parameter order for border
+$pdf->Cell(200, 15, 'Date Paid: ' . 'a', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 40, 'Period Covered: ' . 'a', 0);
+$pdf->Cell(200, -10, 'yyyy-mm-dd', 'a', 0); // Adjusted parameter order for border
+$pdf->Ln();
+$pdf->Cell(1);
+$pdf->Cell(200, 5, '', 'a', 0); // Adjusted parameter order for border
 $pdf->Ln();
 
-$pdf->Rect(11, 183, 200, 5);
+$pdf->Ln();
+
 $pdf->Cell(1);
-$pdf->Cell(200, -30, 'Complaint: ' . 'a', 1); // Adjusted to add border
+$pdf->Cell(200, 4, 'Period Covered: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Rect(11, 186, 200, 15);
+$pdf->Cell(1);
+$pdf->Cell(200, 10, 'Complaint: ' . 'a', 0); // Adjusted to add border
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -446,10 +449,607 @@ $pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
 
 $pdf->Cell(1);
 $pdf->Cell(-63, 5, '', 0, 0);
-$pdf->Cell(0, 42, 'Yes', 0, 0);
+$pdf->Cell(0, 1, 'Yes', 0, 0);
 $pdf->Cell($rect2_x - $rect1_x - $rect_size);
 $pdf->Cell(-180, 5, '', 0, 0);
-$pdf->Cell(0, 42, 'No', 0, 0);
+$pdf->Cell(0, 1, 'No', 0, 0);
+$pdf->Ln();
+
+
+
+$pdf->Cell(1);
+$pdf->SetFont('Arial', 'B', 8);
+$pdf->Cell(62, 20, '', 0, 0, 'C');
+$pdf->Cell(-90, 30, 'Classification and Rates', 0, 0, 'C');
+$pdf->Ln();
+
+$pdf->Rect(11, 220, 200, 15);
+$pdf->Cell(1);
+$pdf->Cell(200, -5, 'Kind of Construction of the Boarding House: ', 0); // Adjusted to add border
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 80;
+$rect3_x = 135;
+$rect_y = 228;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect3_x, $rect_y, $rect_size, $rect_size);
+
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 5, '', 0, 0);
+$pdf->Cell(0, 15, 'A. Made of Strong Materials', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 5, '', 0, 0);
+$pdf->Cell(0, 15, 'B. Made of Light Materials', 0, 0);
+$pdf->Cell($rect3_x - $rect2_x - $rect_size);
+$pdf->Cell(-120, 5, '', 0, 0);
+$pdf->Cell(0, 15, 'C. Others (Specify)', 0, 0);
+$pdf->Ln();
+
+$pdf->Rect(11, 235, 200, 20);
+$pdf->Cell(1);
+$pdf->Cell(200, 10, 'Specify: ' . 'a', 0);
+$pdf->Ln();
+$pdf->Cell(1);
+$pdf->Cell(200, -5, 'Kind of Construction of the Boarding House',  'a', 0);
+$pdf->Ln();
+$pdf->Cell(1);
+$pdf->Cell(200, 5, '', 0); // Adjusted to add border
+$pdf->Ln();
+
+
+$pdf->Rect(11, 255, 200, 10);
+$pdf->Cell(1);
+$pdf->Cell(200, 20, 'Class of the Boarding House: ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 60;
+$rect3_x = 100;
+$rect4_x = 140;
+$rect_y = 260;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect3_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect4_x, $rect_y, $rect_size, $rect_size);
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 5, '', 0, 0);
+$pdf->Cell(0, -10, 'Class A', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 5, '', 0, 0);
+$pdf->Cell(0, -10, 'Class B', 0, 0);
+$pdf->Cell($rect3_x - $rect2_x - $rect_size);
 $pdf->Cell(-140, 5, '', 0, 0);
+$pdf->Cell(0, -10, 'Class C', 0, 0);
+$pdf->Cell($rect4_x - $rect3_x - $rect_size);
+$pdf->Cell(-100, 5, '', 0, 0);
+$pdf->Cell(0, -10, 'Class D', 0, 0);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 8, '', 0); // Adjusted to add border
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->SetFont('Arial', '', 8);
+$pdf->Cell(200, 5, 'No. of Rooms: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'No. of Occupants: ' . 'a', 1);
+$pdf->Ln();
+
+
+$pdf->Rect(11, 275, 200, 20);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Rates being Charges: ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 50;
+$rect3_x = 80;
+$rect4_x = 110;
+$rect5_x = 140;
+$rect6_x = 170;
+$rect_y = 283;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect3_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect4_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect5_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect6_x, $rect_y, $rect_size, $rect_size);
+
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 5, '', 0, 0);
+$pdf->Cell(0, 10, 'Lodging', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 5, '', 0, 0);
+$pdf->Cell(0, 10, 'Board', 0, 0);
+$pdf->Cell($rect3_x - $rect2_x - $rect_size);
+$pdf->Cell(-150, 5, '', 0, 0);
+$pdf->Cell(0, 10, 'Bed Space', 0, 0);
+$pdf->Cell($rect4_x - $rect3_x - $rect_size);
+$pdf->Cell(-120, 5, '', 0, 0);
+$pdf->Cell(0, 10, 'Room Rent', 0, 0);
+$pdf->Cell($rect5_x - $rect3_x - $rect_size);
+$pdf->Cell(-120, 5, '', 0, 0);
+$pdf->Cell(0, 10, 'House Rent', 0, 0);
+$pdf->Cell($rect6_x - $rect3_x - $rect_size);
+$pdf->Cell(-120, 5, '', 0, 0);
+$pdf->Cell(0, 10, 'Rent Per Unit (Apartment)', 0, 0);
+$pdf->Ln();
+
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, '', 0);
+$pdf->Ln();
+
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect_y = 291;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 5, '', 0, 0);
+$pdf->Cell(0, -5, 'Others (Specify):', 0, 0);
+$pdf->Ln();
+
+$pdf->Rect(11, 295, 200, 5);
+$pdf->Cell(1);
+$pdf->Cell(200, 15, 'Rates:', 0, 1);
+$pdf->Ln();
+
+
+$pdf->Cell(1);
+$pdf->SetFont('Arial', 'B', 8);
+$pdf->Cell(62, 5, '', 0, 0, 'C');
+$pdf->Cell(-90, -20, 'Facilities and Sanitary', 0, 0, 'C');
+$pdf->Ln();
+
+
+$pdf->Rect(11, 315, 200, 10);
+$pdf->Cell(1);
+$pdf->Cell(200, 35, 'Source of Water Supply: ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 50;
+$rect_y = 320;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 5, '', 0, 0);
+$pdf->Cell(0, -27, 'NAWASA', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 5, '', 0, 0);
+$pdf->Cell(0, -27, 'Deep Well', 0, 0);
+$pdf->Ln();
+
+$pdf->Rect(11, 325, 200, 10);
+$pdf->Cell(1);
+$pdf->Cell(200, 40, 'Adequate: ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 50;
+$rect_y = 330;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 5, '', 0, 0);
+$pdf->Cell(0, -33, 'Yes', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 5, '', 0, 0);
+$pdf->Cell(0, -33, 'No', 0, 0);
+$pdf->Ln();
+
+
+
+$pdf->Rect(11, 335, 200, 10);
+$pdf->Cell(1);
+$pdf->Cell(200, 45, 'Portable: ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 50;
+$rect_y = 340;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 5, '', 0, 0);
+$pdf->Cell(0, -35, 'Yes', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 5, '', 0, 0);
+$pdf->Cell(0, -35, 'No', 0, 0);
+$pdf->Ln();
+
+
+$pdf->AddPage(); //create new page
+
+$pdf->Cell(1);
+$pdf->SetFont('Arial', '', 8);
+$pdf->Cell(200, 5, 'Toilet Facilities Type: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Rect(11, 15, 200, 10);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Sanitary Condition (Toilet Facilities): ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 50;
+$rect3_x = 80;
+$rect_y = 21;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect3_x, $rect_y, $rect_size, $rect_size);
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Good', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Fair', 0, 0);
+$pdf->Cell($rect3_x - $rect2_x - $rect_size);
+$pdf->Cell(-150, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Poor', 0, 0);
+$pdf->Ln();
+
+
+$pdf->Cell(1);
+$pdf->SetFont('Arial', '', 8);
+$pdf->Cell(200, 5, 'Bath Facilities Type: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Rect(11, 30, 200, 10);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Sanitary Condition (Bath Facilities): ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 50;
+$rect3_x = 80;
+$rect_y = 36;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect3_x, $rect_y, $rect_size, $rect_size);
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Good', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Fair', 0, 0);
+$pdf->Cell($rect3_x - $rect2_x - $rect_size);
+$pdf->Cell(-150, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Poor', 0, 0);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->SetFont('Arial', '', 8);
+$pdf->Cell(200, 5, 'Total Number of Comfort Room: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->SetFont('Arial', '', 8);
+$pdf->Cell(200, 5, 'Total Number of Bathroom: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Rect(11, 50, 200, 10);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Sanitary Condition of the Premises: ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 50;
+$rect3_x = 80;
+$rect_y = 56;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect3_x, $rect_y, $rect_size, $rect_size);
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Good', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Fair', 0, 0);
+$pdf->Cell($rect3_x - $rect2_x - $rect_size);
+$pdf->Cell(-150, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Poor', 0, 0);
+$pdf->Ln();
+
+$pdf->Rect(11, 60, 200, 10);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, '1. Type of Garbage Disposal: ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 50;
+$rect_y = 66;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'DPS', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Others:__________________', 0, 0);
+$pdf->Ln();
+
+$pdf->Rect(11, 70, 200, 10);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, '2. Type of Sewage Disposal: ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 50;
+$rect_y = 76;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'DPS', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Others:__________________', 0, 0);
+$pdf->Ln();
+
+$pdf->Rect(11, 80, 200, 10);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, '3. Type of Rodent/Vermin Disposal: ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 50;
+$rect_y = 86;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'DPS', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Others:__________________', 0, 0);
+$pdf->Ln();
+
+$pdf->Rect(11, 90, 200, 10);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Lightning and Ventilation: ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 50;
+$rect_y = 96;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Natural', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Artificial', 0, 0);
+$pdf->Ln();
+
+$pdf->Rect(11, 100, 200, 10);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Natural/Artificial: ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 50;
+$rect_y = 106;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Satisfactory', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Unsatisfactory', 0, 0);
+$pdf->Ln();
+
+
+$pdf->Rect(11, 110, 200, 10);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Is there any extension or additional construction in the establishment? ' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 50;
+$rect_y = 116;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Yes', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'No', 0, 0);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->SetFont('Arial', '', 8);
+$pdf->Cell(200, 5, 'Specify if yes: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Rect(11, 120, 200, 15);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'With Permit' . $bh_district, 0);
+$pdf->Ln();
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetX(85);
+$pdf->SetFont('Arial', '', 8);
+$rect1_x = 20;
+$rect2_x = 50;
+$rect_y = 131;
+$rect_size = 3;
+
+$pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
+$pdf->Rect($rect2_x, $rect_y, $rect_size, $rect_size);
+
+$pdf->Cell(1);
+$pdf->Cell(-63, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'Yes', 0, 0);
+$pdf->Cell($rect2_x - $rect1_x - $rect_size);
+$pdf->Cell(-180, 4, '', 0, 0);
+$pdf->Cell(0, 5, 'No', 0, 0);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->SetFont('Arial', '', 8);
+$pdf->Cell(200, 5, 'Remarks and Recommendations: ' . 'a', 1);
+$pdf->Ln();
+
+$pdf->Rect(11, 140, 200, 25);
+$pdf->Cell(1);
+$pdf->SetFont('Arial', '', 8);
+$pdf->Cell(200, 5, 'You are hereby requested to appear before this office: ' . 'a', 0);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Failure to do so will conpel this commission t file necessary action againts your business establishment' . 'a', 0);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'yyyy-mm-dd', 0);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 10, '', 0);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Inspected by:', 1);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Acknowledge by:', 1);
+$pdf->Ln();
+
+$pdf->Rect(11, 175, 200, 60);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Get Current Location:', 0);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(100, 5, 'Latitude (x.y):', 1);
+$pdf->Cell(100, 5, 'Longitutde (x.y):', 1);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(100, 5, 'Altitude (m):', 1);
+$pdf->Cell(100, 5, 'Accuracy (m):', 1);
+$pdf->Ln();
+
+$pdf->Cell(1);
+$pdf->Cell(200, 45, '', 1);
+$pdf->Ln();
+
+$pdf->Rect(11, 240, 200, 100);
+$pdf->Cell(1);
+$pdf->Cell(200, 5, 'Boarding House Picture:', 1);
+$pdf->Ln();
+
+
+
+
 
 $pdf->Output();
