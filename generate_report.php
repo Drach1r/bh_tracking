@@ -105,7 +105,6 @@ include 'includes/header.php';
     // Update the table with filtered data
     var tableBody = $('#filteredDataTable tbody');
     tableBody.empty(); // Clear previous data
-
     
 
     for (var district in districts) {

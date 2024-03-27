@@ -185,6 +185,35 @@ $pdf->Cell(-100, 5, '', 0, 0);
 $pdf->Cell(0, 5, 'Lapaz', 0, 0);
 $pdf->Ln();
 
+$checkmark = '';
+if ($bh_district == 'Arevalo' || $bh_district == 'City Proper' || $bh_district == 'Jaro' || $bh_district == 'Lapaz')  {
+  $checkmark = "\x34";
+} else {
+
+  $bh_district = '';
+  $checkmark = "\x34";
+}
+
+
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+
+if ($bh_district == 'Arevalo') {
+  $pdf->Text($rect1_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_district == 'City Proper') {
+  $pdf->Text($rect2_x + 0.5, $rect_y + 2.5, $checkmark);
+}
+elseif ($bh_district == 'Jaro') {
+  $pdf->Text($rect3_x + 0.7, $rect_y + 2.5, $checkmark);
+} 
+elseif ($bh_district == 'Lapaz') {
+  $pdf->Text($rect_4x + 0.9, $rect_y + 2.5, $checkmark);
+}else {
+
+  $pdf->Text($rect3_x + 0.3, $rect_y + 2.5, $checkmark);
+}
+
+
 $pdf->SetFont('ZapfDingbats', '', 8);
 $pdf->SetX(85);
 $pdf->SetFont('Arial', '', 8);

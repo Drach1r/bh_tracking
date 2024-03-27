@@ -806,48 +806,63 @@ try {
 
 
                         <br>
-                        <h2>Upload Boarding House Picture</h2>
+<h2>Upload Boarding House Picture</h2>
+<br><br>
+<input type="file" name="bh_image" accept="image/*" capture="camera" id="image-input" onchange="previewImage(this)">
+<div class="imageform" style="height: 100%; width: 100%; display: flex; justify-content: center; border: 1px solid #ccc;">
+    <?php
+    if (isset($row['bh_image'])) {
+        $imagePath = "resources/gallery/" . $row['bh_image'];
+        if (file_exists($imagePath)) {
+            echo "<img id='selected-image-preview' src='{$imagePath}' alt='Uploaded Image' class='mx-auto d-block' style='max-width: 100%; height: auto;'>";
+        } else {
+            echo "<p>{$imagePath}</p>"; // Display the image path if the file doesn't exist
+        }
+    } else {
+        echo "<p>No image found</p>";
+    }
+    ?>
+</div>
 
-                            <br><br>
-                            <input type="file" name="bh_image" accept="image/*" capture="camera" id="image-input" onchange="previewImage(this)">
+<script>
+    function previewImage(input) {
+        var preview = document.getElementById('selected-image-preview');
+        var file = input.files[0];
+        
+        if (file) {
+            if (file.size <= 5 * 1024 * 1024) { // Limit to 5MB
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block'; // Display the preview
+
+                    // AJAX call to update the database with the new image path
+                    var formData = new FormData();
+                    formData.append('image', file);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'update_image.php', true);
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            // Success, do something if needed
+                            console.log('Image uploaded successfully.');
+                        } else {
+                            // Error handling
+                            console.error('Image upload failed.');
+                        }
+                    };
+                    xhr.send(formData);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert("File size exceeds 5MB. Please select a smaller file.");
+                input.value = ""; // Reset input field
+            }
+        }
+    }
+</script>
 
 
-                            <div class="imageform" style="height: 100%; width: 100%; display: flex; justify-content: center; border: 1px solid #ccc;">
-                                <?php
-                                if (isset($row['bh_image'])) {
-                                    $imagePath = "resources/gallery/" . $row['bh_image'];
-                                    if (file_exists($imagePath)) {
-                                        echo "<img src='{$imagePath}' alt='Uploaded Image' class='mx-auto d-block' style='max-width: 100%; height: auto;'>";
-                                    } else {
-                                        echo "<p>{$imagePath}</p>"; // Display the image path if the file doesn't exist
-                                    }
-                                } else {
-                                    echo "No image found";
-                                }
-                                ?>
-                            </div>
 
-
-                        </div>
-
-                        <script>
-                            function previewImage(input) {
-                                if (input.files && input.files[0]) {
-
-                                    if (input.files[0].size <= 5 * 1024 * 1024) { // Limit to 5MB
-                                        var reader = new FileReader();
-                                        reader.onload = function(e) {
-                                            document.getElementById('selected-image-preview').src = e.target.result;
-                                        };
-                                        reader.readAsDataURL(input.files[0]);
-                                    } else {
-                                        alert("File size exceeds 5MB. Please select a smaller file.");
-
-                                        input.value = ""; // Reset input field
-                                    }
-                                }
-                            }
-                        </script>
 
                         <br>
                         <br>
