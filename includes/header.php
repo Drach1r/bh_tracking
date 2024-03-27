@@ -58,48 +58,22 @@ if (!isset($_SESSION['user_id'])) {
             position: relative;
         }
 
-        .topbar-divider.d-none {
-            display: none;
-            /* Hide divider on small screens */
-        }
-
-        .logout-link {
-            color: white;
-            /* Set logout link color */
-            text-decoration: none;
-            /* Remove underline */
-            margin-left: 10px;
-            /* Add spacing between divider and link */
-        }
-
-        .logout-link:hover {
-            color: #ffc107;
-            /* Change color on hover */
-        }
+     
     </style>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-red sticky-top">
         <div class="container-fluid">
             <a href="records.php"><img src="resources/img/iloilo.png" alt="" height="80"></a>
             <h5 style="color: black; font-weight: bold; margin-left: 20px;">Boarding House Tracking Information Management Application</h5>
-
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
+    <li class="nav-item">
+        <a href="records.php" class="nav-link" style="color: blue; font-weight: bold;">Home</a>
+    </li>
+    <li class="nav-item">
+        <a href="logout.php" class="nav-link logout-link" style="color: red; font-weight: bold;">Logout</a>
+    </li>
+</ul>
 
-                    <a href="records.php" style="margin-right: 20px;" class="btn btn-outline-primary">Home</a>
-
-                </li>
-
-                <li class="nav-item">
-
-                    <a class="nav-link logout-link" href="logout.php" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <h6 class="h6 mb-0 text-danger">Logout</h6>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <div class="topbar-divider d-none d-sm-block"></div> <!-- Move the divider here -->
-                </li>
-            </ul>
         </div>
     </nav>
 
