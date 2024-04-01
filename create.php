@@ -566,7 +566,7 @@ include 'includes/header.php';
                                 textArea.value = "";
                             }
                         }
-                        // Call toggleTextArea function on select change
+
                         document.getElementById("establishment_extension").addEventListener("change", toggleTextArea);
                     </script>
 
