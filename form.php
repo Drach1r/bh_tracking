@@ -268,7 +268,7 @@ if (isset($_GET['id'])) {
 
                     </div>
                     <BR>
-                    <h2>Name of Owner / Manager</h2>
+                    <h5>Name of Owner / Manager</h5>
 
                     <div class="row">
                         <div class="form-group col-md-3">
@@ -376,8 +376,6 @@ if (isset($_GET['id'])) {
 
 
                     </div>
-
-                    <h4>Official Receipt</h4>
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label for="bh_or_num">Official Receipt Number:</label>
@@ -433,7 +431,7 @@ if (isset($_GET['id'])) {
 
 
                     <br>
-                    <h2>Classification And Rates</h2>
+                    <h5>Classification And Rates</h5>
 
                     <p> Kind Of Construction of the Boarding House:</p>
                     <div style="margin-left: 5px;" class="row">
@@ -786,7 +784,7 @@ if (isset($_GET['id'])) {
                     <br>
                     <div class="row">
                         <div class="form-group col-md-4">
-                            <h2> Get Current Location </h2>
+                            <h5> Get Current Location </h5>
 
                         </div>
                     </div>
@@ -802,31 +800,61 @@ if (isset($_GET['id'])) {
 
                     </div>
 
-
+                    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<style>
+    #map { height: 400px; }
+</style>
                     <div class="row">
-                        <div class="form-group col-md-3">
-                            <label for="bh_longitude">Longitude:</label>
-                            <input id="bh_longitude" class="form-control" type="text" name="bh_longitude" value="<?php echo isset($row['bh_longitude']) ? $row['bh_longitude'] : ''; ?>" required disabled>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="bh_latitude">Latitude:</label>
-                            <input id="bh_latitude" class="form-control" type="text" name="bh_latitude" value="<?php echo isset($row['bh_latitude']) ? $row['bh_latitude'] : ''; ?>" required disabled>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="bh_altitude">Altitude:</label>
-                            <input id="bh_altitude" class="form-control" type="text" name="bh_altitude" value="<?php echo isset($row['bh_altitude']) ? $row['bh_altitude'] : ''; ?>" required disabled>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="bh_precision">Precision:</label>
-                            <input id="bh_precision" class="form-control" type="text" name="bh_precision" value="<?php echo isset($row['bh_precision']) ? $row['bh_precision'] : ''; ?>" required disabled>
-                        </div>
-                    </div>
+    <div class="form-group col-md-3">
+        <label for="bh_longitude">Longitude:</label>
+        <input id="bh_longitude" class="form-control" type="text" name="bh_longitude" value="<?php echo isset($row['bh_longitude']) ? $row['bh_longitude'] : ''; ?>" required disabled>
+    </div>
+    <div class="form-group col-md-3">
+        <label for="bh_latitude">Latitude:</label>
+        <input id="bh_latitude" class="form-control" type="text" name="bh_latitude" value="<?php echo isset($row['bh_latitude']) ? $row['bh_latitude'] : ''; ?>" required disabled>
+    </div>
+    <div class="form-group col-md-3">
+        <label for="bh_altitude">Altitude:</label>
+        <input id="bh_altitude" class="form-control" type="text" name="bh_altitude" value="<?php echo isset($row['bh_altitude']) ? $row['bh_altitude'] : ''; ?>" required disabled>
+    </div>
+    <div class="form-group col-md-3">
+        <label for="bh_precision">Precision:</label>
+        <input id="bh_precision" class="form-control" type="text" name="bh_precision" value="<?php echo isset($row['bh_precision']) ? $row['bh_precision'] : ''; ?>" required disabled>
+    </div>
+</div>
 
+<div id="map"></div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
+<script>
+    $(document).ready(function() {
+    // Fetch values from disabled inputs and pin them on the map
+    pinLocation();
+});
+
+function pinLocation() {
+    var latitude = parseFloat($('#bh_latitude').val());
+    var longitude = parseFloat($('#bh_longitude').val());
+    var precision = parseFloat($('#bh_precision').val());
+    var altitude = parseFloat($('#bh_altitude').val());
+
+    var mapCenter = [latitude, longitude];
+    var map = L.map('map').setView(mapCenter, 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var marker = L.marker(mapCenter).addTo(map);
+    marker.bindPopup("<b>Precision:</b> " + precision + "<br><b>Altitude:</b> " + altitude).openPopup();
+}
+
+</script>
 
                     <br>
-                    <h2>Upload Boarding House Picture</h2>
+                    <h5>Boarding House Picture</h5>
 
                     <div class="row">
 

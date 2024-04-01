@@ -400,7 +400,7 @@ $pdf->Cell(1);
 $pdf->Cell(200, 10, 'Specify: ', 0);
 $pdf->Ln();
 $pdf->Cell(1);
-$pdf->Cell(200, -5, 'Kind of Construction of the Boarding House' . $bh_class, 0);
+$pdf->Cell(200, -5, 'Kind of Construction of the Boarding House    ' . $bh_class, 0);
 $pdf->Ln();
 $pdf->Cell(1);
 $pdf->Cell(200, 5, '', 0); // Adjusted to add border
@@ -517,7 +517,7 @@ $pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
 
 $pdf->Cell(1);
 $pdf->Cell(-63, 5, '', 0, 0);
-$pdf->Cell(0, -5, 'Others (Specify):', 0, 0);
+$pdf->Cell(0, -5, 'Others (Specify):____________', 0, 0);
 $pdf->Ln();
 
 $pdf->Rect(11, 295, 200, 5);
@@ -948,11 +948,11 @@ $pdf->Ln();
 $pdf->Rect(11, 240, 200, 100);
 $pdf->Cell(1);
 $pdf->Cell(200, 5, 'Boarding House Picture:', 1);
-$pdf->Cell(200, 5, $bh_image, 1);
 $pdf->Ln();
 
-
-
+$pdf->Cell(1);
+$pdf->Cell(200, 5, $bh_image, 0);
+$pdf->Ln();
 
 
 $pdf->Output();
