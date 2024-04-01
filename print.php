@@ -47,6 +47,7 @@ while ($row = $result->fetch_object()) {
   $bh_occupants = $row->bh_occupants;
   $bh_overcrowded = $row->bh_overcrowded;
   $bh_rates_charge = $row->bh_rates_charge;
+  $bh_ratescharge_other = $row->bh_ratescharge_other;
   $bh_rate = $row->bh_rate;
   $bh_water_source = $row->bh_water_source;
   $bh_nawasa = $row->bh_nawasa;
@@ -92,7 +93,6 @@ while ($row = $result->fetch_object()) {
   $submitted_by = $row->submitted_by;
   $bh_version = $row->bh_version;
   $bh_tags = $row->bh_tags;
-
 }
 
 
@@ -152,7 +152,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 80, 200, 15);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'District: ' . $bh_district, 0);
+$pdf->Cell(200, 5, 'District: ');
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
@@ -186,11 +186,12 @@ $pdf->Cell(0, 5, 'Lapaz', 0, 0);
 $pdf->Ln();
 
 $checkmark = '';
-if ($bh_district == 'Arevalo' || $bh_district == 'City Proper' || $bh_district == 'Jaro' || $bh_district == 'Lapaz')  {
+
+if ($bh_district == '1' || $bh_district == '2' || $bh_district == '3' || $bh_district == '4' || $bh_district == '5' || $bh_district == '6' || $bh_district == '7') {
   $checkmark = "\x34";
 } else {
 
-  $bh_district = '';
+
   $checkmark = "\x34";
 }
 
@@ -198,23 +199,23 @@ if ($bh_district == 'Arevalo' || $bh_district == 'City Proper' || $bh_district =
 
 $pdf->SetFont('ZapfDingbats', '', 8);
 
-if ($bh_district == 'Arevalo') {
+if ($bh_district == '1') {
   $pdf->Text($rect1_x + 0.3, $rect_y + 2.5, $checkmark);
-} elseif ($bh_district == 'City Proper') {
-  $pdf->Text($rect2_x + 0.5, $rect_y + 2.5, $checkmark);
-}
-elseif ($bh_district == 'Jaro') {
-  $pdf->Text($rect3_x + 0.7, $rect_y + 2.5, $checkmark);
-} 
-elseif ($bh_district == 'Lapaz') {
-  $pdf->Text($rect_4x + 0.9, $rect_y + 2.5, $checkmark);
-}else {
-
+} elseif ($bh_district == '2') {
+  $pdf->Text($rect2_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_district == '3') {
   $pdf->Text($rect3_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_district == '4') {
+  $pdf->Text($rect3_x + 40.5, $rect_y + 2.5, $checkmark);
+} elseif ($bh_district == '5') {
+  $pdf->Text($rect1_x + 0.3, $rect_y + 7.5, $checkmark);
+} elseif ($bh_district == '6') {
+  $pdf->Text($rect2_x + 0.3, $rect_y + 7.5, $checkmark);
+} elseif ($bh_district == '7') {
+  $pdf->Text($rect3_x + 0.3, $rect_y + 7.5, $checkmark);
 }
 
 
-$pdf->SetFont('ZapfDingbats', '', 8);
 $pdf->SetX(85);
 $pdf->SetFont('Arial', '', 8);
 $rect1_x = 20;
@@ -238,6 +239,10 @@ $pdf->Cell($rect3_x - $rect2_x - $rect_size);
 $pdf->Cell(-140, 5, '', 0, 0);
 $pdf->Cell(0, 5, 'Molo', 0, 0);
 $pdf->Ln();
+
+
+
+
 
 $pdf->Cell(1);
 $pdf->Cell(200, 5, 'Barangay: ' . $bh_barangay, 1);
@@ -263,13 +268,13 @@ $pdf->Ln();
 
 $pdf->Rect(11, 125, 200, 21);
 $pdf->Cell(1);
-$pdf->Cell(200, 25, 'Date Issued: ' . $date_issued, 0);
+$pdf->Cell(200, 25, 'Date Issued: ', '', 0);
 $pdf->Ln();
 $pdf->Cell(1);
-$pdf->Cell(200, -20, 'Official Receipt',  'a', 0);
+$pdf->Cell(200, -20, '', 0);
 $pdf->Ln();
 $pdf->Cell(1);
-$pdf->Cell(200, 25, 'yyyy-mm-dd',  'a', 0);
+$pdf->Cell(200, 25, $date_issued,  '', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
@@ -285,7 +290,8 @@ $pdf->Cell(1);
 $pdf->Cell(200, 10, 'Mode of Payment: ' . $bh_mp, 0);
 $pdf->Ln();
 
-$pdf->SetFont('ZapfDingbats', '', 8);
+
+
 $pdf->SetX(85);
 $pdf->SetFont('Arial', '', 8);
 $rect1_x = 20;
@@ -315,16 +321,17 @@ $pdf->Cell(0, 1, 'Quarterly', 0, 0);
 $pdf->Ln();
 
 
+
 $pdf->Rect(11, 171, 200, 15);
 $pdf->Cell(1);
-$pdf->Cell(200, 15, 'Date Paid: ', 0);
+$pdf->Cell(200, 15, 'Date Paid: ' . $date_paid, 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, -10, 'yyyy-mm-dd', 0); // Adjusted parameter order for border
+$pdf->Cell(200, -10, '', 0); // Adjusted parameter order for border
 $pdf->Ln();
 $pdf->Cell(1);
-$pdf->Cell(200, 5, '', $date_paid, 0); // Adjusted parameter order for border
+$pdf->Cell(200, 5, '', 0); // Adjusted parameter order for border
 $pdf->Ln();
 
 $pdf->Ln();
@@ -335,10 +342,45 @@ $pdf->Ln();
 
 $pdf->Rect(11, 186, 200, 15);
 $pdf->Cell(1);
-$pdf->Cell(200, 10, 'Complaint: ' . $bh_complaint, 0); // Adjusted to add border
+$pdf->Cell(200, 10, 'Compliant: '); // Adjusted to add border
 $pdf->Ln();
 
+
+if ($bh_mp == 'annual' || $bh_mp == 'semi_annual' || $bh_mp == 'monthly' || $bh_mp == 'quarterly') {
+  $checkmark = "\x34";
+} else {
+
+  $checkmark = "\x34";
+}
+
 $pdf->SetFont('ZapfDingbats', '', 8);
+
+if ($bh_mp == 'annual') {
+  $pdf->Text($rect1_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_mp == 'semi_annual') {
+  $pdf->Text($rect2_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_mp == 'monthly') {
+  $pdf->Text($rect3_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_mp == 'quarterly') {
+  $pdf->Text($rect4_x + 0.3, $rect_y + 2.5, $checkmark);
+}
+
+
+if ($bh_complaint == 'yes' || $bh_complaint == 'no') {
+  $checkmark = "\x34";
+} else {
+
+  $checkmark = "\x34";
+}
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+
+if ($bh_complaint == 'yes') {
+  $pdf->Text($rect1_x + 0.3, $rect_y + 32.5, $checkmark);
+} elseif ($bh_complaint == 'no') {
+  $pdf->Text($rect2_x + 0.3, $rect_y + 32.5, $checkmark);
+}
+
 $pdf->SetX(85);
 $pdf->SetFont('Arial', '', 8);
 $rect1_x = 20;
@@ -397,10 +439,10 @@ $pdf->Ln();
 
 $pdf->Rect(11, 235, 200, 20);
 $pdf->Cell(1);
-$pdf->Cell(200, 10, 'Specify: ', 0);
+$pdf->Cell(200, 10, 'Specify: ' . $bh_specify, 0);
 $pdf->Ln();
 $pdf->Cell(1);
-$pdf->Cell(200, -5, 'Kind of Construction of the Boarding House    ' . $bh_class, 0);
+$pdf->Cell(200, -5, '', '', 0);
 $pdf->Ln();
 $pdf->Cell(1);
 $pdf->Cell(200, 5, '', 0); // Adjusted to add border
@@ -412,7 +454,24 @@ $pdf->Cell(1);
 $pdf->Cell(200, 20, 'Class of the Boarding House: ', 0);
 $pdf->Ln();
 
+
+if ($bh_construction_kind == 'a__made_of_strong_materials' || $bh_construction_kind == 'b__made_of_light_materials' || $bh_construction_kind == 'c__other__specify') {
+  $checkmark = "\x34";
+} else {
+  $bh_construction_kind = 'Others';
+  $checkmark = "\x34";
+}
+
 $pdf->SetFont('ZapfDingbats', '', 8);
+
+if ($bh_construction_kind == 'a__made_of_strong_materials') {
+  $pdf->Text($rect1_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_construction_kind == 'b__made_of_light_materials') {
+  $pdf->Text($rect2_x + 0.3, $rect_y + 2.5, $checkmark);
+} else {
+  $pdf->Text($rect3_x + 0.3, $rect_y + 2.5, $checkmark);
+}
+
 $pdf->SetX(85);
 $pdf->SetFont('Arial', '', 8);
 $rect1_x = 20;
@@ -460,7 +519,25 @@ $pdf->Cell(1);
 $pdf->Cell(200, 5, 'Rates being Charges: ' . $bh_rates_charge, 0);
 $pdf->Ln();
 
+
+if ($bh_class == 'class_a' || $bh_class == 'class_b' || $bh_class == 'class_c' || $bh_class == 'class_d') {
+  $checkmark = "\x34";
+} else {
+
+  $checkmark = "\x34";
+}
+
 $pdf->SetFont('ZapfDingbats', '', 8);
+
+if ($bh_class == 'class_a') {
+  $pdf->Text($rect1_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_class == 'class_b') {
+  $pdf->Text($rect2_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_class == 'class_c') {
+  $pdf->Text($rect3_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_class == 'class_d') {
+  $pdf->Text($rect4_x + 0.3, $rect_y + 2.5, $checkmark);
+}
 $pdf->SetX(85);
 $pdf->SetFont('Arial', '', 8);
 $rect1_x = 20;
@@ -506,7 +583,31 @@ $pdf->Cell(200, 5, '', 0);
 $pdf->Ln();
 
 
+
+if ($bh_rates_charge == 'lodging' || $bh_rates_charge == 'board' || $bh_rates_charge == 'bed_space' || $bh_rates_charge == 'room_rent' || $bh_rates_charge == 'house_rent' || $bh_rates_charge == 'rent_per_unit__apartment' || $bh_rates_charge == 'other') {
+  $checkmark = "\x34";
+} else {
+  $bh_rates_charge = "";
+  $checkmark = "\x34";
+}
+
 $pdf->SetFont('ZapfDingbats', '', 8);
+
+if ($bh_rates_charge == 'lodging') {
+  $pdf->Text($rect1_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_rates_charge == 'board') {
+  $pdf->Text($rect2_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_rates_charge == 'bed_space') {
+  $pdf->Text($rect3_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_rates_charge == 'room_rent') {
+  $pdf->Text($rect4_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_rates_charge == 'house_rent') {
+  $pdf->Text($rect5_x + 0.3, $rect_y + 2.5, $checkmark);
+} elseif ($bh_rates_charge == 'rent_per_unit__apartment') {
+  $pdf->Text($rect6_x + 0.3, $rect_y + 2.5, $checkmark);
+} else {
+  $pdf->Text($rect1_x + 0.3, $rect_y + 10.5, $checkmark);
+}
 $pdf->SetX(85);
 $pdf->SetFont('Arial', '', 8);
 $rect1_x = 20;
@@ -517,7 +618,7 @@ $pdf->Rect($rect1_x, $rect_y, $rect_size, $rect_size);
 
 $pdf->Cell(1);
 $pdf->Cell(-63, 5, '', 0, 0);
-$pdf->Cell(0, -5, 'Others (Specify):____________', 0, 0);
+$pdf->Cell(0, -5, ($bh_rates_charge != 'lodging' && $bh_rates_charge != 'board' && $bh_rates_charge != 'bed_space' && $bh_rates_charge != 'room_rent' && $bh_rates_charge != 'house_rent' && $bh_rates_charge != 'rent_per_unit__apartment') ? "Others: $bh_ratescharge_other" : 'Others:_______', 0, 0);
 $pdf->Ln();
 
 $pdf->Rect(11, 295, 200, 5);
@@ -538,7 +639,65 @@ $pdf->Cell(1);
 $pdf->Cell(200, 35, 'Source of Water Supply: ' . $bh_water_source, 0);
 $pdf->Ln();
 
+// Split the saved data into an array
+$water_sources = explode(' ', $bh_water_source);
+
+// Check if 'nawasa' or 'deep_well' is present in the array
+if (in_array('nawasa', $water_sources) && in_array('deep_well', $water_sources)) {
+  $checkmark = "\x34";
+} elseif (in_array('nawasa', $water_sources)) {
+  $checkmark = "\x34";
+} elseif (in_array('deep_well', $water_sources)) {
+  $checkmark = "\x34";
+} else {
+  // No condition matched
+  $checkmark = ""; // or any default value
+}
+
 $pdf->SetFont('ZapfDingbats', '', 8);
+
+// Check for each value separately and place the checkmark accordingly
+if (in_array('nawasa', $water_sources) && in_array('deep_well', $water_sources)) {
+  // Place checkmark at both positions
+  $pdf->Text($rect1_x + 0.3, $rect_y + 31.5, $checkmark);
+  $pdf->Text($rect2_x + 0.3, $rect_y + 31.5, $checkmark);
+} elseif (in_array('nawasa', $water_sources)) {
+  $pdf->Text($rect1_x + 0.3, $rect_y + 31.5, $checkmark);
+} elseif (in_array('deep_well', $water_sources)) {
+  $pdf->Text($rect2_x + 0.3, $rect_y + 31.5, $checkmark);
+}
+
+if ($bh_adequate == 'yes' || $bh_adequate == 'no') {
+  $checkmark = "\x34";
+} else {
+
+  $checkmark = "\x34";
+}
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+
+if ($bh_adequate == 'yes') {
+  $pdf->Text($rect1_x + 0.3, $rect_y + 41.5, $checkmark);
+} elseif ($bh_adequate == 'no') {
+  $pdf->Text($rect2_x + 0.3, $rect_y +  41.5, $checkmark);
+}
+
+
+if ($bh_portable == 'yes' || $bh_portable == 'no') {
+  $checkmark = "\x34";
+} else {
+
+  $checkmark = "\x34";
+}
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+
+if ($bh_portable == 'yes') {
+  $pdf->Text($rect1_x + 0.3, $rect_y + 51.5, $checkmark);
+} elseif ($bh_portable == 'no') {
+  $pdf->Text($rect2_x + 0.3, $rect_y +  51.5, $checkmark);
+}
+
 $pdf->SetX(85);
 $pdf->SetFont('Arial', '', 8);
 $rect1_x = 20;
@@ -563,7 +722,8 @@ $pdf->Cell(1);
 $pdf->Cell(200, 40, 'Adequate: ' . $bh_adequate, 0);
 $pdf->Ln();
 
-$pdf->SetFont('ZapfDingbats', '', 8);
+
+
 $pdf->SetX(85);
 $pdf->SetFont('Arial', '', 8);
 $rect1_x = 20;
@@ -590,7 +750,7 @@ $pdf->Cell(1);
 $pdf->Cell(200, 45, 'Portable: ' . $bh_portable, 0);
 $pdf->Ln();
 
-$pdf->SetFont('ZapfDingbats', '', 8);
+
 $pdf->SetX(85);
 $pdf->SetFont('Arial', '', 8);
 $rect1_x = 20;
