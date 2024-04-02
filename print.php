@@ -7,10 +7,21 @@ $conn = new mysqli('localhost', 'root', '', 'bh_tracking');
 if ($conn->connect_error) {
   die("Error in DB connection: " . $conn->connect_errno . " : " . $conn->connect_error);
 }
-
+function getImagePath($bh_image)
+{
+  $imagePath = "resources/gallery/" . $bh_image;
+  if (file_exists($imagePath)) {
+    return $imagePath;
+  } else {
+    return null; // Return null if the file doesn't exist
+  }
+}
 
 $pageId = isset($_GET['id']) ? intval($_GET['id']) : 0;
-$select = $conn->prepare("SELECT * FROM boarding_house_tracking WHERE id = ?");
+$select = $conn->prepare("SELECT bht.*, bha.barangay 
+                        FROM boarding_house_tracking bht
+                        INNER JOIN bh_address bha ON bht.bh_barangay = bha.id
+                        WHERE bht.id = ?");
 $select->bind_param("i", $pageId);
 $select->execute();
 $result = $select->get_result();
@@ -29,7 +40,7 @@ while ($row = $result->fetch_object()) {
   $bh_address = $row->bh_address;
   $bh_municipality = $row->bh_municipality;
   $bh_district = $row->bh_district;
-  $bh_barangay = $row->bh_barangay;
+  $bh_barangay_name = $row->barangay; // Retrieve the barangay name from the result
   $bh_province = $row->bh_province;
   $bh_control_no = $row->bh_control_no;
   $bh_or_num = $row->bh_or_num;
@@ -83,7 +94,6 @@ while ($row = $result->fetch_object()) {
   $bh_longitude = $row->bh_longitude;
   $bh_altitude = $row->bh_altitude;
   $bh_precision = $row->bh_precision;
-  $bh_image = $row->bh_image;
   $bh_permit_control = $row->bh_permit_control;
   $bh_class_rates = $row->bh_class_rates;
   $bh_facilities = $row->bh_facilities;
@@ -96,6 +106,8 @@ while ($row = $result->fetch_object()) {
   $submitted_by = $row->submitted_by;
   $bh_version = $row->bh_version;
   $bh_tags = $row->bh_tags;
+  $bh_image = $row->bh_image;
+  $imagePath = getImagePath($bh_image);
 }
 
 
@@ -245,10 +257,8 @@ $pdf->Ln();
 
 
 
-
-
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Barangay: ' . $bh_barangay, 1);
+$pdf->Cell(200, 5, 'Barangay: ' . $bh_barangay_name, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
@@ -1222,7 +1232,7 @@ $pdf->Cell(200, 5, $office_required, 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Failure to do so will conpel this commission to file necessary action againts your business establishment', 0);
+$pdf->Cell(200, 5, 'Failure to do so will compel this commission to file necessary action againts your business establishment', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
@@ -1230,26 +1240,26 @@ $pdf->Cell(200, 10, '', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Inspected by:' . $inspected_by, 1);
+$pdf->Cell(200, 5, 'Inspected by: ' . $inspected_by, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Acknowledge by:' . $acknowledge_by, 1);
+$pdf->Cell(200, 5, 'Acknowledge by: ' . $acknowledge_by, 1);
 $pdf->Ln();
 
 $pdf->Rect(11, 175, 200, 60);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Get Current Location:' . $current_loc, 0);
+$pdf->Cell(200, 5, 'Current Location: ' . $current_loc, 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(100, 5, 'Latitude (x.y):' . $bh_latitude, 1);
-$pdf->Cell(100, 5, 'Longitutde (x.y):' . $bh_longitude, 1);
+$pdf->Cell(100, 5, 'Latitude (x.y): ' . $bh_latitude, 1);
+$pdf->Cell(100, 5, 'Longitutde (x.y): ' . $bh_longitude, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(100, 5, 'Altitude (m):' . $bh_altitude, 1);
-$pdf->Cell(100, 5, 'Accuracy (m):' . $bh_precision, 1);
+$pdf->Cell(100, 5, 'Altitude (m): ' . $bh_altitude, 1);
+$pdf->Cell(100, 5, 'Accuracy (m): ' . $bh_precision, 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
@@ -1258,12 +1268,21 @@ $pdf->Ln();
 
 $pdf->Rect(11, 240, 200, 100);
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Boarding House Picture:', 1);
+$pdf->Cell(200, 5, 'Boarding House Picture: ', 1);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, $bh_image, 0);
+
+if ($imagePath !== null) {
+  $pdf->Image($imagePath, $x = null, $y = null, $w = 200, $h = 100, $type = '', $link = '');
+} else {
+  $pdf->Cell(0, 10, "Image not found for ID {$pageId}", 0, 1);
+}
+
+
 $pdf->Ln();
+
+
 
 
 $pdf->Output();
