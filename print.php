@@ -1247,7 +1247,7 @@ $pdf->Cell(1);
 $pdf->Cell(200, 5, 'Acknowledge by: ' . $acknowledge_by, 1);
 $pdf->Ln();
 
-$pdf->Rect(11, 175, 200, 60);
+$pdf->Rect(11, 175, 200, 150);
 $pdf->Cell(1);
 $pdf->Cell(200, 5, 'Current Location: ' . $current_loc, 0);
 $pdf->Ln();
@@ -1262,11 +1262,8 @@ $pdf->Cell(100, 5, 'Altitude (m): ' . $bh_altitude, 1);
 $pdf->Cell(100, 5, 'Accuracy (m): ' . $bh_precision, 1);
 $pdf->Ln();
 
-$pdf->Cell(1);
-$pdf->Cell(200, 45, '', 1);
-$pdf->Ln();
 
-$pdf->Rect(11, 240, 200, 100);
+
 $pdf->Cell(1);
 $pdf->Cell(200, 5, 'Boarding House Picture: ', 1);
 $pdf->Ln();
@@ -1276,7 +1273,7 @@ $pdf->Cell(1);
 if ($imagePath !== null) {
   $pdf->Image($imagePath, $x = null, $y = null, $w = 200, $h = 100, $type = '', $link = '');
 } else {
-  $pdf->Cell(0, 10, "Image not found for ID {$pageId}", 0, 1);
+  $pdf->Cell(0, 10, "", 0, 1);
 }
 
 
