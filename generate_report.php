@@ -41,7 +41,7 @@ include 'includes/header.php';
         filterPieChart(selectedDate);
     });
 
-    var myChart = null; // Store the chart instance
+    var myChart = null;
 
     function filterPieChart(selectedDate) {
         $.ajax({
@@ -53,8 +53,7 @@ include 'includes/header.php';
             dataType: 'json',
             success: function (response) {
                 if (myChart) {
-                    myChart.destroy(); // Destroy previous chart instance
-                }
+                    myChart.destroy();
                 if (response.labels.length > 0) {
                     updatePieChart(response.labels, response.data);
                     updateTableData(response.districts);
@@ -102,19 +101,16 @@ include 'includes/header.php';
         }
     });
 
-    // Update the table with filtered data
     var tableBody = $('#filteredDataTable tbody');
-    tableBody.empty(); // Clear previous data
+    tableBody.empty(); 
     
 
     for (var district in districts) {
         if (districts.hasOwnProperty(district)) {
-            // Append rows for each barangay under the district
             for (var barangay in districts[district]) {
                 if (districts[district].hasOwnProperty(barangay)) {
                     var inspector = districts[district][barangay];
 
-                    // Append a row with district, barangay, and inspector
                     var row = '<tr>';
                     row += '<td>' + district + '</td>';
                     row += '<td>' + barangay + '</td>';
@@ -132,16 +128,14 @@ include 'includes/header.php';
 
     function updateTableData(districts) {
         var tableBody = $('#filteredDataTable tbody');
-        tableBody.empty(); // Clear previous data
+        tableBody.empty(); 
 
         for (var district in districts) {
             if (districts.hasOwnProperty(district)) {
-                // Append rows for each barangay under the district
                 for (var barangay in districts[district]) {
                     if (districts[district].hasOwnProperty(barangay)) {
                         var inspector = districts[district][barangay];
 
-                        // Append a row with district, barangay, and inspector
                         var row = '<tr>';
                         row += '<td>' + district + '</td>';
                         row += '<td>' + barangay + '</td>';
@@ -226,7 +220,7 @@ include 'includes/header.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- This will be populated dynamically -->
+
                 </tbody>
             </table>
         </div>

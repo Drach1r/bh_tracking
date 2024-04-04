@@ -868,7 +868,7 @@ if (isset($_GET['id'])) {
                                 if (file_exists($imagePath)) {
                                     echo "<img src='{$imagePath}' alt='Uploaded Image' class='mx-auto d-block' style='max-width: 100%; height: auto;'>";
                                 } else {
-                                    echo "<p>{$imagePath}</p>"; // Display the image path if the file doesn't exist
+                                    echo "<p>{$imagePath}</p>"; 
                                 }
                             } else {
                                 echo "No image found";
@@ -886,7 +886,7 @@ if (isset($_GET['id'])) {
             function previewImage(input) {
                 if (input.files && input.files[0]) {
 
-                    if (input.files[0].size <= 5 * 1024 * 1024) { // Limit to 5MB
+                    if (input.files[0].size <= 5 * 1024 * 1024) { 
                         var reader = new FileReader();
                         reader.onload = function(e) {
                             document.getElementById('selected-image-preview').src = e.target.result;
@@ -895,7 +895,7 @@ if (isset($_GET['id'])) {
                     } else {
                         alert("File size exceeds 5MB. Please select a smaller file.");
 
-                        input.value = ""; // Reset input field
+                        input.value = ""; 
                     }
                 }
             }

@@ -25,11 +25,8 @@ include 'includes/boot.php';
     .card {
         width: 600px;
         backdrop-filter: blur(10px);
-        /* Add blur effect */
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        /* Add shadow effect */
         border: none;
-        /* Remove border */
     }
 </style>
 
