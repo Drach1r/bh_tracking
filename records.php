@@ -24,6 +24,31 @@ include 'includes/header.php';
         unset($_SESSION['success']);
     }
     ?>
+
+<script>
+    setTimeout(function() {
+        $('.alert').fadeOut();
+    }, 500);
+</script>
+
+    <div class="alert alert-success alert-dismissible fade show" style="display: none; position: absolute; top: 0px; left: 50%; transform: translateX(-50%); border-radius: 10px;" role="alert">
+        Data deleted successfully.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="alert alert-warning alert-dismissible fade show deleteWarning" style="display: none;" role="alert">
+        Error deleting record. Please try again later.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>x-www-form-urlencoded
+        </button>
+    </div>
+
+
+    
+
+
+
         <a style = "display:relative; float: right; margin-left:5px;" href="map.php" class="btn btn-info btn-sm rounded-s"><i class="fa-solid fa-map-location-dot"></i> Mapping</a>
         <a style = "display:relative; float: right;" href="generate_report.php" class="btn btn-success btn-sm rounded-s"><i class="fas fa-download"></i> Generate Report</a>
         <a href="create.php" class="btn btn-primary  btn-sm rounded-s"> Add New Record</a>
@@ -44,21 +69,6 @@ include 'includes/header.php';
             </div>
         </div>
     </form>
-
-
-
-    <div class="alert alert-success alert-dismissible fade show" style="display: none; position: absolute; top: 0px; left: 50%; transform: translateX(-50%); border-radius: 10px;" role="alert">
-        Data deleted successfully.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="alert alert-warning alert-dismissible fade show deleteWarning" style="display: none;" role="alert">
-        Error deleting record. Please try again later.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>x-www-form-urlencoded
-        </button>
-    </div>
 
     
             <br>

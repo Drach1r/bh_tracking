@@ -14,7 +14,6 @@ if (isset($_POST['id'])) {
 
         $pdo->commit();
 
-        $pdo->exec("ALTER TABLE boarding_house_tracking` AUTO_INCREMENT = 1");
     } catch (PDOException $e) {
         $pdo->rollBack();
     }

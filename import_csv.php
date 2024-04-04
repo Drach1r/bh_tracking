@@ -15,7 +15,6 @@ function importCSV($filename, $pdo)
         $stmt->execute($data);
         $_SESSION['success'] = 'New record created successfully';
         header("Location: records.php"); 
-exit();
     }
 
     fclose($file);
@@ -26,9 +25,7 @@ if (isset($_FILES["file"]) && $_FILES["file"]["error"] == 0) {
     importCSV($file_name, $pdo);
     $_SESSION['success'] = 'Import successful!';
     header("Location: records.php");
-    exit();
 } else {
     $_SESSION['error'] = 'Error: Please select a file to import.';
     header("Location: records.php");
-    exit();
 }
