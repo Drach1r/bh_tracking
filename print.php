@@ -1271,7 +1271,7 @@ $pdf->Ln();
 $pdf->Cell(1);
 
 if ($imagePath !== null) {
-  $pdf->Image($imagePath, $x = null, $y = null, $w = 200, $h = 100, $type = '', $link = '');
+  $pdf->Image($imagePath, $x = 15, $y = 200, $w = 190, $h = 120, $type = '', $link = '');
 } else {
   $pdf->Cell(0, 10, "", 0, 1);
 }

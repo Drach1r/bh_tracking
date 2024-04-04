@@ -24,7 +24,7 @@ include 'includes/header.php';
         unset($_SESSION['success']);
     }
     ?>
-        <a style = "display:relative; float: right; margin-left:5px;" href="map.php" class="btn btn-info btn-sm rounded-s"><i class="fas fa-download"></i>Mapping</a>
+        <a style = "display:relative; float: right; margin-left:5px;" href="map.php" class="btn btn-info btn-sm rounded-s"><i class="fa-solid fa-map-location-dot"></i> Mapping</a>
         <a style = "display:relative; float: right;" href="generate_report.php" class="btn btn-success btn-sm rounded-s"><i class="fas fa-download"></i> Generate Report</a>
         <a href="create.php" class="btn btn-primary  btn-sm rounded-s"> Add New Record</a>
 
