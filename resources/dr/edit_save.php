@@ -1,21 +1,46 @@
 <?php
-
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateform'])) {
     try {
         include '../../includes/boot.php';
 
         $id = $_POST['id'];
 
+
+        $newImageUploaded = isset($_FILES['new_image']) && $_FILES['new_image']['error'] === UPLOAD_ERR_OK;
+        // Process the uploaded image if a new image is uploaded
+        if ($newImageUploaded) {
+            // Your image processing logic here...
+            $currentImageId = $_POST['current_image_id'];
+            $uploadDir = '../../resources/gallery/';
+            $newImageName = uniqid() . '_' . $_FILES['new_image']['name'];
+            $targetFile = $uploadDir . $newImageName;
+
+            // Delete the previous image file if it exists
+            $stmt = $pdo->prepare("SELECT bh_image FROM boarding_house_tracking WHERE id = :id");
+            $stmt->bindParam(':id', $currentImageId, PDO::PARAM_INT);
+            $stmt->execute();
+            $previousImage = $stmt->fetchColumn();
+            if ($previousImage && file_exists($uploadDir . $previousImage)) {
+                unlink($uploadDir . $previousImage);
+            }
+
+            // Move the uploaded file to the target location
+            if (move_uploaded_file($_FILES['new_image']['tmp_name'], $targetFile)) {
+                // Update the database with the new image path
+                // Your database update logic here...
+            } else {
+                // Error handling if file move fails
+                echo "Failed to move uploaded image.";
+            }
+        }
+
+
         $bh_specify = null;
 
-
         if (isset($_POST['bh_specify'])) {
-
             if ($_POST['bh_specify'] === '') {
                 $bh_specify = null;
             } else {
-
                 $bh_specify = $_POST['bh_specify'];
             }
         }
@@ -24,116 +49,85 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateform'])) {
         $bh_nawasa = 0;
         $bh_deepwell = 0;
 
-
         if (isset($_POST['bh_water_source_nawasa'])) {
             $bh_water_source .= 'nawasa ';
             $bh_nawasa = 1;
         }
 
-
         if (isset($_POST['bh_water_source_deepwell'])) {
             $bh_water_source .= 'deep_well';
             $bh_deepwell = 1;
         }
-        if (isset($_FILES['bh_image']) && $_FILES['bh_image']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = '../../resources/gallery/';
-
-            if (!is_dir($uploadDir) || !is_writable($uploadDir)) {
-                mkdir($uploadDir, 0777);
-            }
-
-            $uploadFile = $uploadDir . basename($_FILES['bh_image']['name']);
-
-            if (move_uploaded_file($_FILES['bh_image']['tmp_name'], $uploadFile)) {
-                $imagePath = $uploadFile;
 
 
-                $stmt = $pdo->prepare("SELECT COUNT(*) FROM boarding_house_tracking WHERE bh_image = :bh_image");
-                $stmt->bindParam(':bh_image', $imagePath);
-                $stmt->execute();
-                $count = $stmt->fetchColumn();
 
-                if ($count > 0) {
-                    // Record with the same image path exists, perform update
-                    $sql = "UPDATE boarding_house_tracking SET bh_image = :bh_image WHERE bh_image = :old_bh_image";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->bindParam(':bh_image', $imagePath);
-                    $stmt->bindParam(':old_bh_image', $oldImagePath); // $oldImagePath should be the old image path
-                    $stmt->execute();
-                } else {
-                    // No record with the same image path exists, perform insert
-                    $sql = "INSERT INTO boarding_house_tracking (bh_image) VALUES (:bh_image)";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->bindParam(':bh_image', $imagePath);
-                    $stmt->execute();
-                }
-            }
-        }
         $sql = "UPDATE boarding_house_tracking SET 
-            account_number = :account_number,
-            establishment_name = :establishment_name,
-            first_name = :first_name,
-            middle_name = :middle_name,
-            last_name = :last_name,
-            suffix = :suffix,
-            bh_address = :bh_address,
-            bh_municipality = :bh_municipality,
-            bh_barangay = :bh_barangay,
-            bh_province = :bh_province,
-            bh_control_no = :bh_control_no,
-            bh_or_num = :bh_or_num,
-            date_issued = :date_issued,
-            amount_paid = :amount_paid,
-            bh_bpn = :bh_bpn,
-            bh_mp = :bh_mp,
-            date_paid = :date_paid,
-            bh_period_cover = :bh_period_cover,
-            bh_complaint = :bh_complaint,
-            bh_construction_kind = :bh_construction_kind,
-            bh_specify = :bh_specify,
-            bh_class = :bh_class,
-            bh_room = :bh_room,
-            bh_occupants = :bh_occupants,
-            bh_overcrowded = :bh_overcrowded,
-            bh_rates_charge = :bh_rates_charge,
-            bh_ratescharge_other = :bh_ratescharge_other,
-            bh_rate = :bh_rate,
-            bh_water_source = :bh_water_source,
-            bh_nawasa = :bh_nawasa,
-            bh_deepwell = :bh_deepwell,
-            bh_adequate = :bh_adequate,  
-            bh_portable = :bh_portable,
-            bh_toilet_type = :bh_toilet_type,
-            bh_toilet_cond = :bh_toilet_cond,
-            bh_bath_type = :bh_bath_type,
-            bh_bath_cond = :bh_bath_cond,
-            bh_cr_num = :bh_cr_num,
-            bh_bathroom_num = :bh_bathroom_num,
-            bh_premises_cond = :bh_premises_cond,
-            bh_garbage_disposal = :bh_garbage_disposal,
-            bh_garbage_other = :bh_garbage_other,
-            bh_dps = :bh_dps,
-            bh_sewage_disposal = :bh_sewage_disposal,
-            bh_sewage_other = :bh_sewage_other,
-            bh_sd_dps = :bh_sd_dps,
-            bh_rodent_disposal = :bh_rodent_disposal,
-            bh_rodent_other = :bh_rodent_other,
-            light_ventilation = :light_ventilation,
-            natural_artificial = :natural_artificial,
-            establishment_extension = :establishment_extension,
-            specify_txt = :specify_txt,
-            with_permit  = :with_permit,
-            bh_remarks = :bh_remarks,
-            office_required = :office_required,
-            inspected_by = :inspected_by,
-            acknowledge_by = :acknowledge_by,
-            current_loc = :current_loc,
-            bh_latitude = :bh_latitude,
-            bh_longitude = :bh_longitude,
-            bh_altitude = :bh_altitude,
-            bh_precision = :bh_precision,
-            bh_image = :bh_image
-            WHERE id = :id";
+        account_number = :account_number,
+        establishment_name = :establishment_name,
+        first_name = :first_name,
+        middle_name = :middle_name,
+        last_name = :last_name,
+        suffix = :suffix,
+        bh_address = :bh_address,
+        bh_municipality = :bh_municipality,
+        bh_district = :bh_district,
+        bh_barangay = :bh_barangay,
+        bh_province = :bh_province,
+        bh_control_no = :bh_control_no,
+        bh_or_num = :bh_or_num,
+        date_issued = :date_issued,
+        amount_paid = :amount_paid,
+        bh_bpn = :bh_bpn,
+        bh_mp = :bh_mp,
+        date_paid = :date_paid,
+        bh_period_cover = :bh_period_cover,
+        bh_complaint = :bh_complaint,
+        bh_construction_kind = :bh_construction_kind,
+        bh_specify = :bh_specify,
+        bh_class = :bh_class,
+        bh_room = :bh_room,
+        bh_occupants = :bh_occupants,
+        bh_overcrowded = :bh_overcrowded,
+        bh_rates_charge = :bh_rates_charge,
+        bh_ratescharge_other = :bh_ratescharge_other,
+        bh_rate = :bh_rate,
+        bh_water_source = :bh_water_source,
+        bh_nawasa = :bh_nawasa,
+        bh_deepwell = :bh_deepwell,
+        bh_adequate = :bh_adequate,  
+        bh_portable = :bh_portable,
+        bh_toilet_type = :bh_toilet_type,
+        bh_toilet_cond = :bh_toilet_cond,
+        bh_bath_type = :bh_bath_type,
+        bh_bath_cond = :bh_bath_cond,
+        bh_cr_num = :bh_cr_num,
+        bh_bathroom_num = :bh_bathroom_num,
+        bh_premises_cond = :bh_premises_cond,
+        bh_garbage_disposal = :bh_garbage_disposal,
+        bh_garbage_other = :bh_garbage_other,
+        bh_dps = :bh_dps,
+        bh_sewage_disposal = :bh_sewage_disposal,
+        bh_sewage_other = :bh_sewage_other,
+        bh_sd_dps = :bh_sd_dps,
+        bh_rodent_disposal = :bh_rodent_disposal,
+        bh_rodent_other = :bh_rodent_other,
+        light_ventilation = :light_ventilation,
+        natural_artificial = :natural_artificial,
+        establishment_extension = :establishment_extension,
+        specify_txt = :specify_txt,
+        with_permit  = :with_permit,
+        bh_remarks = :bh_remarks,
+        office_required = :office_required,
+        inspected_by = :inspected_by,
+        acknowledge_by = :acknowledge_by,
+        current_loc = :current_loc,
+        bh_latitude = :bh_latitude,
+        bh_longitude = :bh_longitude,
+        bh_altitude = :bh_altitude,
+        bh_precision = :bh_precision,
+        bh_image = :bh_image
+        WHERE id = :id";
+
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':account_number', $_POST['account_number']);
@@ -143,10 +137,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateform'])) {
         $stmt->bindParam(':last_name', $_POST['last_name']);
         $stmt->bindParam(':suffix', $_POST['suffix']);
         $stmt->bindParam(':bh_address', $_POST['bh_address']);
-        $stmt->bindParam(':bh_municipality', $_POST['bh_municipality_hidden']);
+        $stmt->bindParam(':bh_municipality', $_POST['bh_municipality']);
         $stmt->bindParam(':bh_district', $_POST['bh_district']);
         $stmt->bindParam(':bh_barangay', $_POST['bh_barangay']);
-        $stmt->bindParam(':bh_province', $_POST['bh_province_hidden']);
+        $stmt->bindParam(':bh_province', $_POST['bh_province']);
         $stmt->bindParam(':bh_control_no', $_POST['bh_control_no']);
         $stmt->bindParam(':bh_or_num', $_POST['bh_or_num']);
         $stmt->bindParam(':date_issued', $_POST['date_issued']);
@@ -156,9 +150,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateform'])) {
         $stmt->bindParam(':date_paid', $_POST['date_paid']);
         $stmt->bindParam(':bh_period_cover', $_POST['bh_period_cover']);
         $stmt->bindParam(':bh_complaint', $_POST['bh_complaint']);
-        $stmt->bindParam(':bh_construction_kind', $_POST['bh_construction_kind']);
+        $constructionKind = implode(',', $_POST['bh_construction_kind']);
+        $stmt->bindParam(':bh_construction_kind', $constructionKind);
         $stmt->bindParam(':bh_specify', $bh_specify, PDO::PARAM_STR);
-        $stmt->bindParam(':bh_class', $_POST['bh_class']);
+        $bhClass = implode(',', $_POST['bh_class']);
+        $stmt->bindParam(':bh_class', $bhClass);
         $stmt->bindParam(':bh_room', $_POST['bh_room']);
         $stmt->bindParam(':bh_occupants', $_POST['bh_occupants']);
         $stmt->bindParam(':bh_overcrowded', $_POST['bh_overcrowded']);
@@ -199,13 +195,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateform'])) {
         $stmt->bindParam(':bh_longitude', $_POST['bh_longitude']);
         $stmt->bindParam(':bh_altitude', $_POST['bh_altitude']);
         $stmt->bindParam(':bh_precision', $_POST['bh_precision']);
-        $stmt->bindParam(':bh_image', $imagePath);
+        $stmt->bindParam(':bh_image', $newImageName);
+        $stmt->bindParam(':id', $currentImageId, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id);
 
 
-        // Execute the query
         if ($stmt->execute()) {
             $_SESSION['success'] = "Record inserted successfully";
-            header("Location: ../../create.php");
+            header("Location: ../../bh_edit.php?id=" . $id);
             exit();
         } else {
 

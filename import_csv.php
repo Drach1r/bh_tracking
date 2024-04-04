@@ -14,7 +14,7 @@ function importCSV($filename, $pdo)
 
         $stmt->execute($data);
         $_SESSION['success'] = 'New record created successfully';
-        header("Location: records.php"); 
+        header("Location: records.php");
     }
 
     fclose($file);

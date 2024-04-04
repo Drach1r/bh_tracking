@@ -37,7 +37,8 @@ try {
             <br>
             <div class="card card-block  col-lg-12" style=" background-color: white; ">
 
-                <form action="resources/dr/edith_save.php" method="POST" enctype="multipart/form-data">
+                <form action="resources/dr/edit_save.php" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <input type="hidden" name="CSRFkey" value="<?php echo $key ?>" id="CSRFkey">
                     <input type="hidden" name="token" value="<?php echo $token ?>" id="CSRFtoken">
 
@@ -89,68 +90,75 @@ try {
 
                         <div class="form-group col-md-3">
                             <label for="bh_municipality">City/Municipality:</label>
-                            <input type="text" id="bh_municipality" name="bh_municipality" class="form-control" value="<?php echo isset($row['bh_municipality']) ? $row['bh_municipality'] : ''; ?>" required>
+                            <input type="text" id="bh_municipality" name="bh_municipality" class="form-control" value="ILOILO CITY" required readonly>
 
                         </div>
-
                         <div class="form-group col-md-3">
                             <label for="bh_district">District:</label>
-                            <?php
-                            $selectedDistricts = isset($row['bh_district']) ? explode(',', $row['bh_district']) : []; // Extract selected district numbers from $row['bh_district'] or initialize an empty array
+                            <select id="bh_district" name="bh_district" class="form-control">
+                                <?php
+                                // Extract selected district numbers from $row['bh_district'] or initialize an empty array
+                                $selectedDistricts = isset($row['bh_district']) ? explode(',', $row['bh_district']) : [];
 
-                            $availableDistricts = [
-                                1 => 'Arevalo',
-                                2 => 'City Proper',
-                                3 => 'Jaro',
-                                4 => 'Lapaz',
-                                5 => 'Lapuz',
-                                6 => 'Mandurriao',
-                                7 => 'Molo'
-                            ];
-
-                            $selectedDistrictNames = [];
-                            foreach ($selectedDistricts as $districtNumber) {
-                                if (isset($availableDistricts[$districtNumber])) {
-                                    $selectedDistrictNames[] = $availableDistricts[$districtNumber];
-                                }
-                            }
-                            $selectedDistrictNames = implode(', ', $selectedDistrictNames);
-                            ?>
-                            <input type="text" id="bh_district" name="bh_district" class="form-control" value="<?php echo $selectedDistrictNames; ?>">
-                            <input type="hidden" name="bh_district_hidden" value="<?php echo implode(',', $selectedDistricts); ?>">
-                        </div>
-
-
-                        <div class="form-group col-md-3">
-                            <label for="bh_barangay">Barangay:</label>
-                            <?php
-                            $selectedBarangay = isset($row['bh_barangay']) ? $row['bh_barangay'] : null;
-                            if ($selectedBarangay !== null) {
+                                // Fetch districts from the bh_district table
                                 try {
                                     $pdo = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
                                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                    $query = "SELECT barangay FROM bh_address WHERE id = ?";
-                                    $statement = $pdo->prepare($query);
-                                    $statement->bindParam(1, $selectedBarangay, PDO::PARAM_INT);
-                                    $statement->execute();
-                                    $barangay = $statement->fetchColumn();
+                                    $query = "SELECT id, district_name FROM bh_district";
+                                    $stmt = $pdo->query($query);
 
-                                    $barangayName = $barangay !== false ? $barangay : "";
+                                    if ($stmt->rowCount() > 0) {
+                                        while ($district = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                            $selected = in_array($district['id'], $selectedDistricts) ? "selected" : "";
+                                            echo "<option value='{$district['id']}' $selected>{$district['district_name']}</option>";
+                                        }
+                                    } else {
+                                        echo "<option value=''>No districts found</option>";
+                                    }
                                 } catch (PDOException $e) {
-                                    die("Error in executing query: " . $e->getMessage());
+                                    echo "Error: " . $e->getMessage();
                                 }
-                            } else {
-                                $barangayName = "";
-                            }
-                            ?>
-                            <input type="text" id="bh_barangay" name="bh_barangay" class="form-control" value="<?php echo $barangayName; ?>">
-                            <input type="hidden" name="bh_barangay_hidden" value="<?php echo $selectedBarangay; ?>">
+                                ?>
+                            </select>
                         </div>
 
                         <div class="form-group col-md-3">
+                            <label for="bh_barangay">Barangay:</label>
+                            <?php
+                            // Fetch barangays from the bh_address table based on the selected district
+                            $selectedDistrict = isset($row['bh_district']) ? $row['bh_district'] : null;
+                            if ($selectedDistrict !== null) {
+                                try {
+                                    $query = "SELECT id, barangay FROM bh_address WHERE district_id = ?";
+                                    $stmt = $pdo->prepare($query);
+                                    $stmt->bindParam(1, $selectedDistrict, PDO::PARAM_INT);
+                                    $stmt->execute();
+                                    $barangays = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                                    if ($stmt->rowCount() > 0) {
+                                        echo "<select id='bh_barangay' name='bh_barangay' class='form-control'>";
+                                        foreach ($barangays as $barangay) {
+                                            $selected = ($barangay['id'] == $row['bh_barangay']) ? "selected" : "";
+                                            echo "<option value='{$barangay['id']}' $selected>{$barangay['barangay']}</option>";
+                                        }
+                                        echo "</select>";
+                                    } else {
+                                        echo "<input type='text' id='bh_barangay' name='bh_barangay' class='form-control'>";
+                                    }
+                                } catch (PDOException $e) {
+                                    echo "Error: " . $e->getMessage();
+                                }
+                            } else {
+                                echo "<input type='text' id='bh_barangay' name='bh_barangay' class='form-control'>";
+                            }
+                            ?>
+                        </div>
+
+
+                        <div class="form-group col-md-3">
                             <label for="bh_province">Province:</label>
-                            <input type="text" id="bh_province" name="bh_province" class="form-control" value="<?php echo isset($row['bh_province']) ? $row['bh_province'] : ''; ?>" required>
+                            <input type="text" id="bh_province" name="bh_province" class="form-control" value="ILOILO" required readonly>
 
                         </div>
 
@@ -244,12 +252,30 @@ try {
                             </label>
                         </div>
                         <div class="form-group col-md-3">
-                            <input type="text" id="bh_specify" name="bh_specify" class="form-control" value=" <?php echo isset($row['bh_specify']) ? $row['bh_specify'] : ''; ?>">
+                            <input type="text" id="bh_specify" name="bh_specify" class="form-control" value=" <?php echo isset($row['bh_specify']) ? $row['bh_specify'] : ''; ?>" disabled>
                         </div>
 
 
-
                     </div>
+                    <script>
+                        $(document).ready(function() {
+                            var SpecifyOtherInput = $('#bh_specify');
+                            var OtherCheckbox = $('#otherSpecifyCheckbox');
+                            SpecifyOtherInput.prop('disabled', !OtherCheckbox.prop('checked'));
+                            $('.bh_construction_kind').click(function() {
+
+                                if ($(this).val() === 'c__other__specify') {
+                                    SpecifyOtherInput.prop('disabled', !OtherCheckbox.prop('checked'));
+                                    if (!OtherCheckbox.prop('checked')) {
+                                        SpecifyOtherInput.val('');
+                                    }
+                                } else {
+                                    SpecifyOtherInput.prop('disabled', true).val('');
+                                }
+                                $('.bh_construction_kind').not(this).prop('checked', false);
+                            });
+                        });
+                    </script>
 
 
 
@@ -326,9 +352,22 @@ try {
 
                         <div class="form-group col-md-3">
                             <label for="bh_ratescharge_other">Specify Others:</label>
-                            <input type="text" id="bh_ratescharge_other" class="form-control" name="bh_ratescharge_other" value="<?php echo isset($row['bh_ratescharge_other']) ? $row['bh_ratescharge_other'] : ''; ?>" required>
+                            <input type="text" id="bh_ratescharge_other" class="form-control" name="bh_ratescharge_other" value="<?php echo isset($row['bh_ratescharge_other']) ? $row['bh_ratescharge_other'] : ''; ?>" <?php echo isset($row['bh_rates_charge']) && $row['bh_rates_charge'] === 'other' ? '' : 'disabled'; ?> required>
                         </div>
 
+                        <script>
+                            $(document).ready(function() {
+                                var specifyRatesInput = $('#bh_ratescharge_other');
+                                var ratesSelect = $('#bh_rates_charge');
+
+                                specifyRatesInput.prop('disabled', ratesSelect.val() !== 'other');
+
+                                ratesSelect.change(function() {
+                                    specifyRatesInput.prop('disabled', $(this).val() !== 'other');
+                                    specifyRatesInput.val('');
+                                });
+                            });
+                        </script>
 
                         <div class="form-group col-md-2">
                             <label for="bh_rate">Rates:</label>
@@ -340,13 +379,13 @@ try {
                     <div style="margin-left: 5px;" class="row">
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input" id="bh_water_source_nawasa" name="bh_water_source[]" value="nawasa" <?php echo isset($row['bh_water_source']) && in_array('nawasa', explode(' ', $row['bh_water_source'])) ? 'checked' : ''; ?>>
+                                <input type="checkbox" class="form-check-input" id="bh_water_source_nawasa" name="bh_water_source_nawasa" value="1" <?php echo isset($row['bh_water_source_nawasa']) && $row['bh_water_source_nawasa'] == 1 ? 'checked' : ''; ?>>
                                 NAWASA
                             </label>
                         </div>
                         <div class="form-group col-md-2">
                             <label>
-                                <input type="checkbox" class="form-check-input" id="bh_water_source_deepwell" name="bh_water_source[]" value="deep_well" <?php echo isset($row['bh_water_source']) && in_array('deep_well', explode(' ', $row['bh_water_source'])) ? 'checked' : ''; ?>>
+                                <input type="checkbox" class="form-check-input" id="bh_water_source_deepwell" name="bh_water_source_deepwell" value="1" <?php echo isset($row['bh_water_source_deepwell']) && $row['bh_water_source_deepwell'] == 1 ? 'checked' : ''; ?>>
                                 Deep Well
                             </label>
                         </div>
@@ -430,28 +469,41 @@ try {
                         </div>
                     </div>
                     <div class="row">
-
                         <div class="form-group col-md-3">
                             <label for="bh_garbage_disposal">1. Types of Garbage Disposal:</label>
                             <select id="bh_garbage_disposal" class="form-control" name="bh_garbage_disposal" required>
-                                <option value="" disabled selected>-- Select Option --</option>
-                                <option value=""> <?php echo isset($row['bh_garbage_disposal']) && $row['bh_garbage_disposal'] === '' ? 'selected' : ''; ?> </option>
+                                <option value="" disabled <?php echo isset($row['bh_garbage_disposal']) && $row['bh_garbage_disposal'] === '' ? 'selected' : ''; ?>>-- Select Option --</option>
                                 <option value="dps" <?php echo isset($row['bh_garbage_disposal']) && $row['bh_garbage_disposal'] === 'dps' ? 'selected' : ''; ?>>DPS</option>
                                 <option value="others" <?php echo isset($row['bh_garbage_disposal']) && $row['bh_garbage_disposal'] === 'others' ? 'selected' : ''; ?>>Others:</option>
                             </select>
                         </div>
-
-
                         <div class="form-group col-md-3">
                             <label for="bh_garbage_other">Specify:</label>
-                            <input type="text" id="bh_garbage_other" class="form-control" name="bh_garbage_other" rows="1" value="<?php echo isset($row['bh_garbage_other']) ? $row['bh_garbage_other'] : ''; ?>" required>
+                            <input type="text" id="bh_garbage_other" class="form-control" name="bh_garbage_other" rows="1" value="<?php echo isset($row['bh_garbage_other']) ? $row['bh_garbage_other'] : ''; ?>" <?php echo isset($row['bh_garbage_disposal']) && $row['bh_garbage_disposal'] === 'others' ? '' : 'disabled'; ?> required>
                         </div>
                     </div>
+
+                    <script>
+                        $(document).ready(function() {
+                            var specifyInput = $('#bh_garbage_other');
+                            var disposalSelect = $('#bh_garbage_disposal');
+
+
+                            specifyInput.prop('disabled', disposalSelect.val() !== 'others');
+
+
+                            disposalSelect.change(function() {
+                                specifyInput.prop('disabled', $(this).val() !== 'others');
+                                specifyInput.val('');
+                            });
+                        });
+                    </script>
+
                     <div class="row">
 
                         <div class="form-group col-md-3">
                             <label for="bh_sewage_disposal">2. Types of Sewage Disposal:</label>
-                            <select id="bh_sewage_disposal" class="form-control" name="bh_sewage_disposal" required>
+                            <select id="bh_sewage_disposal" class="form-control" name="bh_sewage_disposal" required onchange="toggleInput('bh_garbage_disposal', 'bh_garbage_other')">
                                 <option value="" disabled selected>-- Select Option --</option>
                                 <option value=""> </option>
                                 <option value="dps" <?php echo isset($row['bh_sewage_disposal']) && $row['bh_sewage_disposal'] === 'dps' ? 'selected' : ''; ?>>DPS</option>
@@ -461,17 +513,32 @@ try {
 
                         <div class="form-group col-md-3">
                             <label for="bh_sewage_other">Specify:</label>
-                            <input type="text" id="bh_sewage_other" class="form-control" name="bh_sewage_other" rows="1" value="<?php echo isset($row['bh_sewage_other']) ? $row['bh_sewage_other'] : ''; ?>" required>
+                            <input type="text" id="bh_sewage_other" class="form-control" name="bh_sewage_other" rows="1" value="<?php echo isset($row['bh_sewage_other']) ? $row['bh_sewage_other'] : ''; ?>" required disabled>
                         </div>
 
                     </div>
+                    <script>
+                        $(document).ready(function() {
+                            var specifyInput = $('#bh_sewage_other');
+                            var disposalSelect = $('#bh_sewage_disposal');
+
+
+                            specifyInput.prop('disabled', disposalSelect.val() !== 'others');
+
+
+                            disposalSelect.change(function() {
+                                specifyInput.prop('disabled', $(this).val() !== 'others');
+                                specifyInput.val('');
+                            });
+                        });
+                    </script>
+
 
                     <div class="row">
 
                         <div class="form-group col-md-4">
                             <label for="bh_rodent_disposal">3. Types of Rodent / Vermin Disposal:</label>
-                            <select id="bh_rodent_disposal" class="form-control" name="bh_rodent_disposal" required>
-                                <option value="" disabled selected>-- Select Option --</option>
+                            <select id="bh_rodent_disposal" class="form-control" name="bh_rodent_disposal" required onchange="toggleInput('bh_garbage_disposal', 'bh_garbage_other')">
                                 <option value=""> </option>
                                 <option value="dps" <?php echo isset($row['bh_rodent_disposal']) && $row['bh_rodent_disposal'] === 'dps' ? 'selected' : ''; ?>>DPS</option>
                                 <option value="others" <?php echo isset($row['bh_rodent_disposal']) && $row['bh_rodent_disposal'] === 'others' ? 'selected' : ''; ?>>Others:</option>
@@ -480,9 +547,26 @@ try {
 
                         <div class="form-group col-md-3">
                             <label for="bh_rodent_other">Specify:</label>
-                            <input type="text" id="bh_rodent_other" class="form-control" name="bh_rodent_other" rows="1" value="<?php echo isset($row['bh_rodent_other']) ? $row['bh_rodent_other'] : ''; ?>" required>
+                            <input type="text" id="bh_rodent_other" class="form-control" name="bh_rodent_other" rows="1" value="<?php echo isset($row['bh_rodent_other']) ? $row['bh_rodent_other'] : ''; ?>" required disabled>
                         </div>
                     </div>
+
+                    <script>
+                        $(document).ready(function() {
+                            var specifyInput = $('#bh_rodent_other');
+                            var disposalSelect = $('#bh_rodent_disposal');
+
+
+                            specifyInput.prop('disabled', disposalSelect.val() !== 'others');
+
+
+                            disposalSelect.change(function() {
+                                specifyInput.prop('disabled', $(this).val() !== 'others');
+                                specifyInput.val('');
+                            });
+                        });
+                    </script>
+
 
 
 
@@ -518,10 +602,28 @@ try {
 
                         <div class="form-group col-md-4">
                             <label for="specify_txt">Specify if Yes:</label>
-                            <textarea id="specify_txt" class="form-control" name="specify_txt" rows="1" required><?php echo isset($row['specify_txt']) ? $row['specify_txt'] : ''; ?></textarea>
+                            <textarea id="specify_txt" class="form-control" name="specify_txt" rows="1" required disabled><?php echo isset($row['specify_txt']) ? $row['specify_txt'] : ''; ?></textarea>
 
                         </div>
                     </div>
+                    <script>
+                        function toggleTextArea() {
+                            var selectElement = document.getElementById("establishment_extension");
+                            var textArea = document.getElementById("specify_txt");
+
+                            if (selectElement.value === "yes") {
+                                textArea.disabled = false;
+                                textArea.required = true;
+                            } else {
+                                textArea.disabled = true;
+                                textArea.required = false;
+                                textArea.value = "";
+                            }
+                        }
+
+                        document.getElementById("establishment_extension").addEventListener("change", toggleTextArea);
+                        toggleTextArea();
+                    </script>
 
                     <div class="row">
                         <div class="form-group col-md-2">
@@ -646,17 +748,25 @@ try {
 
                     <br>
                     <h5>Boarding House Picture</h5>
+                    <!-- Add form for uploading a new image -->
+
+                    <input type="hidden" name="current_image" value="<?php echo isset($row['bh_image']) ? $row['bh_image'] : ''; ?>">
+                    <div class="form-group">
+                        <label for="new_image">Upload New Image:</label>
+                        <input type="file" name="new_image" id="new_image" accept="image/*" onchange="previewImage(event)">
+                    </div>
+
+                    <input type="hidden" name="current_image_id" value="<?php echo $row['id']; ?>">
+
 
                     <div class="row">
-
                         <br><br>
-
                         <div class="imageform" style="height: 100%; width: 100%; display: flex; justify-content: center; border: 1px solid #ccc;">
                             <?php
                             if (isset($row['bh_image'])) {
                                 $imagePath = "resources/gallery/" . $row['bh_image'];
                                 if (file_exists($imagePath)) {
-                                    echo "<img src='{$imagePath}' alt='Uploaded Image' class='mx-auto d-block' style='max-width: 100%; height: auto;'>";
+                                    echo "<img id='previewImage' src='{$imagePath}' alt='Uploaded Image' class='mx-auto d-block' style='max-width: 100%; height: auto;'>";
                                 } else {
                                     echo "<p>{$imagePath}</p>"; // Display the image path if the file doesn't exist
                                 }
@@ -665,45 +775,41 @@ try {
                             }
                             ?>
                         </div>
-
-
                     </div>
-                </form>
+
+
+
+                    <script>
+                        function previewImage(event) {
+                            var preview = document.getElementById('previewImage');
+                            var file = event.target.files[0];
+                            var reader = new FileReader();
+
+                            reader.onloadend = function() {
+                                preview.src = reader.result;
+                            }
+
+                            if (file) {
+                                reader.readAsDataURL(file);
+                            } else {
+                                preview.src = "";
+                            }
+                        }
+                    </script>
+
+
+                    <br>
+                    <br>
+
+                    <br><br>
+
+                    <button type="submit" class="btn btn-success btn-sm" name="updateform" style="float: right;">Submit</button>
             </div>
+            </form>
+
         </div>
-
-        <script>
-            function previewImage(input) {
-                if (input.files && input.files[0]) {
-
-                    if (input.files[0].size <= 5 * 1024 * 1024) { // Limit to 5MB
-                        var reader = new FileReader();
-                        reader.onload = function(e) {
-                            document.getElementById('selected-image-preview').src = e.target.result;
-                        };
-                        reader.readAsDataURL(input.files[0]);
-                    } else {
-                        alert("File size exceeds 5MB. Please select a smaller file.");
-
-                        input.value = ""; // Reset input field
-                    }
-                }
-            }
-        </script>
-
-        <br>
-        <br>
-
     </div>
-
-
-    <br>
-    <br>
-
-
-
-    <button type="submit" class="btn btn-success btn-sm" onclick="uploadImage()" style="float: right;">Submit</button>
-
+    </div>
 
 </section>
 
