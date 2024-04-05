@@ -59,16 +59,31 @@ include 'includes/header.php';
     <form action="import_csv.php" method="post" enctype="multipart/form-data">
         <div class="form-row align-items-center">
             <div class="col-auto">
-                <label for="file" class="col-form-label">Choose CSV file to import:</label>
+                <label for="file" class="col-form-label">Choose CSV file:</label>
             </div>
             <div class="col-auto">
                 <input type="file" class="form-control-file" id="file" name="file">
             </div>
             <div class="col-auto">
-                <button type="submit" class="btn btn-primary btn-sm rounded-s">Import</button>
+                <button type="submit" class="btn btn-success btn-sm rounded-s">Import</button>
             </div>
         </div>
     </form>
+
+
+    <form action="import_image.php" method="post" enctype="multipart/form-data">
+    <div class="form-row align-items-center">
+        <div class="col-auto">
+            <label for="file" class="col-form-label">Choose Image files:</label>
+        </div>
+        <div class="col-auto">
+            <input type="file" class="form-control-file" id="file" name="file[]" multiple>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary btn-sm rounded-s">Import</button>
+        </div>
+    </div>
+</form>
 
     
             <br>

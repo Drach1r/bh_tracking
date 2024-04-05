@@ -198,12 +198,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateform'])) {
         }
 
         if ($stmt->execute()) {
-            $_SESSION['success'] = "Record inserted successfully";
+            $_SESSION['success'] = "Record updated successfully";
             header("Location: ../../bh_edit.php?id=" . $id);
             exit();
         } else {
 
-            $_SESSION['error'] = "Failed to insert record";
+            $_SESSION['error'] = "Failed to update record";
         }
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
