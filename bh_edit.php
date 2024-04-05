@@ -711,7 +711,7 @@ try {
                             <h5> GPS: <button type="button" onclick="getLocation()" class="btn btn-primary btn-sm my-2 buton"><i class="fa-solid fa-location-dot"></i></button></h5>
                             <label for="current_loc">Current Location:</label>
                             <div class="input-group">
-                                <textarea id="current_loc" class="form-control" rows="1" name="current_loc"><?php echo isset($row['current_loc']) ? $row['current_loc'] : ''; ?></textarea>
+                                <textarea id="current_loc" class="form-control" rows="1" name="current_loc" readonly><?php echo isset($row['current_loc']) ? $row['current_loc'] : ''; ?></textarea>
                             </div>
                         </div>
 
@@ -722,19 +722,19 @@ try {
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label for="bh_longitude">Longitude:</label>
-                            <input id="bh_longitude" class="form-control" type="text" rows="1" name="bh_longitude" value="<?php echo isset($row['bh_longitude']) ? $row['bh_longitude'] : ''; ?>">
+                            <input id="bh_longitude" class="form-control" type="text" rows="1" name="bh_longitude" value="<?php echo isset($row['bh_longitude']) ? $row['bh_longitude'] : ''; ?>" readonly>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="bh_latitude">Latitude:</label>
-                            <input id="bh_latitude" class="form-control" type="text" rows="1" name="bh_latitude" value="<?php echo isset($row['bh_latitude']) ? $row['bh_latitude'] : ''; ?>">
+                            <input id="bh_latitude" class="form-control" type="text" rows="1" name="bh_latitude" value="<?php echo isset($row['bh_latitude']) ? $row['bh_latitude'] : ''; ?>" readonly>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="bh_altitude">Altitude:</label>
-                            <input id="bh_altitude" class="form-control" type="text" rows="1" name="bh_altitude" value="<?php echo isset($row['bh_altitude']) ? $row['bh_altitude'] : ''; ?>">
+                            <input id="bh_altitude" class="form-control" type="text" rows="1" name="bh_altitude" value="<?php echo isset($row['bh_altitude']) ? $row['bh_altitude'] : ''; ?>" readonly>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="bh_precision">Precision:</label>
-                            <input id="bh_precision" class="form-control" type="text" rows="1" name="bh_precision" value="<?php echo isset($row['bh_precision']) ? $row['bh_precision'] : ''; ?>">
+                            <input id="bh_precision" class="form-control" type="text" rows="1" name="bh_precision" value="<?php echo isset($row['bh_precision']) ? $row['bh_precision'] : ''; ?>" readonly>
                         </div>
                     </div>
 
@@ -812,50 +812,29 @@ try {
 
                     <br>
                     <h5>Boarding House Picture</h5>
-                    <!-- Add form for uploading a new image -->
-
-                    <input type="hidden" name="current_image" value="<?php echo isset($row['bh_image']) ? $row['bh_image'] : ''; ?>">
                     <div class="form-group">
                         <label for="new_image">Upload New Image:</label>
                         <input type="file" name="new_image" id="new_image" accept="image/*" onchange="previewImage(event)">
+                        <br>
+                        <img id="preview" src="<?php echo isset($row['bh_image']) ? 'resources/gallery/' . $row['bh_image'] : '#'; ?>" alt="Preview" style="height: 100%; width: 100%; display: flex; justify-content: center; border: 1px solid #ccc;">
                     </div>
 
-                    <input type="hidden" name="current_image_id" value="<?php echo $row['id']; ?>">
                     <script>
+                        // JavaScript
                         function previewImage(event) {
-                            var preview = document.getElementById('previewImage');
-                            var file = event.target.files[0];
                             var reader = new FileReader();
 
-                            reader.onloadend = function() {
+                            reader.onload = function() {
+                                var preview = document.getElementById('preview');
                                 preview.src = reader.result;
+                                preview.style.display = 'block'; // Show the preview image
                             }
 
-                            if (file) {
-                                reader.readAsDataURL(file);
-                            } else {
-                                preview.src = "";
+                            if (event.target.files && event.target.files[0]) {
+                                reader.readAsDataURL(event.target.files[0]);
                             }
                         }
                     </script>
-
-                    <div class="row">
-                        <br><br>
-                        <div class="imageform" style="height: 100%; width: 100%; display: flex; justify-content: center; border: 1px solid #ccc;">
-                            <?php
-                            if (isset($row['bh_image'])) {
-                                $imagePath = "resources/gallery/" . $row['bh_image'];
-                                if (file_exists($imagePath)) {
-                                    echo "<img id='previewImage' src='{$imagePath}' alt='Uploaded Image' class='mx-auto d-block' style='max-width: 100%; height: auto;'>";
-                                } else {
-                                    echo "<p>{$imagePath}</p>"; // Display the image path if the file doesn't exist
-                                }
-                            } else {
-                                echo "No image found";
-                            }
-                            ?>
-                        </div>
-                    </div>
 
 
 
