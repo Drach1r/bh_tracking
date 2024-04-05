@@ -465,6 +465,23 @@ include 'includes/header.php';
                             <input type="text" id="bh_garbage_other" class="form-control" name="bh_garbage_other" rows="1" placeholder="Specify other" required disabled>
                         </div>
                     </div>
+
+
+                    <script>
+                        document.getElementById('bh_garbage_disposal').addEventListener('change', function() {
+                            var specifyRatesInput = document.getElementById('bh_garbage_other');
+                            if (this.value === 'others') {
+                                specifyRatesInput.disabled = false;
+                                specifyRatesInput.value = '';
+                                specifyRatesInput.focus();
+                            } else {
+                                specifyRatesInput.disabled = true;
+                                specifyRatesInput.value = ''; // Clear the input field value
+                            }
+                        });
+                    </script>
+
+
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label for="bh_sewage_disposal">2. Types of Sewage Disposal:</label>
@@ -481,6 +498,20 @@ include 'includes/header.php';
                             <input type="text" id="bh_sewage_other" class="form-control" name="bh_sewage_other" rows="1" placeholder="Specify other" required disabled>
                         </div>
                     </div>
+
+                    <script>
+                        document.getElementById('bh_sewage_disposal').addEventListener('change', function() {
+                            var specifyRatesInput = document.getElementById('bh_sewage_other');
+                            if (this.value === 'others') {
+                                specifyRatesInput.disabled = false;
+                                specifyRatesInput.value = '';
+                                specifyRatesInput.focus();
+                            } else {
+                                specifyRatesInput.disabled = true;
+                                specifyRatesInput.value = ''; // Clear the input field value
+                            }
+                        });
+                    </script>
                     <div Class="row">
                         <div class="form-group col-md-4">
                             <label for="bh_rodent_disposal">3. Types of Rodent / Vermin Disposal:</label>
@@ -498,19 +529,17 @@ include 'includes/header.php';
                         </div>
                     </div>
                     <script>
-                        function toggleInput(selectId, inputId) {
-                            var selectElement = document.getElementById(selectId);
-                            var input = document.getElementById(inputId);
-
-                            if (selectElement.value === "others") {
-                                input.disabled = false;
-                                input.required = true;
+                        document.getElementById('bh_rodent_disposal').addEventListener('change', function() {
+                            var specifyRatesInput = document.getElementById('bh_rodent_other');
+                            if (this.value === 'others') {
+                                specifyRatesInput.disabled = false;
+                                specifyRatesInput.value = '';
+                                specifyRatesInput.focus();
                             } else {
-                                input.disabled = true;
-                                input.required = false;
-                                input.value = "";
+                                specifyRatesInput.disabled = true;
+                                specifyRatesInput.value = ''; // Clear the input field value
                             }
-                        }
+                        });
                     </script>
 
 
