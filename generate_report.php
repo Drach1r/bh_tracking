@@ -6,27 +6,26 @@ include 'includes/header.php';
 
 <div class="container">
     <div class="card-title-body">
-        <script>
-           $(document).ready(function () {
-    var table = $('#recordstable').DataTable({
-        'pageLength': 10,
-        'scrollY': '40vh',
-        columnDefs: [{
-                width: '10%',
-                targets: 1
-            },
-            {
-                width: '10%',
-                targets: 3
-            },
-        ]
-    });
-
-    $('.nav-link').click(function () {
-        table.columns.adjust().draw();
-    });
-
+    <script>
     $(document).ready(function () {
+        var table = $('#recordstable').DataTable({
+            'pageLength': 10,
+            'scrollY': '40vh',
+            columnDefs: [{
+                    width: '10%',
+                    targets: 1
+                },
+                {
+                    width: '10%',
+                    targets: 3
+                },
+            ]
+        });
+
+        $('.nav-link').click(function () {
+            table.columns.adjust().draw();
+        });
+
         var today = new Date().toISOString().slice(0, 10);
         $('#filterDate').val(today);
         filterPieChart(today);
@@ -35,122 +34,94 @@ include 'includes/header.php';
             var selectedDate = $(this).val();
             filterPieChart(selectedDate);
         });
-    });
-    $('#filterDate').change(function () {
-        var selectedDate = $(this).val();
-        filterPieChart(selectedDate);
-    });
 
-    var myChart = null;
-
-    function filterPieChart(selectedDate) {
-        $.ajax({
-            url: 'fetch_data.php',
-            type: 'POST',
-            data: {
-                selectedDate: selectedDate
-            },
-            dataType: 'json',
-            success: function (response) {
-                if (myChart) {
-                    myChart.destroy();
-                if (response.labels.length > 0) {
-                    updatePieChart(response.labels, response.data);
-                    updateTableData(response.districts);
-                } else {
-                    updatePieChart(['No data available'], [0]);
+        function filterPieChart(selectedDate) {
+            $.ajax({
+                url: 'fetch_data.php',
+                type: 'POST',
+                data: {
+                    selectedDate: selectedDate
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (myChart) {
+                        myChart.destroy();
+                    }
+                    if (response.labels.length > 0) {
+                        updatePieChart(response.labels, response.data, response.districts);
+                        updateTableData(response.districts);
+                    } else {
+                        updatePieChart(['No data available'], [0]);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
-    }
-
-    function updatePieChart(labels, data, districts) {
-    var ctx = document.getElementById('districtPieChart').getContext('2d');
-    myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: data,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.8)',
-                    'rgba(54, 162, 235, 0.8)',
-                    'rgba(255, 206, 86, 0.8)',
-                    'rgba(75, 192, 192, 0.8)',
-                    'rgba(153, 102, 255, 0.8)',
-                    'rgba(255, 159, 64, 0.8)',
-                    'rgba(255, 0, 0, 0.8)',
-                    'rgba(0, 255, 0, 0.8)',
-                    'rgba(0, 0, 255, 0.8)',
-                    'rgba(255, 255, 0, 0.8)',
-                    'rgba(255, 0, 255, 0.8)',
-                    'rgba(0, 255, 255, 0.8)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'Inspections Per District',
-                fontSize: 18
-            }
+            });
         }
-    });
 
-    var tableBody = $('#filteredDataTable tbody');
-    tableBody.empty(); 
-    
+        var myChart = null;
 
-    for (var district in districts) {
-        if (districts.hasOwnProperty(district)) {
-            for (var barangay in districts[district]) {
-                if (districts[district].hasOwnProperty(barangay)) {
-                    var inspector = districts[district][barangay];
-
-                    var row = '<tr>';
-                    row += '<td>' + district + '</td>';
-                    row += '<td>' + barangay + '</td>';
-                    row += '<td>' + inspector + '</td>';
-                    row += '</tr>';
-
-                    tableBody.append(row);
+        function updatePieChart(labels, data, districts) {
+            var ctx = document.getElementById('districtPieChart').getContext('2d');
+            myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 206, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(153, 102, 255, 0.8)',
+                            'rgba(255, 159, 64, 0.8)',
+                            'rgba(255, 0, 0, 0.8)',
+                            'rgba(0, 255, 0, 0.8)',
+                            'rgba(0, 0, 255, 0.8)',
+                            'rgba(255, 255, 0, 0.8)',
+                            'rgba(255, 0, 255, 0.8)',
+                            'rgba(0, 255, 255, 0.8)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Inspections Per District',
+                        fontSize: 18
+                    }
                 }
-            }
+            });
         }
-    }
-}
 
+        function updateTableData(districts) {
+            var tableBody = $('#filteredDataTable tbody');
+            tableBody.empty();
 
+            for (var district in districts) {
+                if (districts.hasOwnProperty(district)) {
+                    for (var barangay in districts[district]) {
+                        if (districts[district].hasOwnProperty(barangay)) {
+                            var inspector = districts[district][barangay];
 
-    function updateTableData(districts) {
-        var tableBody = $('#filteredDataTable tbody');
-        tableBody.empty(); 
+                            var row = '<tr>';
+                            row += '<td>' + district + '</td>';
+                            row += '<td>' + barangay + '</td>';
+                            row += '<td>' + inspector + '</td>';
+                            row += '</tr>';
 
-        for (var district in districts) {
-            if (districts.hasOwnProperty(district)) {
-                for (var barangay in districts[district]) {
-                    if (districts[district].hasOwnProperty(barangay)) {
-                        var inspector = districts[district][barangay];
-
-                        var row = '<tr>';
-                        row += '<td>' + district + '</td>';
-                        row += '<td>' + barangay + '</td>';
-                        row += '<td>' + inspector + '</td>';
-                        row += '</tr>';
-
-                        tableBody.append(row);
+                            tableBody.append(row);
+                        }
                     }
                 }
             }
         }
-    }
-});
+    });
+</script>
 
-        </script>
 
         <table class="table table-bordered" id="recordstable">
             <thead>
