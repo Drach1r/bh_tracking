@@ -118,7 +118,7 @@ include 'includes/header.php';
                                             data.forEach(barangay => {
                                                 var option = document.createElement('option');
                                                 option.value = barangay.id;
-                                                option.textContent = barangay.barangay; // Ensure this matches your database field name
+                                                option.textContent = barangay.barangay;
                                                 selectBarangay.appendChild(option);
                                             });
                                         })
@@ -337,7 +337,7 @@ include 'includes/header.php';
                                     specifyRatesInput.focus();
                                 } else {
                                     specifyRatesInput.disabled = true;
-                                    specifyRatesInput.value = ''; // Clear the input field value
+                                    specifyRatesInput.value = '';
                                 }
                             });
                         </script>
@@ -508,7 +508,7 @@ include 'includes/header.php';
                                 specifyRatesInput.focus();
                             } else {
                                 specifyRatesInput.disabled = true;
-                                specifyRatesInput.value = ''; // Clear the input field value
+                                specifyRatesInput.value = '';
                             }
                         });
                     </script>
@@ -689,7 +689,7 @@ include 'includes/header.php';
                             var altitude = position.coords.altitude;
                             var accuracy = position.coords.accuracy;
 
-                            // Replace null values with "0"
+
                             latitude = latitude !== null ? latitude : 0;
                             longitude = longitude !== null ? longitude : 0;
                             altitude = altitude !== null ? altitude : 0;

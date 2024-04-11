@@ -13,7 +13,7 @@ function getImagePath($bh_image)
   if (file_exists($imagePath)) {
     return $imagePath;
   } else {
-    return null; // Return null if the file doesn't exist
+    return null;
   }
 }
 
@@ -40,7 +40,7 @@ while ($row = $result->fetch_object()) {
   $bh_address = $row->bh_address;
   $bh_municipality = $row->bh_municipality;
   $bh_district = $row->bh_district;
-  $bh_barangay_name = $row->barangay; // Retrieve the barangay name from the result
+  $bh_barangay_name = $row->barangay;
   $bh_province = $row->bh_province;
   $bh_control_no = $row->bh_control_no;
   $bh_or_num = $row->bh_or_num;
@@ -422,7 +422,7 @@ $pdf->Ln();
 
 $pdf->Rect(11, 220, 200, 15);
 $pdf->Cell(1);
-$pdf->Cell(200, -5, 'Kind of Construction of the Boarding House: ', 0); // Adjusted to add border
+$pdf->Cell(200, -5, 'Kind of Construction of the Boarding House: ', 0);
 $pdf->Ln();
 
 $pdf->SetFont('ZapfDingbats', '', 8);
