@@ -14,7 +14,7 @@
     <div class="filter-form-container">
         <div class="filter-form">
             <label for="establishment-name"><strong>Establishment Name:</strong></label>
-            <input type="text" id="establishment-name">
+            <input type="text" id="establishment-name" class="form-control">
             <br>
             <br>
             <label for="district"><strong>District:</strong></label>
