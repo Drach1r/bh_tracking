@@ -9,16 +9,16 @@ try {
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "SELECT 
-    bht.*, 
-    bd.district_name AS district_name,
-    ba.barangay AS barangay_name
-FROM 
-    boarding_house_tracking bht
-LEFT JOIN 
-    bh_district bd ON bht.bh_district = bd.id
-LEFT JOIN 
-    bh_address ba ON bht.bh_barangay = ba.id;
-";
+                bht.*, 
+                bd.id AS bh_district_id,
+                bd.district_name AS district_name,
+                ba.barangay AS barangay_name
+            FROM 
+                boarding_house_tracking bht
+            LEFT JOIN 
+                bh_district bd ON bht.bh_district = bd.id
+            LEFT JOIN 
+                bh_address ba ON bht.bh_barangay = ba.id";
 
 
     $stmt = $pdo->query($sql);

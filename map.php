@@ -11,42 +11,107 @@
         Filter Map
     </div>
 
-
     <div class="filter-form-container">
         <div class="filter-form">
             <label for="establishment-name"><strong>Establishment Name:</strong></label>
-            <input type="text" id="establishment-name" class="form-control">
-
+            <input type="text" id="establishment-name">
+            <br>
             <br>
             <label for="district"><strong>District:</strong></label>
             <select id="district" name="district" class="form-control">
                 <option value="">-- Select District --</option>
-            </select>
+                <?php
+                try {
+                    $pdo = new PDO('mysql:host=localhost;dbname=bh_tracking', 'root', '');
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+                    $query = "SELECT id, district_name FROM bh_district";
+                    $stmt = $pdo->query($query);
+
+                    if ($stmt->rowCount() > 0) {
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            // Check if the current district ID matches the one you want to pre-select
+                            $selected = ''; // Default to empty (no pre-selection)
+                            if ($row['id'] == $selectedDistrictId) {
+                                $selected = 'selected'; // Mark this option as selected
+                            }
+
+                            echo "<option value='" . $row['id'] . "' $selected>" . $row['district_name'] . "</option>";
+                        }
+                    } else {
+                        echo "<option value=''>No districts found</option>";
+                    }
+                } catch (PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+                ?>
+            </select>
 
             <label for="barangay"><strong>Barangay:</strong></label>
-            <select id="barangay" class="form-control">
+            <select id="barangay" name="barangay" class="form-control">
                 <option value="">-- Select Barangay --</option>
-
             </select>
+
+            <script>
+                $(document).ready(function() {
+                    $('#district').on('change', function() {
+                        var districtId = $(this).val();
+
+                        console.log("Selected district ID:", districtId); // Log the selected district ID
+
+                        // Fetch barangays based on the selected district
+                        $.ajax({
+                            url: 'fetch_address.php',
+                            type: 'POST',
+                            data: {
+                                districtId: districtId
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                $('#barangay').empty(); // Clear existing options
+                                $('#barangay').append($('<option>', {
+                                    value: '',
+                                    text: '-- Select Barangay --'
+                                }));
+
+                                if (response.success) {
+                                    response.barangays.forEach(function(barangay) {
+                                        $('#barangay').append($('<option>', {
+                                            value: barangay.id,
+                                            text: barangay.barangay
+                                        }));
+                                    });
+                                } else {
+                                    $('#barangay').append($('<option>', {
+                                        value: '',
+                                        text: 'No barangays found'
+                                    }));
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("Error fetching barangays:", error);
+                            }
+                        });
+                    });
+                });
+            </script>
+
+
             <br>
 
             <div class="row">
                 <div class="checkbox-group">
                     <label for="construction-kind"><strong>Kind of Construction:</strong></label>
-                    <label><input type="checkbox" class="bh_construction_kind kind-checkbox-group"
-                            value="made_of_strong_materials"> A. Made
+                    <label><input type="checkbox" class="bh_construction_kind kind-checkbox-group" value="made_of_strong_materials"> A. Made
                         of Strong Materials</label>
-                    <label><input type="checkbox" class="bh_construction_kind kind-checkbox-group"
-                            value="made_of_light_materials"> B. Made
+                    <label><input type="checkbox" class="bh_construction_kind kind-checkbox-group" value="made_of_light_materials"> B. Made
                         of Light Materials</label>
-                    <label><input type="checkbox" class="bh_construction_kind kind-checkbox-group"
-                            value="other_specify"> C. Other:</label>
+                    <label><input type="checkbox" class="bh_construction_kind kind-checkbox-group" value="other_specify"> C. Other:</label>
                     <input type="text" id="bh_specify" name="bh_specify" placeholder="Specify" style="display: none;">
 
                     <script>
-                        $(document).ready(function () {
-                            $('.kind-checkbox-group').click(function () {
+                        $(document).ready(function() {
+                            $('.kind-checkbox-group').click(function() {
 
                                 $('.kind-checkbox-group').not(this).prop('checked', false);
                             });
@@ -62,8 +127,8 @@
                     <label><input type="checkbox" class="bh_class bh-checkbox-group" value="class_d"> Class D</label>
 
                     <script>
-                        $(document).ready(function () {
-                            $('.bh-checkbox-group').click(function () {
+                        $(document).ready(function() {
+                            $('.bh-checkbox-group').click(function() {
 
                                 $('.bh-checkbox-group').not(this).prop('checked', false);
                             });
@@ -85,16 +150,14 @@
                         Rent</label>
                     <label><input type="checkbox" class="bh_rates_charge rate-checkbox-group" value="house_rent"> House
                         Rent</label>
-                    <label><input type="checkbox" class="bh_rates_charge rate-checkbox-group"
-                            value="rent_per_unit__apartment"> Rent Per Unit(Apartment)</label>
+                    <label><input type="checkbox" class="bh_rates_charge rate-checkbox-group" value="rent_per_unit__apartment"> Rent Per Unit(Apartment)</label>
                     <label><input type="checkbox" class="bh_rates_charge rate-checkbox-group" value="other">
                         Others</label>
-                    <input type="text" id="other-rates" name="bh_ratescharge_other" placeholder="Specify Rates"
-                        style="display: none;">
+                    <input type="text" id="other-rates" name="bh_ratescharge_other" placeholder="Specify Rates" style="display: none;">
 
                     <script>
-                        $(document).ready(function () {
-                            $('.rate-checkbox-group').click(function () {
+                        $(document).ready(function() {
+                            $('.rate-checkbox-group').click(function() {
 
                                 $('.rate-checkbox-group').not(this).prop('checked', false);
                             });
@@ -118,8 +181,8 @@
                         Artificial</label>
 
                     <script>
-                        $(document).ready(function () {
-                            $('.light-checkbox-group').click(function () {
+                        $(document).ready(function() {
+                            $('.light-checkbox-group').click(function() {
 
                                 $('.light-checkbox-group').not(this).prop('checked', false);
                             });
@@ -132,8 +195,8 @@
                     <label><input type="checkbox" class="with_permit permit-checkbox-group" value="yes"> Yes</label>
                     <label><input type="checkbox" class="with_permit permit-checkbox-group" value="no"> No</label>
                     <script>
-                        $(document).ready(function () {
-                            $('.permit-checkbox-group').click(function () {
+                        $(document).ready(function() {
+                            $('.permit-checkbox-group').click(function() {
 
                                 $('.permit-checkbox-group').not(this).prop('checked', false);
                             });
@@ -153,15 +216,15 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         function toggleFilterForm() {
             $('.filter-form-container').toggleClass('hidden');
             $('#map').toggleClass('expanded');
-            map.invalidateSize(); 
+            map.invalidateSize();
         }
 
-        $('#burger-icon').click(function () {
+        $('#burger-icon').click(function() {
             toggleFilterForm();
         });
 
@@ -177,10 +240,11 @@
             url: 'resources/dr/pins.php',
             type: 'GET',
             dataType: 'json',
-            success: function (data) {
-                data.forEach(function (item) {
+            success: function(data) {
+                data.forEach(function(item) {
                     var latitude = parseFloat(item.bh_latitude);
                     var longitude = parseFloat(item.bh_longitude);
+                    var districtId = parseInt(item.bh_district_id); // Adjust this according to your actual data structure
                     var establishmentName = String(item.establishment_name);
                     var address = String(item.bh_address);
                     var municipality = String(item.bh_municipality);
@@ -200,11 +264,11 @@
                     var specify = String(item.bh_specify);
                     var bhClass = String(item.bh_class);
                     var bhRoom = String(item.bh_room);
-                    var occupants = parseInt(item.bh_occupants) || 0; 
+                    var occupants = parseInt(item.bh_occupants) || 0;
                     var overcrowded = parseInt(item.bh_overcrowded) || 0;
                     var ratesCharge = item.bh_rates_charge ? String(item.bh_rates_charge) : '';
                     var ratesChargeOther = item.bh_ratescharge_other ? String(item.bh_ratescharge_other) : '';
-                    var rate = parseFloat(item.bh_rate) || 0.0; 
+                    var rate = parseFloat(item.bh_rate) || 0.0;
                     var waterSource = String(item.bh_water_source);
                     var adequate = String(item.bh_adequate);
                     var portable = String(item.bh_portable);
@@ -244,7 +308,10 @@
                             html: '<div style="width: 12px; height: 12px; background-color: red; border-radius: 50%;"></div>'
                         });
 
-                        var marker = L.marker(mapCenter, { icon: redDotIcon }).addTo(map);
+                        var marker = L.marker(mapCenter, {
+                            icon: redDotIcon,
+                            districtId: districtId
+                        }).addTo(map);
                         marker.bindPopup(
                             `<div class="popup-content">
                             <h4>${establishmentName}</h4>
@@ -307,35 +374,48 @@
                     }
                 });
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error("Error fetching boarding house locations:", error);
             }
         });
 
-
-        $('#establishment-name, #district, #barangay, .bh_construction_kind, .bh_class, .bh_rates_charge, .bh_water_source, .light_ventilation, .with_permit').on('input', function () {
+        $('#establishment-name, #district, #barangay, .bh_construction_kind, .bh_class, .bh_rates_charge, .bh_water_source, .light_ventilation, .with_permit').on('input change', function() {
             var establishmentName = $('#establishment-name').val().toLowerCase();
-            var district = $('#district').val().toLowerCase();
+            var district = $('#district').val();
             var barangay = $('#barangay').val().toLowerCase();
-            var constructionKind = $('.bh_construction_kind:checked').map(function () { return this.value; }).get().join(",");
-            var bhClass = $('.bh_class:checked').map(function () { return this.value; }).get().join(",");
-            var rates = $('.bh_rates_charge:checked').map(function () { return this.value; }).get().join(",");
-            var waterSource = $('.bh_water_source:checked').map(function () { return this.value; }).get().join(",");
-            var lightingVentilation = $('.light_ventilation:checked').map(function () { return this.value; }).get().join(",");
-            var withPermit = $('.with_permit:checked').map(function () { return this.value; }).get().join(",");
+            var constructionKind = $('.bh_construction_kind:checked').map(function() {
+                return this.value;
+            }).get().join(",");
+            var bhClass = $('.bh_class:checked').map(function() {
+                return this.value;
+            }).get().join(",");
+            var rates = $('.bh_rates_charge:checked').map(function() {
+                return this.value;
+            }).get().join(",");
+            var waterSource = $('.bh_water_source:checked').map(function() {
+                return this.value;
+            }).get().join(",");
+            var lightingVentilation = $('.light_ventilation:checked').map(function() {
+                return this.value;
+            }).get().join(",");
+            var withPermit = $('.with_permit:checked').map(function() {
+                return this.value;
+            }).get().join(",");
 
-            markers.forEach(function (marker) {
+            markers.forEach(function(marker) {
                 var popupContent = marker.getPopup().getContent().toLowerCase();
+                var markerDistrict = marker.options.districtId; // Get the district ID associated with the marker
+
                 var showMarker =
                     (establishmentName === '' || popupContent.includes(establishmentName)) &&
-                    (district === '' || popupContent.includes(district)) &&
                     (barangay === '' || popupContent.includes(barangay)) &&
                     (constructionKind === '' || popupContent.includes(constructionKind)) &&
                     (bhClass === '' || popupContent.includes(bhClass)) &&
                     (rates === '' || popupContent.includes(rates)) &&
                     (waterSource === '' || waterSource.split(',').every(val => popupContent.includes(val.trim()))) &&
                     (lightingVentilation === '' || popupContent.includes(lightingVentilation)) &&
-                    (withPermit === '' || popupContent.includes(withPermit));
+                    (withPermit === '' || popupContent.includes(withPermit)) &&
+                    (district === '' || markerDistrict === parseInt(district)); // Include district filter
 
                 if (showMarker) {
                     marker.addTo(map);
@@ -344,8 +424,30 @@
                 }
             });
         });
-    });
 
+
+        $('#district').on('change', function() {
+            var selectedDistrictId = $(this).val(); // Get the selected district ID
+
+            markers.forEach(function(marker) {
+                var districtIdFromMarker = marker.options.districtId; // Get the district ID associated with the marker
+
+                // Show the marker only if its associated district ID matches the selected district ID
+                var showMarker = selectedDistrictId === '' || districtIdFromMarker === parseInt(selectedDistrictId);
+
+                if (showMarker) {
+                    // Add the marker to the map if it belongs to the selected district
+                    marker.addTo(map);
+                } else {
+                    // Remove the marker from the map if it does not belong to the selected district
+                    map.removeLayer(marker);
+                }
+            });
+        });
+
+
+
+    });
 </script>
 
 
