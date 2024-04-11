@@ -757,9 +757,9 @@ if (isset($_GET['id'])) {
                         <div class="form-group col-md-3">
                             <label for="office_required">You are hereby requested to appear before this office:</label>
                             <?php
-                            // Check if office_required date is set and not empty
+
                             if (isset($row['office_required']) && !empty($row['office_required'])) {
-                                // Parse the date string and format it as YYYY-MM-DD
+
                                 $formatted_date = date('Y-m-d', strtotime($row['office_required']));
                             } else {
                                 $formatted_date = '';
@@ -832,7 +832,7 @@ if (isset($_GET['id'])) {
 
                     <script>
                         $(document).ready(function() {
-                            // Fetch values from disabled inputs and pin them on the map
+
                             pinLocation();
                         });
 
@@ -868,7 +868,7 @@ if (isset($_GET['id'])) {
                                 if (file_exists($imagePath)) {
                                     echo "<img src='{$imagePath}' alt='Uploaded Image' class='mx-auto d-block' style='max-width: 100%; height: auto;'>";
                                 } else {
-                                    echo "<p>{$imagePath}</p>"; 
+                                    echo "<p>{$imagePath}</p>";
                                 }
                             } else {
                                 echo "No image found";
@@ -886,7 +886,7 @@ if (isset($_GET['id'])) {
             function previewImage(input) {
                 if (input.files && input.files[0]) {
 
-                    if (input.files[0].size <= 5 * 1024 * 1024) { 
+                    if (input.files[0].size <= 5 * 1024 * 1024) {
                         var reader = new FileReader();
                         reader.onload = function(e) {
                             document.getElementById('selected-image-preview').src = e.target.result;
@@ -895,7 +895,7 @@ if (isset($_GET['id'])) {
                     } else {
                         alert("File size exceeds 5MB. Please select a smaller file.");
 
-                        input.value = ""; 
+                        input.value = "";
                     }
                 }
             }

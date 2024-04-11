@@ -15,10 +15,10 @@
         <div class="filter-form">
             <label for="establishment-name"><strong>Establishment Name:</strong></label>
             <input type="text" id="establishment-name" class="form-control">
-            <br>
+
             <br>
             <label for="district"><strong>District:</strong></label>
-            <select id="district" name="district" class="form-control">
+            <select id="district" name="district" class="form-control" onchange="populateBarangays()">
                 <option value="">-- Select District --</option>
                 <?php
                 try {
@@ -30,10 +30,10 @@
 
                     if ($stmt->rowCount() > 0) {
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                            // Check if the current district ID matches the one you want to pre-select
-                            $selected = ''; // Default to empty (no pre-selection)
+
+                            $selected = '';
                             if ($row['id'] == $selectedDistrictId) {
-                                $selected = 'selected'; // Mark this option as selected
+                                $selected = 'selected';
                             }
 
                             echo "<option value='" . $row['id'] . "' $selected>" . $row['district_name'] . "</option>";
@@ -51,50 +51,28 @@
             <select id="barangay" name="barangay" class="form-control">
                 <option value="">-- Select Barangay --</option>
             </select>
-
             <script>
-                $(document).ready(function() {
-                    $('#district').on('change', function() {
-                        var districtId = $(this).val();
+                function populateBarangays() {
+                    var districtId = document.getElementById("district").value;
+                    var selectBarangay = document.getElementById("barangay");
+                    selectBarangay.innerHTML = '<option value=""  selected> -- Select Barangay --</option>';
 
-                        console.log("Selected district ID:", districtId); // Log the selected district ID
-
-                        // Fetch barangays based on the selected district
-                        $.ajax({
-                            url: 'fetch_address.php',
-                            type: 'POST',
-                            data: {
-                                districtId: districtId
-                            },
-                            dataType: 'json',
-                            success: function(response) {
-                                $('#barangay').empty(); // Clear existing options
-                                $('#barangay').append($('<option>', {
-                                    value: '',
-                                    text: '-- Select Barangay --'
-                                }));
-
-                                if (response.success) {
-                                    response.barangays.forEach(function(barangay) {
-                                        $('#barangay').append($('<option>', {
-                                            value: barangay.id,
-                                            text: barangay.barangay
-                                        }));
-                                    });
-                                } else {
-                                    $('#barangay').append($('<option>', {
-                                        value: '',
-                                        text: 'No barangays found'
-                                    }));
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                                console.error("Error fetching barangays:", error);
-                            }
-                        });
-                    });
-                });
+                    if (districtId !== "") {
+                        fetch('fetch_barangays.php?district_id=' + districtId)
+                            .then(response => response.json())
+                            .then(data => {
+                                data.forEach(barangay => {
+                                    var option = document.createElement('option');
+                                    option.value = barangay.id;
+                                    option.textContent = barangay.barangay;
+                                    selectBarangay.appendChild(option);
+                                });
+                            })
+                            .catch(error => console.error('Error fetching barangays:', error));
+                    }
+                }
             </script>
+
 
 
             <br>
@@ -244,7 +222,8 @@
                 data.forEach(function(item) {
                     var latitude = parseFloat(item.bh_latitude);
                     var longitude = parseFloat(item.bh_longitude);
-                    var districtId = parseInt(item.bh_district_id); // Adjust this according to your actual data structure
+                    var districtId = parseInt(item.bh_district_id);
+                    var barangayId = parseInt(item.barangay_id);
                     var establishmentName = String(item.establishment_name);
                     var address = String(item.bh_address);
                     var municipality = String(item.bh_municipality);
@@ -310,7 +289,8 @@
 
                         var marker = L.marker(mapCenter, {
                             icon: redDotIcon,
-                            districtId: districtId
+                            districtId: districtId,
+                            barangayId: barangayId
                         }).addTo(map);
                         marker.bindPopup(
                             `<div class="popup-content">
@@ -382,7 +362,7 @@
         $('#establishment-name, #district, #barangay, .bh_construction_kind, .bh_class, .bh_rates_charge, .bh_water_source, .light_ventilation, .with_permit').on('input change', function() {
             var establishmentName = $('#establishment-name').val().toLowerCase();
             var district = $('#district').val();
-            var barangay = $('#barangay').val().toLowerCase();
+            var barangay = $('#barangay').val();
             var constructionKind = $('.bh_construction_kind:checked').map(function() {
                 return this.value;
             }).get().join(",");
@@ -404,19 +384,19 @@
 
             markers.forEach(function(marker) {
                 var popupContent = marker.getPopup().getContent().toLowerCase();
-                var markerDistrict = marker.options.districtId; // Get the district ID associated with the marker
+                var markerDistrict = marker.options.districtId;
+                var markerBarangay = marker.options.barangayId;
 
                 var showMarker =
                     (establishmentName === '' || popupContent.includes(establishmentName)) &&
-                    (barangay === '' || popupContent.includes(barangay)) &&
                     (constructionKind === '' || popupContent.includes(constructionKind)) &&
                     (bhClass === '' || popupContent.includes(bhClass)) &&
                     (rates === '' || popupContent.includes(rates)) &&
                     (waterSource === '' || waterSource.split(',').every(val => popupContent.includes(val.trim()))) &&
                     (lightingVentilation === '' || popupContent.includes(lightingVentilation)) &&
                     (withPermit === '' || popupContent.includes(withPermit)) &&
-                    (district === '' || markerDistrict === parseInt(district)); // Include district filter
-
+                    (district === '' || markerDistrict === parseInt(district)) &&
+                    (barangay === '' || markerBarangay === parseInt(barangay));
                 if (showMarker) {
                     marker.addTo(map);
                 } else {
@@ -427,23 +407,42 @@
 
 
         $('#district').on('change', function() {
-            var selectedDistrictId = $(this).val(); // Get the selected district ID
+            var selectedDistrictId = $(this).val();
 
             markers.forEach(function(marker) {
-                var districtIdFromMarker = marker.options.districtId; // Get the district ID associated with the marker
+                var districtIdFromMarker = marker.options.districtId;
 
-                // Show the marker only if its associated district ID matches the selected district ID
+
                 var showMarker = selectedDistrictId === '' || districtIdFromMarker === parseInt(selectedDistrictId);
 
                 if (showMarker) {
-                    // Add the marker to the map if it belongs to the selected district
+
                     marker.addTo(map);
                 } else {
-                    // Remove the marker from the map if it does not belong to the selected district
+
                     map.removeLayer(marker);
                 }
             });
         });
+        $('#barangay').on('change', function() {
+            var selectedBarangayId = $(this).val();
+
+            markers.forEach(function(marker) {
+                var barangayIdFromMarker = marker.options.barangayId;
+
+
+                var showMarker = selectedBarangayId === '' || barangayIdFromMarker === parseInt(selectedBarangayId);
+
+                if (showMarker) {
+
+                    marker.addTo(map);
+                } else {
+
+                    map.removeLayer(marker);
+                }
+            });
+        });
+
 
 
 

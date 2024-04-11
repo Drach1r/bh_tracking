@@ -11,6 +11,7 @@ try {
     $sql = "SELECT 
                 bht.*, 
                 bd.id AS bh_district_id,
+                ba.id AS barangay_id,
                 bd.district_name AS district_name,
                 ba.barangay AS barangay_name
             FROM 
@@ -19,7 +20,6 @@ try {
                 bh_district bd ON bht.bh_district = bd.id
             LEFT JOIN 
                 bh_address ba ON bht.bh_barangay = ba.id";
-
 
     $stmt = $pdo->query($sql);
 

@@ -134,7 +134,7 @@ include 'includes/header.php';
                         <div class="form-group col-md-3">
                             <label for="bh_province">Province:</label>
                             <input type="text" id="bh_province" name="bh_province" class="form-control" value="ILOILO" disabled required>
-                            <!-- Hidden input field to store the value -->
+
                             <input type="hidden" name="bh_province_hidden" value="ILOILO">
                         </div>
 
@@ -476,7 +476,7 @@ include 'includes/header.php';
                                 specifyRatesInput.focus();
                             } else {
                                 specifyRatesInput.disabled = true;
-                                specifyRatesInput.value = ''; // Clear the input field value
+                                specifyRatesInput.value = '';
                             }
                         });
                     </script>
@@ -537,7 +537,7 @@ include 'includes/header.php';
                                 specifyRatesInput.focus();
                             } else {
                                 specifyRatesInput.disabled = true;
-                                specifyRatesInput.value = ''; // Clear the input field value
+                                specifyRatesInput.value = '';
                             }
                         });
                     </script>
@@ -727,7 +727,7 @@ include 'includes/header.php';
                         function previewImage(input) {
                             if (input.files && input.files[0]) {
 
-                                if (input.files[0].size <= 5 * 1024 * 1024) { // Limit to 5MB
+                                if (input.files[0].size <= 5 * 1024 * 1024) {
                                     var reader = new FileReader();
                                     reader.onload = function(e) {
                                         document.getElementById('selected-image-preview').src = e.target.result;
@@ -736,7 +736,7 @@ include 'includes/header.php';
                                 } else {
                                     alert("File size exceeds 5MB. Please select a smaller file.");
 
-                                    input.value = ""; // Reset input field
+                                    input.value = "";
                                 }
                             }
                         }
