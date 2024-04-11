@@ -812,29 +812,33 @@ try {
 
                     <br>
                     <h5>Boarding House Picture</h5>
-                    <div class="form-group">
-                        <label for="new_image">Upload New Image:</label>
-                        <input type="file" name="new_image" id="new_image" accept="image/*" onchange="previewImage(event)">
-                        <br>
-                        <img id="preview" src="<?php echo isset($row['bh_image']) ? 'resources/gallery/' . $row['bh_image'] : '#'; ?>" alt="Preview" style="height: 100%; width: 100%; display: flex; justify-content: center; border: 1px solid #ccc;">
-                    </div>
+<div class="form-group">
+    <label for="bh_image">Upload New Image:</label>
+    <input type="file" name="bh_image" id="bh_image" accept="image/*" onchange="previewImage(event)">
+    <br>
+    <?php
+    $imageSrc = isset($row['bh_image']) ? 'resources/gallery/' . $row['bh_image'] : '#';
+    ?>
+    <img id="preview" src="<?php echo $imageSrc; ?>" alt="Preview" style="height: 100%; width: 100%; display: flex; justify-content: center; border: 1px solid #ccc;">
+</div>
 
-                    <script>
-                        // JavaScript
-                        function previewImage(event) {
-                            var reader = new FileReader();
+<script>
+    // JavaScript
+    function previewImage(event) {
+        var reader = new FileReader();
 
-                            reader.onload = function() {
-                                var preview = document.getElementById('preview');
-                                preview.src = reader.result;
-                                preview.style.display = 'block'; // Show the preview image
-                            }
+        reader.onload = function() {
+            var preview = document.getElementById('preview');
+            preview.src = reader.result;
+            preview.style.display = 'block'; // Show the preview image
+        }
 
-                            if (event.target.files && event.target.files[0]) {
-                                reader.readAsDataURL(event.target.files[0]);
-                            }
-                        }
-                    </script>
+        if (event.target.files && event.target.files[0]) {
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    }
+</script>
+
 
 
 
