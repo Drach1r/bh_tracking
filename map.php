@@ -13,7 +13,7 @@
 
     <div class="filter-form-container">
         <div class="filter-form">
-            <label for="establishment-name"><strong>Establishment Name:</strong></label>
+            <label for="establishment-name"><strong>Search by type:</strong></label>
             <input type="text" id="establishment-name" class="form-control">
 
             <br>
@@ -225,6 +225,10 @@
                     var districtId = parseInt(item.bh_district_id);
                     var barangayId = parseInt(item.barangay_id);
                     var establishmentName = String(item.establishment_name);
+                    var accountnum = String(item.account_number);
+                    var firstname = String(item.first_name);
+                    var middlename = String(item.middle_name);
+                    var lastname = String(item.last_name);
                     var address = String(item.bh_address);
                     var municipality = String(item.bh_municipality);
                     var district = String(item.district_name);
@@ -295,8 +299,12 @@
                         marker.bindPopup(
                             `<div class="popup-content">
                             <h4>${establishmentName}</h4>
+                            <br>
                             <ul>
-                                <li><b>Address:</b> ${address}</li>
+                            <li><b>Account No.:</b> ${accountnum}</li>
+                            <li><b>First Name:</b> ${firstname}</li>
+                            <li><b>Middle Name:</b> ${middlename}</li>
+                                <li><b>Last Name:</b> ${lastname}</li>
                                 <li><b>Municipality:</b> ${municipality}</li>
                                 <li><b>District:</b> ${district}</li>
                                 <li><b>Barangay:</b> ${barangay}</li>
