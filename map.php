@@ -77,6 +77,25 @@
 
             <br>
 
+
+            <div class="checkbox-group">
+                    <label for="mp"><strong>Mode of Payment:</strong></label>
+                    <label><input type="checkbox" class="mp mp-checkbox-group" value="annual"> Annual</label>
+                    <label><input type="checkbox" class="mp mp-checkbox-group" value="quarterly"> Quarterly</label>
+                    <label><input type="checkbox" class="mp mp-checkbox-group" value="semi-annual"> Semi-Annual</label>
+
+                    <script>
+                        $(document).ready(function() {
+                            $('.mp-checkbox-group').click(function() {
+
+                                $('.mp-checkbox-group').not(this).prop('checked', false);
+                            });
+                        });
+                    </script>
+
+
+                </div>
+
             <div class="row">
                 <div class="checkbox-group">
                     <label for="construction-kind"><strong>Kind of Construction:</strong></label>

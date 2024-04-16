@@ -230,6 +230,8 @@ if (isset($_GET['id'])) {
 
 <h3 style="margin-left: 80px;" class="title">View Record
     <button onclick="printPage()" class='btn btn-primary'>Print</button>
+    <button onclick="print()" class='btn btn-success'>Print</button>
+
 </h3>
 </div>
 <script>
@@ -237,6 +239,13 @@ if (isset($_GET['id'])) {
         var currentPageUrl = window.location.href;
         var pageId = currentPageUrl.split('?')[1];
         var urlWithId = 'print.php?' + pageId;
+        window.open(urlWithId, '_blank');
+    }
+
+    function print() {
+        var currentPageUrl = window.location.href;
+        var pageId = currentPageUrl.split('?')[1];
+        var urlWithId = 'print1.php?' + pageId;
         window.open(urlWithId, '_blank');
     }
 </script>
