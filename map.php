@@ -77,12 +77,18 @@
 
             <br>
 
+            <div class="row">
+                <label for="bh_mp"><strong>Mode of Payment:</strong></label>
+                <div class="checkbox-group">
 
-            <div class="checkbox-group">
-                    <label for="mp"><strong>Mode of Payment:</strong></label>
-                    <label><input type="checkbox" class="mp mp-checkbox-group" value="annual"> Annual</label>
-                    <label><input type="checkbox" class="mp mp-checkbox-group" value="quarterly"> Quarterly</label>
-                    <label><input type="checkbox" class="mp mp-checkbox-group" value="semi-annual"> Semi-Annual</label>
+                    <label><input type="checkbox" class="bh_mp mp-checkbox-group" value="annual"> Annual</label>
+                    <label><input type="checkbox" class="bh_mp mp-checkbox-group" value="quarterly"> Quarterly</label>
+
+                </div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" class="bh_mp mp-checkbox-group" value="monthly">Monthly</label>
+                    <label><input type="checkbox" class="bh_mp mp-checkbox-group" value="semi-annual"> Semi-Annual</label>
+
 
                     <script>
                         $(document).ready(function() {
@@ -95,6 +101,7 @@
 
 
                 </div>
+            </div>
 
             <div class="row">
                 <div class="checkbox-group">
@@ -166,7 +173,24 @@
                     <label for="water-source"><strong>Sources of Water Supply:</strong></label>
                     <label><input type="checkbox" class="bh_water_source" value="nawasa"> Nawasa</label>
                     <label><input type="checkbox" class="bh_water_source" value="deep_well"> Deep Well</label>
+
+                    <label for="bh_premises_cond"><strong>Sanitary Condition of the Premises:</strong></label>
+                    <label><input type="checkbox" class="bh_premises_cond premises-checkbox-group" value="good"> Good </label>
+                    <label><input type="checkbox" class="bh_premises_cond premises-checkbox-group" value="fair"> Fair</label>
+                    <label><input type="checkbox" class="bh_premises_cond premises-checkbox-group" value="poor"> Poor</label>
+
                 </div>
+                <script>
+                    $(document).ready(function() {
+                        $('.premises-checkbox-group').click(function() {
+
+                            $('.premises-checkbox-group').not(this).prop('checked', false);
+                        });
+                    });
+                </script>
+
+
+
             </div>
 
             <div class="row">
@@ -386,7 +410,7 @@
             }
         });
 
-        $('#establishment-name, #district, #barangay, .bh_construction_kind, .bh_class, .bh_rates_charge, .bh_water_source, .light_ventilation, .with_permit').on('input change', function() {
+        $('#establishment-name, #district, #barangay, .bh_construction_kind, .bh_class, .bh_rates_charge, .bh_mp, .bh_water_source, .bh_premises_cond, .light_ventilation, .with_permit').on('input change', function() {
             var establishmentName = $('#establishment-name').val().toLowerCase();
             var district = $('#district').val();
             var barangay = $('#barangay').val();
@@ -396,10 +420,16 @@
             var bhClass = $('.bh_class:checked').map(function() {
                 return this.value;
             }).get().join(",");
+            var mp = $('.bh_mp:checked').map(function() {
+                return this.value;
+            }).get().join(",");
             var rates = $('.bh_rates_charge:checked').map(function() {
                 return this.value;
             }).get().join(",");
             var waterSource = $('.bh_water_source:checked').map(function() {
+                return this.value;
+            }).get().join(",");
+            var premisescond = $('.bh_premises_cond:checked').map(function() {
                 return this.value;
             }).get().join(",");
             var lightingVentilation = $('.light_ventilation:checked').map(function() {
@@ -418,8 +448,10 @@
                     (establishmentName === '' || popupContent.includes(establishmentName)) &&
                     (constructionKind === '' || popupContent.includes(constructionKind)) &&
                     (bhClass === '' || popupContent.includes(bhClass)) &&
+                    (mp === '' || popupContent.includes(mp)) &&
                     (rates === '' || popupContent.includes(rates)) &&
                     (waterSource === '' || waterSource.split(',').every(val => popupContent.includes(val.trim()))) &&
+                    (premisescond === '' || popupContent.includes(premisescond)) &&
                     (lightingVentilation === '' || popupContent.includes(lightingVentilation)) &&
                     (withPermit === '' || popupContent.includes(withPermit)) &&
                     (district === '' || markerDistrict === parseInt(district)) &&
