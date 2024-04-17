@@ -1,14 +1,13 @@
-<?php 
-class Navigation {
+<?php
+class Navigation
+{
 
-	public static function baseNav($link, $print = true){
-		if($print == true){
+	public static function baseNav($link, $print = true)
+	{
+		if ($print == true) {
 			echo APP_ROOT . $link;
-		}else{
+		} else {
 			return APP_ROOT . $link;
 		}
-
 	}
 }
-
-?>

@@ -1,5 +1,6 @@
 <?php
 include 'includes/header.php';
+include 'includes/navbar.php';
 
 $servername = "localhost";
 $username = "root";
@@ -24,9 +25,7 @@ try {
 ?>
 
 <div class="row">
-    <h3 style="margin-left: 290px;" class="title">Update Record
-
-    </h3>
+    <h3 class="title"><strong>Update Record</strong></h3>
 </div>
 
 <section class="container">
@@ -34,7 +33,6 @@ try {
         <div class="card-body">
             <div class="card-title-body">
             </div>
-            <br>
             <div class="card card-block  col-lg-12" style=" background-color: white; ">
 
                 <form action="resources/dr/edit_save.php" method="POST" enctype="multipart/form-data">
@@ -867,5 +865,6 @@ try {
 
 
 <?php
+include 'includes/scripts.php';
 include 'includes/footer.php';
 ?>

@@ -5,8 +5,6 @@ if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-
-
     $stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email');
 
     try {
@@ -16,9 +14,21 @@ if (isset($_POST['login'])) {
             $user = $stmt->fetch();
 
             if (password_verify($password, $user['password'])) {
-                $_SESSION['user_id'] = $user['id'];
-                header("Location:../../records.php");
-                exit();
+                if ($user['approved'] == 1) { // Check if the user is approved
+                    if ($user['role'] == 'admin') {
+                        $_SESSION['user_id'] = $user['id'];
+                        header("Location:../../records.php");
+                        exit();
+                    } elseif ($user['role'] == 'super_admin') {
+                        $_SESSION['user_id'] = $user['id'];
+                        header("Location:../../user.php");
+                        exit();
+                    }
+                } else {
+                    $_SESSION['error'] = 'Your account has not been approved yet.';
+                    header('location: ../../index.php');
+                    exit();
+                }
             } else {
                 $_SESSION['error'] = 'Incorrect password';
                 header('location: ../../index.php');
@@ -31,6 +41,8 @@ if (isset($_POST['login'])) {
         }
     } catch (PDOException $e) {
         $_SESSION['error'] = $e->getMessage();
+        header('location: ../../index.php');
+        exit();
     }
 }
 

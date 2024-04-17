@@ -1,5 +1,6 @@
 <?php
 include 'includes/header.php';
+include 'includes/navbar.php';
 
 $servername = "localhost";
 $username = "root";
@@ -228,19 +229,12 @@ if (isset($_GET['id'])) {
 }
 ?>
 
-<h3 style="margin-left: 80px;" class="title">View Record
-    <button onclick="printPage()" class='btn btn-primary'>Print</button>
+<h3 class="title"><strong>View Record</strong>
     <button onclick="print()" class='btn btn-success'>Print</button>
 
 </h3>
 </div>
 <script>
-    function printPage() {
-        var currentPageUrl = window.location.href;
-        var pageId = currentPageUrl.split('?')[1];
-        var urlWithId = 'print.php?' + pageId;
-        window.open(urlWithId, '_blank');
-    }
 
     function print() {
         var currentPageUrl = window.location.href;
@@ -931,5 +925,6 @@ if (isset($_GET['id'])) {
 
 
 <?php
+include 'includes/scripts.php';
 include 'includes/footer.php';
 ?>

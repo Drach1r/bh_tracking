@@ -24,7 +24,7 @@
 }
 
 .burger-icon {
-    position: absolute;
+    position: relative;
     top: 95px;
     left: 10px;
     cursor: pointer;

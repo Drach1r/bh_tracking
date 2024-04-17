@@ -1,32 +1,108 @@
 <?php
 include 'includes/header.php';
+include 'includes/navbar.php';
 ?>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<br>
 <div class="container">
-    <div class="card-title-body">
-    <script>
+
+
+    <section class="example">
+
+        <div class="d-flex justify-content-center">
+            <table class="table table-bordered" id="recordstable">
+                <thead>
+                    <tr>
+                    <th class="text-center" style="color: black; background-color:#f0a190">Date</th>
+                    <th class="text-center" style="color: black; background-color:#f0a190">District</th>
+                    <th class="text-center" style="color: black; background-color:#f0a190">Barangay</th>
+                    <th class="text-center" style="color: black; background-color:#f0a190">Inspector</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $database = "bh_tracking";
+
+                try {
+                    $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                    $sql = "SELECT submission_time, bh_district, bh_barangay, inspected_by FROM boarding_house_tracking";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute();
+
+                    if ($stmt->rowCount() > 0) {
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            echo "<tr>";
+                            echo "<td class='text-center'>" . $row['submission_time'] . "</td>";
+                            echo "<td class='text-center'>" . $row['bh_district'] . "</td>";
+                            echo "<td class='text-center'>" . $row['bh_barangay'] . "</td>";
+                            echo "<td class='text-center'>" . $row['inspected_by'] . "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='4' class='text-center'>No records found</td></tr>";
+                    }
+                } catch (PDOException $e) {
+                    echo "Connection failed: " . $e->getMessage();
+                }
+                ?>
+
+                </tbody>
+            </table>
+
+    </section>
+</div>
+<br>
+<div class="container">
+
+<label for="filterDate">Filter by Date:</label>
+
+    <div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <input type="date" class="form-control" id="filterDate">
+        </div>
+        <canvas id="districtPieChart" width="200" height="200"></canvas>
+    </div>
+    <div class="col-md-6">
+        <div class="table-container">
+            <table class="table table-bordered" id="filteredDataTable">
+                <thead>
+                    <tr>
+                    <th class="text-center" style="color: black; background-color:#f0a190">District</th>
+                    <th class="text-center" style="color: black; background-color:#f0a190">Barangay</th>
+                    <th class="text-center" style="color: black; background-color:#f0a190">Inspector</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<style>
+    #recordstable_wrapper {
+        width: 100%;
+    }
+</style>
+
+<script>
     $(document).ready(function () {
-        var table = $('#recordstable').DataTable({
-            'pageLength': 10,
-            'scrollY': '40vh',
-            columnDefs: [{
-                    width: '10%',
-                    targets: 1
-                },
-                {
-                    width: '10%',
-                    targets: 3
-                },
-            ]
+        $('#recordstable').DataTable({
+            "scrollY": "300px" 
         });
-
-        $('.nav-link').click(function () {
-            table.columns.adjust().draw();
-        });
-
-        var today = new Date().toISOString().slice(0, 10);
+   
+    var today = new Date().toISOString().slice(0, 10);
         $('#filterDate').val(today);
         filterPieChart(today);
 
@@ -119,84 +195,14 @@ include 'includes/header.php';
                 }
             }
         }
+
     });
+
 </script>
 
 
-        <table class="table table-bordered" id="recordstable">
-            <thead>
-                <tr>
-                    <th class="text-center" style="background-color:#f0c277; color: black;">Date</th>
-                    <th class="text-center" style="background-color:#f0c277; color: black;">District</th>
-                    <th class="text-center" style="background-color:#f0c277; color: black;">Barangay</th>
-                    <th class="text-center" style="background-color:#f0c277; color: black;">Inspector</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $database = "bh_tracking";
-
-                try {
-                    $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
-                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                    $sql = "SELECT submission_time, bh_district, bh_barangay, inspected_by FROM boarding_house_tracking";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->execute();
-
-                    if ($stmt->rowCount() > 0) {
-                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                            echo "<tr>";
-                            echo "<td class='text-center'>" . $row['submission_time'] . "</td>";
-                            echo "<td class='text-center'>" . $row['bh_district'] . "</td>";
-                            echo "<td class='text-center'>" . $row['bh_barangay'] . "</td>";
-                            echo "<td class='text-center'>" . $row['inspected_by'] . "</td>";
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='4' class='text-center'>No records found</td></tr>";
-                    }
-                } catch (PDOException $e) {
-                    echo "Connection failed: " . $e->getMessage();
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
 
 
-<br>
-<br>
-
-<label for="filterDate">Filter by Date:</label>
-
-    <div class="row">
-    <div class="col-md-6">
-        <div class="form-group">
-            <input type="date" class="form-control" id="filterDate">
-        </div>
-        <canvas id="districtPieChart" width="200" height="200"></canvas>
-    </div>
-    <div class="col-md-6">
-        <div class="table-container">
-            <table class="table table-bordered" id="filteredDataTable">
-                <thead>
-                    <tr>
-                    <th class="text-center" style="background-color:#f0c277; color: black;">District</th>
-                    <th class="text-center" style="background-color:#f0c277; color: black;">Barangay</th>
-                    <th class="text-center" style="background-color:#f0c277; color: black;">Inspector</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 
 
 <?php

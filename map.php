@@ -1,4 +1,7 @@
-<?php include 'includes/header.php'; ?>
+<?php 
+include 'includes/header.php'; 
+include 'includes/navbar.php'; 
+?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -6,7 +9,7 @@
 
 
 <div id="map-container">
-    <div class="burger-icon">
+    <div class="burger-icon" style= "top: 10px; left: 250px">
         <span class="fas fa-bars" id="burger-icon"></span>
         Filter Map
     </div>
@@ -509,4 +512,7 @@
 </script>
 
 
-<?php include 'includes/footer.php'; ?>
+<?php 
+include 'includes/scripts.php'; 
+include 'includes/footer.php'; 
+?>

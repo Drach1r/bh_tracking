@@ -1,10 +1,11 @@
 <?php
 include 'includes/header.php';
+include 'includes/navbar.php';
 ?>
 
 
 
-<h3 class="title">New Record</h3>
+<h3 class="title"><strong>New Record</strong></h3>
 
 <section class="container">
     <div class="row">
@@ -766,5 +767,6 @@ include 'includes/header.php';
 
 
 <?php
+include 'includes/scripts.php';
 include 'includes/footer.php';
 ?>
