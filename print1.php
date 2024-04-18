@@ -139,40 +139,87 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Times', 'B', 10);
-$pdf->Cell(200, 5, 'Name of Establishment:_______________________________________________________________________________________', 0);
+$pdf->Cell(200, 5, 'Name of Establishment: ' . $establishment_name, 0);
+$pdf->Ln();
+
+$labelWidth = $pdf->GetStringWidth('Name of Establishment:  ');
+$underlineWidth =  152;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, 0, '', 'B');
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Name of Owner/Manager:_____________________________________________________________________________________', 0);
+$pdf->Cell(200, 5, 'Name of Owner/Manager: ' . $first_name . ' '  . $middle_name . ' ' . $last_name . ' ' . $suffix, 0);
+$pdf->Ln();
+
+$labelWidth = $pdf->GetStringWidth('Name of Owner/Manager:  ');
+$underlineWidth =  148.5;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, 0, '', 'B');
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'Address:___________________________________________________________________________________________________', 0);
+$pdf->Cell(200, 5, 'Address: ' . $bh_address, 0);
+$pdf->Ln();
+
+$labelWidth = $pdf->GetStringWidth('Address:  ');
+$underlineWidth =  175;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, 0, '', 'B');
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(60, 5, 'BH Control No:___________________', 0);
-$pdf->Cell(40, 5, 'OR No:_______________', 0);
-$pdf->Cell(50, 5, 'Date Issued:_______________', 0);
-$pdf->Cell(50, 5, 'Amount:______________', 0);
+$pdf->Cell(60, 5, 'BH Control No: ' . $bh_control_no, 0);
+$pdf->Cell(50, 5, 'OR No: ' . $bh_or_num, 0);
+$pdf->Cell(50, 5, 'Date Issued: ' . $date_issued, 0);
+$pdf->Cell(50, 5, 'Amount: ' . $amount_paid, 0);
+$pdf->Ln();
+
+$labelWidth = $pdf->GetStringWidth('BH Control No:  ');
+$underlineWidth =  36;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, 0, '', 'B');
+$labelWidth = $pdf->GetStringWidth('OR No:');
+$underlineWidth =  38.3;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, 0, '', 'B');
+$labelWidth = $pdf->GetStringWidth('Date Issued:');
+$underlineWidth =  31.7;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, 0, '', 'B');
+$labelWidth = $pdf->GetStringWidth('Amount:');
+$underlineWidth =  14.5;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, 0, '', 'B');
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(60, 5, 'Bus. Permit No.:___________________', 0);
+$pdf->Cell(60, 5, 'Bus. Permit No.: ' . $bh_bpn, 0);
+$pdf->Ln();
+
+$labelWidth = $pdf->GetStringWidth('Bus. Permit No.:  ');
+$underlineWidth =  163.5;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, 0, '', 'B');
 $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Times', '', 10);
-$pdf->Cell(60, 5, 'RATES BEING CHARGE:', 0);
+$pdf->Cell(60, 10, 'RATES BEING CHARGE:', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 10, '', 0);
+$pdf->Cell(200, 5, '', 0);
 $pdf->Ln();
+
 
 $pdf->Cell(1);
 $pdf->Cell(200, 5, 'KIND OF CONSTRUCTION OF THE BOARDING HOUSE:', 0);
 $pdf->Ln();
+
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+$pdf->SetFont('Arial', '', 8);
 
 $pdf->Cell(1);
 $pdf->Cell(200, 5, '_____A. Made of Strong Materials', 0);
@@ -183,7 +230,37 @@ $pdf->Cell(200, 5, '_____B. Made of Light Materials', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, '_____C. Other (Pls. Specify:__________________________________________________________________________)', 0);
+$pdf->Cell(200, 5, '_____C. Other (Pls. Specify: ' . $bh_specify, 0);
+$pdf->Ln();
+
+$labelWidth = $pdf->GetStringWidth('_____C. Other (Pls. Specify:  ');
+$underlineWidth =  100;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, 0, '', 'B',);
+$pdf->Cell($underlineWidth, -5, ')', 0,);
+$pdf->Ln();
+
+if ($bh_construction_kind == 'a__made_of_strong_materials' || $bh_construction_kind == 'b__made_of_light_materials' || $bh_construction_kind == 'c__other__specify') {
+  $checkmark = "\x34";
+} else {
+  $bh_construction_kind = 'Others';
+  $checkmark = "\x34";
+}
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+
+
+if ($bh_construction_kind == 'a__made_of_strong_materials') {
+  $pdf->Text(15,  +103, $checkmark);
+} elseif ($bh_construction_kind == 'b__made_of_light_materials') {
+  $pdf->Text(15,  +108, $checkmark);
+} else {
+  $pdf->Text(15,  +113, $checkmark);
+}
+
+$pdf->SetFont('Arial', '', 8);
+$pdf->Cell(1);
+$pdf->Cell(200, 10, '', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
@@ -194,50 +271,189 @@ $pdf->Cell(30, 10, 'C: (___)', 0);
 $pdf->Cell(30, 10, 'D: (___)', 0);
 $pdf->Ln();
 
+
+if ($bh_class == 'class_a' || $bh_class == 'class_b' || $bh_class == 'class_c' || $bh_class == 'class_d') {
+  $checkmark = "\x34";
+} else {
+
+  $checkmark = "\x34";
+}
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+
+if ($bh_class == 'class_a') {
+  $pdf->Text(87.7,  +126, $checkmark);
+} elseif ($bh_class == 'class_b') {
+  $pdf->Text(117.7,  +126, $checkmark);
+} elseif ($bh_class == 'class_c') {
+  $pdf->Text(147.7,  +126, $checkmark);
+} elseif ($bh_class == 'class_d') {
+  $pdf->Text(177.7,  +126, $checkmark);
+}
+
+$pdf->SetFont('Arial', '', 8);
 $pdf->Cell(1);
 $pdf->Cell(10, 5, '', 0);
-$pdf->Cell(50, 5, 'No. Of Rooms:__________', 0);
-$pdf->Cell(50, 5, 'No. Of Occupants:________', 0);
+$pdf->Cell(50, 5, 'No. Of Rooms:   ' . $bh_room, 0);
+$pdf->Cell(50, 5, 'No. Of Occupants:   ' . $bh_occupants, 0);
 $pdf->Cell(25, 5, 'Overcrowded: ', 0);
 $pdf->Cell(20, 5, 'YES: (___)', 0);
 $pdf->Cell(20, 5, 'NO: (___)', 0);
 $pdf->Ln();
 
-$pdf->Cell(1);
-$pdf->Cell(10, 5, '', 0);
-$pdf->Cell(50, 5, 'Lodging:_______________', 0);
-$pdf->Cell(50, 5, 'Board:__________________', 0);
-$pdf->Cell(25, 5, 'Bedspace:_______________________________ ', 0);
+$labelWidth = $pdf->GetStringWidth('No. Of Rooms:_______ ');
+$underlineWidth =  20;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, 0, '', 'B');
+$labelWidth = $pdf->GetStringWidth('No. Of Occupants:_______ ');
+$underlineWidth =  20;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, 0, '', 'B');
 $pdf->Ln();
 
 
+if ($bh_overcrowded == 'yes' || $bh_overcrowded == 'no') {
+  $checkmark = "\x34";
+} else {
+
+  $checkmark = "\x34";
+}
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+
+
+if ($bh_overcrowded == 'yes') {
+  $pdf->Text(156.5,  +133.5, $checkmark);
+} elseif ($bh_overcrowded == 'no') {
+  $pdf->Text(175,  +133.5, $checkmark);
+}
+
+$pdf->SetFont('Arial', '', 8);
 $pdf->Cell(1);
 $pdf->Cell(10, 5, '', 0);
-$pdf->Cell(50, 5, 'Room Rent:_______________', 0);
-$pdf->Cell(50, 5, 'House Rent:__________________', 0);
-$pdf->Cell(25, 5, 'Rent per Unit(Apartment):__________________ ', 0);
+$pdf->Cell(50, 5, 'Lodging:______', 0);
+$pdf->Cell(50, 5, 'Board:______', 0);
+$pdf->Cell(25, 5, 'Bedspace:_______ ', 0);
+$pdf->Ln();
+
+
+if ($bh_rates_charge == 'lodging' || $bh_rates_charge == 'board' || $bh_rates_charge == 'bed_space' || $bh_rates_charge == 'room_rent' || $bh_rates_charge == 'house_rent' || $bh_rates_charge == 'rent_per_unit__apartment' || $bh_rates_charge == 'other') {
+  $checkmark = "\x34";
+} else {
+  $bh_rates_charge = "";
+  $checkmark = "\x34";
+}
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+
+if ($bh_rates_charge == 'lodging') {
+  $pdf->Text(36,  +138.5, $checkmark);
+} elseif ($bh_rates_charge == 'board') {
+  $pdf->Text(84,  +138.5, $checkmark);
+} elseif ($bh_rates_charge == 'bed_space') {
+  $pdf->Text(140,  +138.5, $checkmark);
+} elseif ($bh_rates_charge == 'room_rent') {
+  $pdf->Text(41,  +143.5, $checkmark);
+} elseif ($bh_rates_charge == 'house_rent') {
+  $pdf->Text(92,  +143.5, $checkmark);
+} elseif ($bh_rates_charge == 'rent_per_unit__apartment') {
+  $pdf->Text(159,  +143.5, $checkmark);
+} else {
+  $pdf->Text(185,  +143.5, $checkmark);
+}
+
+$pdf->SetFont('Arial', '', 8);
+$pdf->Cell(1);
+$pdf->Cell(10, 5, '', 0);
+$pdf->Cell(50, 5, 'Room Rent:______', 0);
+$pdf->Cell(50, 5, 'House Rent:_______', 0);
+$pdf->Cell(50, 5, 'Rent per Unit(Apartment):_______ ', 0);
+$pdf->Cell(25, 5, 'Others:______', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(80, 10, 'SOURCE OF WATER SUPPLY:_______________', 0);
+
+$pdf->Cell(80, 10, 'SOURCE OF WATER SUPPLY: ' . $bh_water_source, 0);
 $pdf->Cell(32, 10, 'Adequate: YES(___)', 0);
 $pdf->Cell(20, 10, 'NO: (___)', 0);
 $pdf->Cell(30, 10, 'Portable: YES(___)', 0);
 $pdf->Cell(30, 10, 'NO: (___)', 0);
 $pdf->Ln();
 
+$labelWidth = $pdf->GetStringWidth('SOURCE OF WATER SUPPLY:  ');
+$underlineWidth =  30;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, -3.5, '', 'B');
+$pdf->Cell(10, 0, '', 0);
+$pdf->Ln();
+
+if ($bh_adequate == 'yes' || $bh_adequate == 'no') {
+  $checkmark = "\x34";
+} else {
+
+  $checkmark = "\x34";
+}
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+
+if ($bh_adequate == 'yes') {
+  $pdf->Text(113.5,  +151, $checkmark);
+} elseif ($bh_adequate == 'no') {
+  $pdf->Text(132,  +151, $checkmark);
+}
+
+
+if ($bh_portable == 'yes' || $bh_portable == 'no') {
+  $checkmark = "\x34";
+} else {
+
+  $checkmark = "\x34";
+}
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+
+if ($bh_portable == 'yes') {
+  $pdf->Text(164,  +151, $checkmark);
+} elseif ($bh_portable == 'no') {
+  $pdf->Text(182,  +151, $checkmark);
+}
+
+
+$pdf->SetFont('Arial', '', 8);
 $pdf->Cell(1);
 $pdf->Cell(10, 5, '', 0);
 $pdf->Cell(50, 5, 'TOILET FACILITIES:', 0);
-$pdf->Cell(50, 5, 'Type:__________________', 0);
-$pdf->Cell(25, 5, 'Sanitary Condition:________________________ ', 0);
+$pdf->Cell(50, 5, 'Type: ' . $bh_toilet_type, 0);
+$pdf->Cell(25, 5, 'Sanitary Condition: ' . $bh_toilet_cond, 0);
 $pdf->Ln();
+
+$labelWidth = $pdf->GetStringWidth('                    TOILET FACILITIES:  Type:                       ');
+$underlineWidth =  30;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, -1, '', 'B');
+$labelWidth = $pdf->GetStringWidth('Sanitary Condition:________');
+$underlineWidth =  30;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, -1, '', 'B');
+$pdf->Ln();
+
 
 $pdf->Cell(1);
 $pdf->Cell(10, 5, '', 0);
 $pdf->Cell(50, 5, 'BATH FACILITIES:', 0);
-$pdf->Cell(50, 5, 'Type:__________________', 0);
-$pdf->Cell(25, 5, 'Sanitary Condition:________________________ ', 0);
+$pdf->Cell(50, 5, 'Type: ' . $bh_bath_type, 0);
+$pdf->Cell(25, 5, 'Sanitary Condition: ' . $bh_bath_cond, 0);
+$pdf->Ln();
+
+
+$labelWidth = $pdf->GetStringWidth('BATH FACILITIES:Type:________________________');
+$underlineWidth =  30;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, -1, '', 'B');
+$labelWidth = $pdf->GetStringWidth('Sanitary Condition:________');
+$underlineWidth =  30;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, -1, '', 'B');
 $pdf->Ln();
 
 $pdf->Cell(1);

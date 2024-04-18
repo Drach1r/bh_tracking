@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['district_id'])) {
         $stmt->execute([$districtId]);
         $barangays = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Return the barangays as JSON
+
         echo json_encode($barangays);
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();

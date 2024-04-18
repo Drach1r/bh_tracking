@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addform'])) {
             $stmt->bindValue(':bh_specify', null, PDO::PARAM_NULL);
         }
 
-        // Execute the query
+
         if ($stmt->execute()) {
             $_SESSION['success'] = "Record inserted successfully";
             header("Location: ../../create.php");

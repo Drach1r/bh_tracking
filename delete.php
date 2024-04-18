@@ -12,20 +12,19 @@ if (isset($_POST['id'])) {
         $stmt->execute();
         $deletedRows = $stmt->rowCount();
 
-        // Reset AUTO_INCREMENT values
+
         $pdo->exec("ALTER TABLE boarding_house_tracking AUTO_INCREMENT = 1");
 
         $pdo->commit();
     } catch (PDOException $e) {
-        // Rollback the transaction in case of error
+
         $pdo->rollBack();
 
-        // Send an error response
         http_response_code(500);
         echo json_encode(array('message' => 'Failed to delete records.', 'error' => $e->getMessage()));
     }
 } else {
-    // Send a bad request response if no ID is provided
+
     http_response_code(400);
     echo json_encode(array('message' => 'No ID provided.'));
 }

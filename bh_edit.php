@@ -751,7 +751,7 @@ try {
                             var altitude = position.coords.altitude;
                             var accuracy = position.coords.accuracy;
 
-                            // Replace null values with "0"
+
                             latitude = latitude !== null ? latitude : 0;
                             longitude = longitude !== null ? longitude : 0;
                             altitude = altitude !== null ? altitude : 0;
@@ -759,14 +759,13 @@ try {
 
                             var currentLocation = longitude + "," + latitude + "," + altitude + "," + accuracy;
 
-                            // Update input fields with new coordinates
+
                             document.getElementById("bh_longitude").value = longitude;
                             document.getElementById("bh_latitude").value = latitude;
                             document.getElementById("bh_altitude").value = altitude;
                             document.getElementById("bh_precision").value = accuracy;
                             document.getElementById("current_loc").value = currentLocation;
 
-                            // Update map display
                             var output = "";
                             output += '<center><iframe src="https://www.google.com/maps?q=' + latitude + ',' + longitude + '&ie=UTF8&iwloc=&output=embed" width="100%" height="200px"></iframe></center>';
                             document.getElementById('displayMapa').innerHTML = output;
@@ -810,32 +809,32 @@ try {
 
                     <br>
                     <h5>Boarding House Picture</h5>
-<div class="form-group">
-    <label for="bh_image">Upload New Image:</label>
-    <input type="file" name="bh_image" id="bh_image" accept="image/*" onchange="previewImage(event)">
-    <br>
-    <?php
-    $imageSrc = isset($row['bh_image']) ? 'resources/gallery/' . $row['bh_image'] : '#';
-    ?>
-    <img id="preview" src="<?php echo $imageSrc; ?>" alt="Preview" style="height: 100%; width: 100%; display: flex; justify-content: center; border: 1px solid #ccc;">
-</div>
+                    <div class="form-group">
+                        <label for="bh_image">Upload New Image:</label>
+                        <input type="file" name="bh_image" id="bh_image" accept="image/*" onchange="previewImage(event)">
+                        <br>
+                        <?php
+                        $imageSrc = isset($row['bh_image']) ? 'resources/gallery/' . $row['bh_image'] : '#';
+                        ?>
+                        <img id="preview" src="<?php echo $imageSrc; ?>" alt="Preview" style="height: 100%; width: 100%; display: flex; justify-content: center; border: 1px solid #ccc;">
+                    </div>
 
-<script>
-    // JavaScript
-    function previewImage(event) {
-        var reader = new FileReader();
+                    <script>
+                        // JavaScript
+                        function previewImage(event) {
+                            var reader = new FileReader();
 
-        reader.onload = function() {
-            var preview = document.getElementById('preview');
-            preview.src = reader.result;
-            preview.style.display = 'block'; // Show the preview image
-        }
+                            reader.onload = function() {
+                                var preview = document.getElementById('preview');
+                                preview.src = reader.result;
+                                preview.style.display = 'block'; // Show the preview image
+                            }
 
-        if (event.target.files && event.target.files[0]) {
-            reader.readAsDataURL(event.target.files[0]);
-        }
-    }
-</script>
+                            if (event.target.files && event.target.files[0]) {
+                                reader.readAsDataURL(event.target.files[0]);
+                            }
+                        }
+                    </script>
 
 
 
