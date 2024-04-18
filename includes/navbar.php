@@ -1,37 +1,20 @@
 <?php
-// Example database connection parameters
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "bh_tracking";
 
-try {
-    // Create a new PDO instance
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    // Set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $stmt = $conn->prepare("SELECT role FROM users WHERE email = :email AND password = :password");
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':password', $password);
-    $stmt->execute();
-
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($result) {
-        // If user exists, fetch the role and store it in the session variable
-        $_SESSION['user_role'] = $result['role']; // Changed 'role' to 'user_role' to match later usage
-    } else {
-        // If user doesn't exist or credentials are incorrect, handle the error (redirect or display message)
-        echo "Invalid email or password";
-    }
-} catch(PDOException $e) {
-    // Handle database connection errors
-    echo "Connection failed: " . $e->getMessage();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit();
 }
 
-// Close the database connection
-$conn = null;
+$stmt = $pdo->prepare('SELECT role FROM users WHERE id = :user_id');
+
+try {
+    $stmt->execute(['user_id' => $_SESSION['user_id']]);
+    $user_role = $stmt->fetchColumn();
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+    exit();
+}
+
 ?>
 
 <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -92,8 +75,8 @@ $conn = null;
         </a>
     </li>
 
-  <!-- Conditionally include "Manage Profiles" link -->
-<?php if ($_SESSION['user_role'] === 'super_admin') : ?>
+<!-- Conditionally include "Manage Profiles" link -->
+<?php if ($user_role === 'super_admin') : ?>
     <li class="nav-item">
         <a class="nav-link collapsed" href="user.php" aria-expanded="true">
             <i class="fa-solid fa-pen-to-square"></i>

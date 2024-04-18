@@ -21,7 +21,7 @@ if (isset($_POST['login'])) {
                         exit();
                     } elseif ($user['role'] == 'super_admin') {
                         $_SESSION['user_id'] = $user['id'];
-                        header("Location:../../user.php");
+                        header("Location:../../records.php");
                         exit();
                     }
                 } else {
