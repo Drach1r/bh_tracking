@@ -673,31 +673,12 @@ $pdf->Ln();
 $pdf->Cell(1);
 $pdf->SetFont('Times', '', 10);
 $pdf->Cell(10, 5, '', 0);
-$pdf->Cell(190, 5, '1.___________________________________________________________________________________________________', 0);
 $pdf->Ln();
 
-$pdf->Cell(1);
-$pdf->Cell(10, 5, '', 0);
-$pdf->Cell(190, 5, '2.___________________________________________________________________________________________________', 0);
-$pdf->Ln();
+$pdf->Rect(15, 240, 185, 40);
 
 $pdf->Cell(1);
-$pdf->Cell(10, 5, '', 0);
-$pdf->Cell(190, 5, '3.___________________________________________________________________________________________________', 0);
-$pdf->Ln();
-
-$pdf->Cell(1);
-$pdf->Cell(10, 5, '', 0);
-$pdf->Cell(190, 5, '4.___________________________________________________________________________________________________', 0);
-$pdf->Ln();
-
-$pdf->Cell(1);
-$pdf->Cell(10, 5, '', 0);
-$pdf->Cell(190, 5, '5.___________________________________________________________________________________________________', 0);
-$pdf->Ln();
-
-$pdf->Cell(1);
-$pdf->Cell(200, 10, '', 0);
+$pdf->Cell(1, 40, '', 0);
 $pdf->Ln();
 
 $pdf->Cell(90);
@@ -707,7 +688,7 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Times', '', 10);
-$pdf->Cell(200, 5, 'You are hereby requested to appear before this office on   ' . $office_required . '   at __________________________. Failure ', 0);
+$pdf->Cell(200, 5, 'You are hereby requested to appear before this office on   ' . $office_required . '   at __________________________. Failure to do so will compel', 0);
 $pdf->Ln();
 
 $labelWidth = $pdf->GetStringWidth('You are hereby requested to appear before this office on   ');
@@ -717,7 +698,7 @@ $pdf->Cell($underlineWidth, -1, '', 'B');
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, 'to do so will compel this commission to file necessary action against your business establishment.', 0);
+$pdf->Cell(200, 5, 'this commission to file necessary action against your business establishment.', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
