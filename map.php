@@ -9,12 +9,12 @@ include 'includes/navbar.php';
 
 
 <div id="map-container">
-    <div class="burger-icon" style= "top: 10px; left: 250px">
+    <div class="burger-icon" style= "top: -80px; left: 10px;">
         <span class="fas fa-bars" id="burger-icon"></span>
         Filter Map
     </div>
 
-    <div class="filter-form-container">
+    <div class="filter-form-container" style= "position: relative; right: 100px;">
         <div class="filter-form">
             <label for="establishment-name"><strong>Search by type:</strong></label>
             <input type="text" id="establishment-name" class="form-control">
@@ -233,7 +233,7 @@ include 'includes/navbar.php';
         </div>
     </div>
 
-    <div id="map"></div>
+    <div id="map" style= "right: 80px;"></div>
 </div>
 
 

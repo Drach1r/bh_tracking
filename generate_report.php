@@ -67,7 +67,7 @@ include 'includes/navbar.php';
         <div class="form-group">
             <input type="date" class="form-control" id="filterDate">
         </div>
-        <canvas id="districtPieChart" width="200" height="200"></canvas>
+        <canvas id="barangayPieChart" width="200" height="200"></canvas>
     </div>
     <div class="col-md-6">
         <div class="table-container">
@@ -94,115 +94,140 @@ include 'includes/navbar.php';
     #recordstable_wrapper {
         width: 100%;
     }
+    
 </style>
 
 <script>
-    $(document).ready(function () {
-        $('#recordstable').DataTable({
-            "scrollY": "300px" 
-        });
-   
+
+$(document).ready(function () {
+    $('#recordstable').DataTable({
+        "scrollY": "300px" 
+    });
+
     var today = new Date().toISOString().slice(0, 10);
-        $('#filterDate').val(today);
-        filterPieChart(today);
+    $('#filterDate').val(today);
+    filterPieChart(today);
 
-        $('#filterDate').change(function () {
-            var selectedDate = $(this).val();
-            filterPieChart(selectedDate);
+    $('#filterDate').change(function () {
+        var selectedDate = $(this).val();
+        filterPieChart(selectedDate);
+    });
+
+    function filterPieChart(selectedDate) {
+        $.ajax({
+            url: 'fetch_data.php',
+            type: 'POST',
+            data: {
+                selectedDate: selectedDate
+            },
+            dataType: 'json',
+            success: function (response) {
+                if (myChart) {
+                    myChart.destroy();
+                }
+                if (response.labels.length > 0) {
+                    updatePieChart(response.labels, response.data);
+                    updateTableData(response.barangay);
+                } else {
+                    clearTable();
+                    updatePieChart(['No data available'], [0]);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
         });
+    }
 
-        function filterPieChart(selectedDate) {
-            $.ajax({
-                url: 'fetch_data.php',
-                type: 'POST',
-                data: {
-                    selectedDate: selectedDate
-                },
-                dataType: 'json',
-                success: function (response) {
-                    if (myChart) {
-                        myChart.destroy();
-                    }
-                    if (response.labels.length > 0) {
-                        updatePieChart(response.labels, response.data, response.districts);
-                        updateTableData(response.districts);
-                    } else {
-                        updatePieChart(['No data available'], [0]);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
+    function clearTable() {
+        if ($.fn.DataTable.isDataTable('#filteredDataTable')) {
+            $('#filteredDataTable').DataTable().destroy();
         }
+        $('#filteredDataTable tbody').empty();
+    }
 
-        var myChart = null;
+    var myChart = null;
 
-        function updatePieChart(labels, data, districts) {
-            var ctx = document.getElementById('districtPieChart').getContext('2d');
-            myChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        data: data,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.8)',
-                            'rgba(54, 162, 235, 0.8)',
-                            'rgba(255, 206, 86, 0.8)',
-                            'rgba(75, 192, 192, 0.8)',
-                            'rgba(153, 102, 255, 0.8)',
-                            'rgba(255, 159, 64, 0.8)',
-                            'rgba(255, 0, 0, 0.8)',
-                            'rgba(0, 255, 0, 0.8)',
-                            'rgba(0, 0, 255, 0.8)',
-                            'rgba(255, 255, 0, 0.8)',
-                            'rgba(255, 0, 255, 0.8)',
-                            'rgba(0, 255, 255, 0.8)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: 'Inspections Per District',
-                        fontSize: 18
-                    }
+    function updatePieChart(labels, data) {
+        var ctx = document.getElementById('barangayPieChart').getContext('2d');
+        myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(153, 102, 255, 0.8)',
+                        'rgba(255, 159, 64, 0.8)',
+                        'rgba(255, 0, 0, 0.8)',
+                        'rgba(0, 255, 0, 0.8)',
+                        'rgba(0, 0, 255, 0.8)',
+                        'rgba(255, 255, 0, 0.8)',
+                        'rgba(255, 0, 255, 0.8)',
+                        'rgba(0, 255, 255, 0.8)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Inspections Per Barangay',
+                    fontSize: 18
                 }
-            });
-        }
+            }
+        });
+    }
 
-        function updateTableData(districts) {
-            var tableBody = $('#filteredDataTable tbody');
-            tableBody.empty();
+    function updateTableData(barangayData) {
+    var tableBody = $('#filteredDataTable tbody');
 
-            for (var district in districts) {
-                if (districts.hasOwnProperty(district)) {
-                    for (var barangay in districts[district]) {
-                        if (districts[district].hasOwnProperty(barangay)) {
-                            var inspector = districts[district][barangay];
+    tableBody.empty();
 
-                            var row = '<tr>';
-                            row += '<td>' + district + '</td>';
-                            row += '<td>' + barangay + '</td>';
-                            row += '<td>' + inspector + '</td>';
-                            row += '</tr>';
+    if ($.isEmptyObject(barangayData)) {
+        tableBody.append('<tr><td colspan="3" class="text-center">No data available</td></tr>');
+        return;
+    }
 
-                            tableBody.append(row);
-                        }
-                    }
+    var uniqueEntries = new Set();
+
+    for (var barangay in barangayData) {
+        if (barangayData.hasOwnProperty(barangay)) {
+            var inspectors = barangayData[barangay];
+            for (var i = 0; i < inspectors.length; i++) {
+                var districtName = inspectors[i].district;
+                var inspectorName = inspectors[i].inspector;
+                var key = districtName + '-' + barangay + '-' + inspectorName;
+
+                if (!uniqueEntries.has(key)) {
+                    var row = '<tr>';
+                    row += '<td>' + districtName + '</td>';
+                    row += '<td>' + barangay + '</td>';
+                    row += '<td>' + inspectorName + '</td>';
+                    row += '</tr>';
+
+                    tableBody.append(row);
+                    uniqueEntries.add(key); 
                 }
             }
         }
+    }
 
-    });
+    if (!$.fn.DataTable.isDataTable('#filteredDataTable')) {
+        $('#filteredDataTable').DataTable({
+            "scrollY": "300px" 
+        });
+    }
+}
+
+
+});
 
 </script>
-
-
-
-
 
 
 <?php
