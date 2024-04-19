@@ -252,11 +252,11 @@ $pdf->SetFont('ZapfDingbats', '', 8);
 
 
 if ($bh_construction_kind == 'a__made_of_strong_materials') {
-  $pdf->Text(15,  +103, $checkmark);
+  $pdf->Text(15,  +98.5, $checkmark);
 } elseif ($bh_construction_kind == 'b__made_of_light_materials') {
-  $pdf->Text(15,  +108, $checkmark);
+  $pdf->Text(15,  +103.5, $checkmark);
 } else {
-  $pdf->Text(15,  +113, $checkmark);
+  $pdf->Text(15,  +108.5, $checkmark);
 }
 
 $pdf->SetFont('Arial', '', 8);
@@ -310,6 +310,7 @@ $labelWidth = $pdf->GetStringWidth('No. Of Occupants:_______ ');
 $underlineWidth =  20;
 $pdf->Cell($labelWidth);
 $pdf->Cell($underlineWidth, -1, '', 'B');
+
 $pdf->Ln();
 
 
@@ -334,8 +335,9 @@ $pdf->Cell(1);
 $pdf->Cell(10, 5, '', 0);
 $pdf->Cell(50, 5, 'Lodging:______', 0);
 $pdf->Cell(50, 5, 'Board:______', 0);
-$pdf->Cell(25, 5, 'Bedspace:_______ ', 0);
-$pdf->Cell(10, 6, '', 0);
+$pdf->Cell(25, 5, 'Bedspace:______ ', 0);
+$pdf->Cell(50, 5, 'Room Rent:______', 0);
+
 $pdf->Ln();
 
 
@@ -349,32 +351,38 @@ if ($bh_rates_charge == 'lodging' || $bh_rates_charge == 'board' || $bh_rates_ch
 $pdf->SetFont('ZapfDingbats', '', 8);
 
 if ($bh_rates_charge == 'lodging') {
-  $pdf->Text(36,  +138.5, $checkmark);
+  $pdf->Text(36,  +137.5, $checkmark);
 } elseif ($bh_rates_charge == 'board') {
-  $pdf->Text(84,  +138.5, $checkmark);
+  $pdf->Text(84,  +137.5, $checkmark);
 } elseif ($bh_rates_charge == 'bed_space') {
-  $pdf->Text(140,  +138.5, $checkmark);
+  $pdf->Text(140,  +137.5, $checkmark);
 } elseif ($bh_rates_charge == 'room_rent') {
-  $pdf->Text(41,  +143.5, $checkmark);
+  $pdf->Text(166,  +137.5, $checkmark);
 } elseif ($bh_rates_charge == 'house_rent') {
-  $pdf->Text(92,  +143.5, $checkmark);
+  $pdf->Text(41,  +142.5, $checkmark);
 } elseif ($bh_rates_charge == 'rent_per_unit__apartment') {
-  $pdf->Text(159,  +143.5, $checkmark);
+  $pdf->Text(108,  +142.5, $checkmark);
 } else {
-  $pdf->Text(185,  +143.5, $checkmark);
+  $pdf->Text(134,  +142.5, $checkmark);
 }
 
 $pdf->SetFont('Arial', '', 8);
 $pdf->Cell(1);
 $pdf->Cell(10, 5, '', 0);
-$pdf->Cell(50, 5, 'Room Rent:______', 0);
-$pdf->Cell(50, 5, 'House Rent:_______', 0);
-$pdf->Cell(50, 5, 'Rent per Unit(Apartment):_______ ', 0);
-$pdf->Cell(25, 5, 'Others:______', 0);
+$pdf->Cell(50, 5, 'House Rent:______', 0);
+$pdf->Cell(50, 5, 'Rent per Unit(Apartment):______', 0);
+$pdf->Cell(25, 5, 'Others:_____ : ' . $bh_garbage_other, 0);
+
+$pdf->Ln();
+
+$labelWidth = $pdf->GetStringWidth('House Rent:______Rent per Unit(Apartment):______Others:_____ : ____________________________');
+$underlineWidth =  33;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, -1, '', 'B');
+$pdf->Cell(10, 1, '', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
-
 $pdf->Cell(80, 10, 'SOURCE OF WATER SUPPLY: ' . $bh_water_source, 0);
 $pdf->Cell(32, 10, 'Adequate: YES(___)', 0);
 $pdf->Cell(20, 10, 'NO: (___)', 0);
@@ -505,7 +513,7 @@ if ($bh_premises_cond == 'good') {
 $pdf->SetFont('Arial', '', 8);
 $pdf->Cell(1);
 $pdf->Cell(10, 5, '', 0);
-$pdf->Cell(50, 5, '1. Type of Garbage Disposal:    ' . $bh_garbage_disposal, 0);
+$pdf->Cell(50, 5, '1. Type of Garbage Disposal:    ' . $bh_garbage_disposal . '    ' . $bh_garbage_other, 0);
 $pdf->Ln();
 
 
@@ -518,7 +526,7 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->Cell(10, 5, '', 0);
-$pdf->Cell(50, 5, '2. Type of Sewage Disposal:    ' . $bh_sewage_disposal, 0);
+$pdf->Cell(50, 5, '2. Type of Sewage Disposal:    ' . $bh_sewage_disposal . '     ' . $bh_sewage_other, 0);
 $pdf->Ln();
 
 
@@ -531,7 +539,7 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->Cell(10, 5, '', 0);
-$pdf->Cell(50, 5, '3. Type of Rodent/Vermin Control:    ' . $bh_rodent_disposal, 0);
+$pdf->Cell(50, 5, '3. Type of Rodent/Vermin Control:    ' . $bh_rodent_disposal . '    ' .  $bh_rodent_other, 0);
 $pdf->Ln();
 
 $labelWidth = $pdf->GetStringWidth('3. Type of Rodent/Vermin Control:_______ ');
@@ -574,6 +582,35 @@ if ($light_ventilation == 'natural') {
 } elseif ($light_ventilation == 'artificial') {
   $pdf->Text(38.8,  +210.5, $checkmark);
 }
+
+
+$pdf->SetFont('ZapfDingbats', '', 8);
+
+
+if ($light_ventilation == 'natural') {
+  if ($natural_artificial == 'satisfactory' || $natural_artificial == 'unsatisfactory') {
+    $checkmark = "\x34";
+    if ($natural_artificial == 'satisfactory') {
+      $pdf->Text(90.6, 205.5, $checkmark);
+    } elseif ($natural_artificial == 'unsatisfactory') {
+      $pdf->Text(143.6, 205.5, $checkmark);
+    }
+  }
+}
+
+
+if ($light_ventilation == 'artificial') {
+  if ($natural_artificial == 'satisfactory' || $natural_artificial == 'unsatisfactory') {
+    $checkmark = "\x34";
+    if ($natural_artificial == 'satisfactory') {
+      $pdf->Text(90.6, 210.5, $checkmark);
+    } elseif ($natural_artificial == 'unsatisfactory') {
+      $pdf->Text(143.6, 210.5, $checkmark);
+    }
+  }
+}
+
+
 
 $pdf->SetFont('Arial', '', 8);
 $pdf->Cell(1);
