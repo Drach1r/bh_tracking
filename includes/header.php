@@ -32,7 +32,6 @@ if (!isset($_SESSION["user_id"])) {
     <script src="resources/js/create.js"></script>
     <script src="resources/js/edit_question.js"></script>
 
-<!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
 </head>
 
@@ -43,7 +42,6 @@ if (!isset($_SESSION["user_id"])) {
 
 <body id="page-top">
 
-<!-- Page Wrapper -->
 <div id="wrapper">
 
     <br>
