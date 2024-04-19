@@ -14,7 +14,7 @@ include 'includes/navbar.php';
         Filter Map
     </div>
 
-    <div class="filter-form-container" style= "position: relative; right: 100px;">
+    <div class="filter-form-container" style= "position: relative; right: 100px; width: 25%;">
         <div class="filter-form">
             <label for="establishment-name"><strong>Search by type:</strong></label>
             <input type="text" id="establishment-name" class="form-control">
