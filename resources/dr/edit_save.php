@@ -8,32 +8,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateform'])) {
         
         $stmt = null;
 
-
-        $newImageUploaded = isset($_FILES['bh_image']) && $_FILES['bh_image']['error'] === UPLOAD_ERR_OK;
-
-        if ($newImageUploaded) {
-
-            $currentImageId = $_POST['id'];
+ 
+        if (isset($_FILES['bh_image']['name']) && $_FILES['bh_image']['name'] !== '') {
             $uploadDir = '../../resources/gallery/';
             $newImageName = uniqid() . '_' . $_FILES['bh_image']['name'];
             $targetFile = $uploadDir . $newImageName;
 
-
-            $stmt = $pdo->prepare("SELECT bh_image FROM boarding_house_tracking WHERE id = :id");
-            $stmt->bindParam(':id', $currentImageId, PDO::PARAM_INT);
-            $stmt->execute();
-            $previousImage = $stmt->fetchColumn();
-
-
-            if ($previousImage && file_exists($uploadDir . $previousImage)) {
-                unlink($uploadDir . $previousImage);
-            }
-
-
             if (move_uploaded_file($_FILES['bh_image']['tmp_name'], $targetFile)) {
+                $stmt = $pdo->prepare("SELECT bh_image FROM boarding_house_tracking WHERE id = :id");
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                $stmt->execute();
+                $previousImage = $stmt->fetchColumn();
+
+                if ($previousImage && file_exists($uploadDir . $previousImage)) {
+                    unlink($uploadDir . $previousImage);
+                }
+
+                $stmt = $pdo->prepare("UPDATE boarding_house_tracking SET bh_image = :bh_image WHERE id = :id");
+                $stmt->bindParam(':bh_image', $newImageName);
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                $stmt->execute();
             } else {
                 echo "Failed to move uploaded image.";
             }
+        } else {
+            $stmt = $pdo->prepare("SELECT bh_image FROM boarding_house_tracking WHERE id = :id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $previousImage = $stmt->fetchColumn();
+            $newImageName = $previousImage;
         }
 
 
@@ -105,7 +108,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateform'])) {
         WHERE id = :id";
 
 
-        // Prepare statement
         $stmt = $pdo->prepare($sql);
 
 
@@ -182,7 +184,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateform'])) {
         $stmt->bindParam(':bh_image', $newImageName);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
-        // Execute statement
         if ($stmt->execute()) {
             $_SESSION['success'] = "Record updated successfully";
             header("Location: ../../bh_edit.php?id=" . $id);

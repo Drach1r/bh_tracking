@@ -24,6 +24,8 @@ try {
 
 ?>
 
+
+
 <div class="row">
     <h3 class="title"><strong>Update Record</strong></h3>
 </div>
@@ -827,7 +829,7 @@ try {
                             reader.onload = function() {
                                 var preview = document.getElementById('preview');
                                 preview.src = reader.result;
-                                preview.style.display = 'block'; // Show the preview image
+                                preview.style.display = 'block'; 
                             }
 
                             if (event.target.files && event.target.files[0]) {
