@@ -677,9 +677,16 @@ $pdf->Ln();
 
 $pdf->Rect(15, 240, 185, 40);
 
+
+$pdf->SetFont('Arial', '', 8);
+$pdf->Cell(5);
+$pdf->Cell(200, 0, '' . $bh_remarks, 0,);
+$pdf->Ln();
+
 $pdf->Cell(1);
 $pdf->Cell(1, 40, '', 0);
 $pdf->Ln();
+
 
 $pdf->Cell(90);
 $pdf->SetFont('Times', 'B', 10);
