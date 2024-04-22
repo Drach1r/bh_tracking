@@ -1,20 +1,20 @@
-<?php 
-include 'includes/header.php'; 
-include 'includes/navbar.php'; 
+<?php
+include 'includes/header.php';
+include 'includes/navbar.php';
 ?>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <link rel="stylesheet" href="resources/css/map_style.css">
 
 
 <div id="map-container">
-    <div class="burger-icon" style= "top: -80px; left: 10px;">
+    <div class="burger-icon" style="top: -80px; left: 10px;">
         <span class="fas fa-bars" id="burger-icon"></span>
         Filter Map
     </div>
 
-    <div class="filter-form-container" style= "position: relative; right: 100px; width: 25%;">
+    <div class="filter-form-container" style="position: relative; right: 100px; width: 25%;">
         <div class="filter-form">
             <label for="establishment-name"><strong>Search by type:</strong></label>
             <input type="text" id="establishment-name" class="form-control">
@@ -192,8 +192,6 @@ include 'includes/navbar.php';
                     });
                 </script>
 
-
-
             </div>
 
             <div class="row">
@@ -227,13 +225,12 @@ include 'includes/navbar.php';
                         });
                     </script>
 
-
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="map" style= "right: 80px;"></div>
+    <div id="map" style="right: 80px;"></div>
 </div>
 
 
@@ -320,7 +317,7 @@ include 'includes/navbar.php';
                     var artificial = String(item.natural_artificial);
                     var extension = String(item.establishment_extension);
                     var txt = String(item.specify_txt);
-                    var permit = String(item.with_permit);
+                    var with_permit = String(item.with_permit);
                     var remarks = String(item.bh_remarks);
                     var required = String(item.office_required);
                     var inspect = String(item.inspected_by);
@@ -391,7 +388,7 @@ include 'includes/navbar.php';
                                 <li><b>Natural or Artificial:</b> ${artificial}</li>
                                 <li><b>Establishment Extension:</b> ${extension}</li>
                                 <li><b>Specify Extension:</b> ${txt}</li>
-                                <li><b>With Permit:</b> ${permit}</li>
+                                <li><b>With Permit:</b> ${with_permit}</li>
                                 <li><b>Remarks and Recommendation:</b> ${remarks}</li>
                                 <li><b>Office Required:</b> ${required}</li>
                                 <li><b>Inspected by:</b> ${inspect}</li>
@@ -432,13 +429,13 @@ include 'includes/navbar.php';
             var waterSource = $('.bh_water_source:checked').map(function() {
                 return this.value;
             }).get().join(",");
+            var ventilation = $('.light_ventilation:checked').map(function() {
+                return this.value;
+            }).get().join(",");
+            var with_permit = $('.with_permit:checked').map(function() {
+                return this.value;
+            }).get().join(",");
             var premisescond = $('.bh_premises_cond:checked').map(function() {
-                return this.value;
-            }).get().join(",");
-            var lightingVentilation = $('.light_ventilation:checked').map(function() {
-                return this.value;
-            }).get().join(",");
-            var withPermit = $('.with_permit:checked').map(function() {
                 return this.value;
             }).get().join(",");
 
@@ -454,9 +451,9 @@ include 'includes/navbar.php';
                     (mp === '' || popupContent.includes(mp)) &&
                     (rates === '' || popupContent.includes(rates)) &&
                     (waterSource === '' || waterSource.split(',').every(val => popupContent.includes(val.trim()))) &&
+                    (ventilation === '' || popupContent.includes(ventilation)) &&
+                    (with_permit === '' || popupContent.includes(with_permit)) &&
                     (premisescond === '' || popupContent.includes(premisescond)) &&
-                    (lightingVentilation === '' || popupContent.includes(lightingVentilation)) &&
-                    (withPermit === '' || popupContent.includes(withPermit)) &&
                     (district === '' || markerDistrict === parseInt(district)) &&
                     (barangay === '' || markerBarangay === parseInt(barangay));
                 if (showMarker) {
@@ -512,7 +509,7 @@ include 'includes/navbar.php';
 </script>
 
 
-<?php 
-include 'includes/scripts.php'; 
-include 'includes/footer.php'; 
+<?php
+include 'includes/scripts.php';
+include 'includes/footer.php';
 ?>

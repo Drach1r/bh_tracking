@@ -5,9 +5,9 @@ include 'includes/navbar.php';
 
 
 
-<h3 class="title"><strong>New Record</strong></h3>
+<h3 class="title" style="margin-left: 200px;"><strong>New Record</strong></h3>
 
-<section class="container">
+<section class=" container">
     <div class="row">
         <div class="card-body">
             <div class="card-title-body">
@@ -647,7 +647,7 @@ include 'includes/navbar.php';
                     </div>
                     <div class="row">
                         <div class="form-group col-md-5">
-                            <h5> GPS: <button type="button" onclick="getLocation()" class="btn btn-primary btn-sm my-2 buton"> <i class="fa-solid fa-location-dot"></i></button></h5>
+                            <h5> GPS: <button type="button" onclick="getLocation()" class="btn btn-primary btn-sm my-2 buton"> <i class="fas fa-map-marker-alt"></i></button></h5>
                             <label for="current_loc">Current Location:</label>
                             <textarea id="current_loc" class="form-control" rows="1" name="current_loc" required readonly> </textarea>
 

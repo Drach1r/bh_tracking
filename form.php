@@ -229,13 +229,12 @@ if (isset($_GET['id'])) {
 }
 ?>
 
-<h3 class="title"><strong>View Record</strong>
+<h3 class="title" style="margin-left: 200px;"><strong>View Record</strong>
     <button onclick="print()" class='btn btn-success'>Print</button>
 
 </h3>
 </div>
 <script>
-
     function print() {
         var currentPageUrl = window.location.href;
         var pageId = currentPageUrl.split('?')[1];
@@ -793,7 +792,7 @@ if (isset($_GET['id'])) {
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <h5>GPS: <button type="button" class="btn btn-primary btn-sm my-2 buton"><i class="fa-solid fa-location-dot"></i></button></h5>
+                            <h5>GPS: <button type="button" class="btn btn-primary btn-sm my-2 buton"><i class="fas fa-map-marker-alt"></i></i></button></h5>
                             <label for="current_loc">Current Location:</label>
                             <div class="input-group">
                                 <textarea id="current_loc" class="form-control" rows="1" name="current_loc" disabled required><?php echo isset($row['current_loc']) ? $row['current_loc'] : ''; ?></textarea>

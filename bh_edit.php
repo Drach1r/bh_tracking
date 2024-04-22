@@ -27,7 +27,7 @@ try {
 
 
 <div class="row">
-    <h3 class="title"><strong>Update Record</strong></h3>
+    <h3 class="title" style="margin-left: 200px;"><strong>Update Record</strong></h3>
 </div>
 
 <section class="container">
@@ -708,7 +708,7 @@ try {
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <h5> GPS: <button type="button" onclick="getLocation()" class="btn btn-primary btn-sm my-2 buton"><i class="fa-solid fa-location-dot"></i></button></h5>
+                            <h5> GPS: <button type="button" onclick="getLocation()" class="btn btn-primary btn-sm my-2 buton"><i class="fas fa-map-marker-alt"></i></i></button></h5>
                             <label for="current_loc">Current Location:</label>
                             <div class="input-group">
                                 <textarea id="current_loc" class="form-control" rows="1" name="current_loc" readonly><?php echo isset($row['current_loc']) ? $row['current_loc'] : ''; ?></textarea>
@@ -829,7 +829,7 @@ try {
                             reader.onload = function() {
                                 var preview = document.getElementById('preview');
                                 preview.src = reader.result;
-                                preview.style.display = 'block'; 
+                                preview.style.display = 'block';
                             }
 
                             if (event.target.files && event.target.files[0]) {

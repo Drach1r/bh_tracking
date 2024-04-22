@@ -16,8 +16,7 @@ try {
 }
 
 ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-s2NqIX+4ogvHzh0JqQLN73OY5hC+O4uvOs7BYpvL/gLP+B3r+Fu+6wUopE3PybLWpA2ZYsKOpYyDAxskpFL9CA==" crossorigin="anonymous" />
-
+<script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
 
 <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="records.php">
@@ -51,35 +50,37 @@ try {
 
     <hr class="sidebar-divider">
 
+    <?php if ($user_role === 'super_admin') : ?>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="user.php" aria-expanded="true">
+                <i class="fas fa-users"></i>
+                <span>Manage Profiles</span>
+            </a>
+        </li>
+    <?php endif; ?>
+
     <li class="nav-item">
         <a class="nav-link collapsed" href="create.php" aria-expanded="true">
-            <i class="fa fa-file"></i>
+            <i class="fa fa-solid fa-plus"></i>
+
             <span>Add New Record</span>
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link collapsed" href="generate_report.php" aria-expanded="true">
-            <i class="fa-solid fa-circle-plus"></i>
+            <i class="fa fa-file"></i>
             <span>Generate Report</span>
         </a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link collapsed" href="map.php" aria-expanded="true">
-            <i class="fa-solid fa-pen-to-square"></i>
+            <i class="fas fa-map-marked-alt"></i>
             <span>Mapping</span>
         </a>
     </li>
 
-<?php if ($user_role === 'super_admin') : ?>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="user.php" aria-expanded="true">
-            <i class="fa-solid fa-pen-to-square"></i>
-            <span>Manage Profiles</span>
-        </a>
-    </li>
-<?php endif; ?>
 
 
     <hr class="sidebar-divider d-none d-md-block">
@@ -91,8 +92,7 @@ try {
             <ul class="navbar-nav ml-auto">
                 <div class="topbar-divider d-none d-sm-block"></div>
                 <li class="nav-item dropdown no-arrow">
-                    <a class="nav-link dropdown-toggle" href="logout.php" id="userDropdown" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="logout.php" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <h3 class="h6 mb-0 text-danger">Logout</h3>
                     </a>
                 </li>
