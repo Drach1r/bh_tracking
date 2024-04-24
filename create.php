@@ -5,7 +5,7 @@ include 'includes/navbar.php';
 
 
 
-<h3 class="title" style="margin-left: 200px;"><strong>New Record</strong></h3>
+
 
 <section class=" container">
     <div class="row">

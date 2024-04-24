@@ -19,12 +19,12 @@ try {
 <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
 
 <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="records.php">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="records.php" style="margin-top: 5px;">
         <div class="sidebar-brand-icon rotate-n-0">
             <img class="img-profile rounded-circle" src="resources/img/iloilo.png">
         </div>
         <div class="sidebar-brand-text mx-1" style="font-size: 0.8rem;">
-            BH Tracking <span> Information Management </span>
+            BH Tracking <span> Information System </span>
         </div>
     </a>
 
@@ -58,6 +58,16 @@ try {
             </a>
         </li>
     <?php endif; ?>
+    <?php if ($user_role === 'admin') : ?>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="user.php" aria-expanded="true">
+                <i class="fas fa-users"></i>
+                <span>Manage Profiles</span>
+            </a>
+        </li>
+    <?php endif; ?>
+
+
 
     <li class="nav-item">
         <a class="nav-link collapsed" href="create.php" aria-expanded="true">
@@ -89,6 +99,18 @@ try {
 <div id="content-wrapper" class="d-flex flex-column">
     <div id="content">
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <?php
+
+            $current_file = basename($_SERVER["SCRIPT_FILENAME"], ".php");
+            if ($current_file === 'records') : ?>
+                <h2>Dashboard</h2>
+            <?php elseif ($current_file === 'user') : ?>
+                <h2>Manage Users</h2>
+            <?php elseif ($current_file === 'create') : ?>
+                <h2>Create Record</h2>
+            <?php elseif ($current_file === 'generate_report') : ?>
+                <h2>Generate Reports</h2>
+            <?php endif; ?>
             <ul class="navbar-nav ml-auto">
                 <div class="topbar-divider d-none d-sm-block"></div>
                 <li class="nav-item dropdown no-arrow">

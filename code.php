@@ -14,7 +14,7 @@ if (isset($_POST['register'])) {
         exit();
     }
 
-    // Check if email already exists
+
     $stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email');
     $stmt->execute(['email' => $email]);
     if ($stmt->rowCount() > 0) {
@@ -23,10 +23,10 @@ if (isset($_POST['register'])) {
         exit();
     }
 
-    // Hash password
+
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Insert user data into the database
+
     $stmt = $pdo->prepare('INSERT INTO users (first_name, last_name, email, password, approved, role) VALUES (:first_name, :last_name, :email, :password, :approved, :role)');
     try {
         $stmt->execute([
@@ -34,8 +34,8 @@ if (isset($_POST['register'])) {
             'last_name' => $last_name,
             'email' => $email,
             'password' => $hashed_password,
-            'approved' => false, // Set default approval status
-            'role' => 'admin' // Set default role to admin
+            'approved' => false,
+            'role' => 'user'
         ]);
 
         $_SESSION['success'] = 'Registration successful. Waiting for approval.';
@@ -47,4 +47,3 @@ if (isset($_POST['register'])) {
         exit();
     }
 }
-?>

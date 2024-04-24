@@ -5,7 +5,7 @@ include 'includes/navbar.php';
 
 <br>
 <div class="container">
-<div class="alert alert-success alert-dismissible fade show" style="display: none; position: absolute; top: 0px; left: 50%; transform: translateX(-50%); border-radius: 10px;" role="alert">
+    <div class="alert alert-success alert-dismissible fade show" style="display: none; position: absolute; top: 0px; left: 50%; transform: translateX(-50%); border-radius: 10px;" role="alert">
         Data deleted successfully.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -19,7 +19,7 @@ include 'includes/navbar.php';
     </div>
 
 
-<form action="import_csv.php" method="post" enctype="multipart/form-data">
+    <form action="import_csv.php" method="post" enctype="multipart/form-data">
         <div class="form-row align-items-center">
             <div class="col-auto">
                 <label for="file" class="col-form-label">Choose CSV file:</label>
@@ -34,7 +34,7 @@ include 'includes/navbar.php';
     </form>
 
 
-    <form action="import_image.php" method="post" enctype="multipart/form-data">
+    <form action="import_image.php" metx`hod="post" enctype="multipart/form-data">
         <div class="form-row align-items-center">
             <div class="col-auto">
                 <label for="file" class="col-form-label">Choose Image files:</label>
@@ -54,54 +54,54 @@ include 'includes/navbar.php';
             <table class="table table-bordered" id="recordstable">
                 <thead>
                     <tr>
-                    <th class="text-center" style="color: black; background-color:#f0a190">#</th>
-                    <th class="text-center" style="color: black; background-color:#f0a190">Name of Establishment</th>
-                    <th class="text-center" style="color: black; background-color:#f0a190">Full Name</th>
-                    <th class="text-center" style="color: black; background-color:#f0a190">Address</th>
-                    <th class="text-center" style="color: black; background-color:#f0a190">City Municipality</th>
-                    <th class="text-center" style="color: black; background-color:#f0a190">Action</th>
+                        <th class="text-center" style="color: black; background-color:#f0a190">#</th>
+                        <th class="text-center" style="color: black; background-color:#f0a190">Name of Establishment</th>
+                        <th class="text-center" style="color: black; background-color:#f0a190">Full Name</th>
+                        <th class="text-center" style="color: black; background-color:#f0a190">Address</th>
+                        <th class="text-center" style="color: black; background-color:#f0a190">City Municipality</th>
+                        <th class="text-center" style="color: black; background-color:#f0a190">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                <?php
+                    <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bh_tracking";
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $database = "bh_tracking";
 
-try {
+                    try {
 
-    $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+                        $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
 
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-
-    $sql = "SELECT id, account_number, establishment_name, first_name, middle_name, last_name, bh_address, bh_municipality FROM boarding_house_tracking";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
+                        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-    if ($stmt->rowCount() > 0) {
-
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<tr>";
-            echo "<td class='text-center'>" . $row['id'] . "</td>";
-            echo "<td class='text-center'>" . $row['establishment_name'] . "</td>";
-            echo "<td class='text-center'>" . $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name'];
-
-            if (array_key_exists('suffix', $row) && $row['suffix'] !== null) {
-                echo ' ' . $row['suffix'];
-            }
-
-            echo "</td>";
+                        $sql = "SELECT id, account_number, establishment_name, first_name, middle_name, last_name, bh_address, bh_municipality FROM boarding_house_tracking";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->execute();
 
 
+                        if ($stmt->rowCount() > 0) {
 
-            echo "<td class='text-center'>" . $row['bh_address'] . "</td>";
-            echo "<td class='text-center'>" . $row['bh_municipality'] . "</td>";
+                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                echo "<tr>";
+                                echo "<td class='text-center'>" . $row['id'] . "</td>";
+                                echo "<td class='text-center'>" . $row['establishment_name'] . "</td>";
+                                echo "<td class='text-center'>" . $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name'];
 
-            echo "<td class='text-center'>
+                                if (array_key_exists('suffix', $row) && $row['suffix'] !== null) {
+                                    echo ' ' . $row['suffix'];
+                                }
+
+                                echo "</td>";
+
+
+
+                                echo "<td class='text-center'>" . $row['bh_address'] . "</td>";
+                                echo "<td class='text-center'>" . $row['bh_municipality'] . "</td>";
+
+                                echo "<td class='text-center'>
                     <a class='btn btn-primary btn-sm rounded-s' style='margin-bottom: 5px;' href='form.php?id=" . $row['id'] . "'>
                         View
                     </a>
@@ -115,16 +115,16 @@ try {
 
 
 
-            echo "</tr>";
-        }
-    } else {
-        echo "<tr><td colspan='5' class='text-center'>No records found</td></tr>";
-    }
-} catch (PDOException $e) {
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='5' class='text-center'>No records found</td></tr>";
+                        }
+                    } catch (PDOException $e) {
 
-    echo "Connection failed: " . $e->getMessage();
-}
-?>
+                        echo "Connection failed: " . $e->getMessage();
+                    }
+                    ?>
 
                 </tbody>
             </table>
@@ -141,9 +141,10 @@ try {
 </style>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#recordstable').DataTable({
-            "scrollY": "300px" 
+            "scrollY": "45vh"
+
         });
     });
 
@@ -174,7 +175,6 @@ try {
             xhr.send('id=' + id);
         }
     }
-
 </script>
 
 

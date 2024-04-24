@@ -744,6 +744,12 @@ $pdf->SetFont('Times', '', 10);
 $pdf->Cell(50, 5, '____________________________', 0);
 $pdf->Ln();
 
+
+$pdf->Cell(1);
+$pdf->SetFont('Times', '', 10);
+$pdf->Cell(139, 0, '' . $acknowledge_by, 0,);
+$pdf->Ln();
+
 $pdf->Cell(1);
 $pdf->SetFont('Times', '', 10);
 $pdf->Cell(139, 5, '___________________________', 0);
