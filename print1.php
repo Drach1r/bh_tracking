@@ -513,7 +513,12 @@ if ($bh_premises_cond == 'good') {
 $pdf->SetFont('Arial', '', 8);
 $pdf->Cell(1);
 $pdf->Cell(10, 5, '', 0);
-$pdf->Cell(50, 5, '1. Type of Garbage Disposal:    ' . $bh_garbage_disposal . '    ' . $bh_garbage_other, 0);
+$pdf->Cell(50, 5, '1. Type of Garbage Disposal:');
+if ($bh_garbage_disposal == "others") {
+  $pdf->Cell(50, 5, $bh_garbage_other, 0);
+} else {
+  $pdf->Cell(50, 5, $bh_garbage_disposal, 0);
+}
 $pdf->Ln();
 
 
@@ -526,7 +531,12 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->Cell(10, 5, '', 0);
-$pdf->Cell(50, 5, '2. Type of Sewage Disposal:    ' . $bh_sewage_disposal . '     ' . $bh_sewage_other, 0);
+$pdf->Cell(50, 5, '2. Type of Sewage Disposal:    ', 0);
+if ($bh_sewage_disposal == "others") {
+  $pdf->Cell(50, 5, $bh_sewage_other, 0);
+} else {
+  $pdf->Cell(50, 5, $bh_sewage_disposal, 0);
+}
 $pdf->Ln();
 
 
@@ -539,7 +549,12 @@ $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->Cell(10, 5, '', 0);
-$pdf->Cell(50, 5, '3. Type of Rodent/Vermin Control:    ' . $bh_rodent_disposal . '    ' .  $bh_rodent_other, 0);
+$pdf->Cell(50, 5, '3. Type of Rodent/Vermin Control:    ');
+if ($bh_rodent_disposal == "others") {
+  $pdf->Cell(50, 5, $bh_rodent_other, 0);
+} else {
+  $pdf->Cell(50, 5, $bh_rodent_disposal, 0);
+}
 $pdf->Ln();
 
 $labelWidth = $pdf->GetStringWidth('3. Type of Rodent/Vermin Control:_______ ');
@@ -709,7 +724,7 @@ $pdf->Cell(200, 5, 'this commission to file necessary action against your busine
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 10, '', 0);
+$pdf->Cell(200, 5, '', 0);
 $pdf->Ln();
 
 $pdf->Cell(120);
@@ -717,49 +732,52 @@ $pdf->SetFont('Times', 'B', 10);
 $pdf->Cell(50, 5, 'Inspected by:', 0);
 $pdf->Ln();
 
-$pdf->Cell(140);
-$pdf->SetFont('Times', '', 10);
-$pdf->Cell(50, 5, '____________________________', 0);
-$pdf->Ln();
 
-$pdf->Cell(140);
+$pdf->Cell(.1);
 $pdf->SetFont('Times', '', 10);
-$pdf->Cell(50, 5, '____________________________', 0);
-$pdf->Ln();
+$names = explode(',', $inspected_by);
+foreach ($names as $name) {
+  $name = trim($name);
+  if ($name !== "") {
+    $pdf->Cell(150);
+    $pdf->Cell(50, 5, '' . $name, 0);
+    $pdf->Ln();
 
-$pdf->Cell(140);
-$pdf->SetFont('Times', '', 10);
-$pdf->Cell(50, 5, '____________________________', 0);
-$pdf->Ln();
+    $labelWidth = $pdf->GetStringWidth('________________________________________________________________________________');
+    $underlineWidth =  49;
+    $pdf->Cell($labelWidth);
+    $pdf->Cell($underlineWidth, -1, '', 'B');
+    $pdf->Ln();
+  }
+}
+
+
 
 $pdf->Cell(1);
 $pdf->SetFont('Times', 'B', 10);
-$pdf->Cell(139, 5, 'Acknowledge by:', 0);
-$pdf->SetFont('Times', '', 10);
-$pdf->Cell(50, 5, '____________________________', 0);
+$pdf->Cell(130, 10, 'Acknowledge by:', 0);
 $pdf->Ln();
 
 $pdf->Cell(140);
 $pdf->SetFont('Times', '', 10);
-$pdf->Cell(50, 5, '____________________________', 0);
 $pdf->Ln();
 
 
 $pdf->Cell(1);
 $pdf->SetFont('Times', '', 10);
-$pdf->Cell(139, 0, '' . $acknowledge_by, 0,);
+$pdf->Cell(139, 5, '' . $acknowledge_by, 0,);
 $pdf->Ln();
 
-$pdf->Cell(1);
-$pdf->SetFont('Times', '', 10);
-$pdf->Cell(139, 5, '___________________________', 0);
-$pdf->Cell(50, 5, '____________________________', 0);
+
+$labelWidth = $pdf->GetStringWidth('_');
+$underlineWidth =  49;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, -1, '', 'B');
 $pdf->Ln();
 
 $pdf->Cell(1);
 $pdf->SetFont('Times', 'B', 10);
 $pdf->Cell(150, 5, 'Signature over Printed Name', 0, '');
-$pdf->Cell(55, 5, 'Team Leader', 0, 'C');
 $pdf->Ln();
 
 $pdf->Output();

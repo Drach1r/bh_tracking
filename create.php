@@ -627,9 +627,9 @@ include 'includes/navbar.php';
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-7">
                             <label for="inspected_by">Inspected by:</label>
-                            <input type="text" id="inspected_by" class="form-control" name="inspected_by" placeholder="Enter name" required>
+                            <input type="text" id="inspected_by" class="form-control" name="inspected_by" placeholder="Seperate each name by comma ex: fullname, fullname,....." required>
                         </div>
                     </div>
                     <div class="row">

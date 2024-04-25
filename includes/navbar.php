@@ -110,7 +110,12 @@ try {
                 <h2>Create Record</h2>
             <?php elseif ($current_file === 'generate_report') : ?>
                 <h2>Generate Reports</h2>
+            <?php elseif ($current_file === 'form') : ?>
+                <h2>View Record</h2>
+            <?php elseif ($current_file === 'bh_edit') : ?>
+                <h2>Update Record</h2>
             <?php endif; ?>
+
             <ul class="navbar-nav ml-auto">
                 <div class="topbar-divider d-none d-sm-block"></div>
                 <li class="nav-item dropdown no-arrow">

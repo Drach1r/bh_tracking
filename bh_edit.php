@@ -26,9 +26,6 @@ try {
 
 
 
-<div class="row">
-    <h3 class="title" style="margin-left: 200px;"><strong>Update Record</strong></h3>
-</div>
 
 <section class="container">
     <div class="row">
