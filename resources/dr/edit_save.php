@@ -5,38 +5,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateform'])) {
 
 
         $id = $_POST['id'];
-        
         $stmt = null;
+        $bh_water_source = '';
+        $bh_nawasa = 0;
+        $bh_deepwell = 0;
+        $bh_specify = null;
 
- 
-        if (isset($_FILES['bh_image']['name']) && $_FILES['bh_image']['name'] !== '') {
+        if (isset($_POST['bh_specify']) && $_POST['bh_specify'] !== '') {
+            $bh_specify = $_POST['bh_specify'];
+        }
+
+        $bh_water_source = '';
+        if (isset($_POST['bh_water_source'])) {
+            foreach ($_POST['bh_water_source'] as $source) {
+                if ($source === 'nawasa') {
+                    $bh_water_source .= 'nawasa ';
+                    $bh_nawasa = 1;
+                } elseif ($source === 'deep_well') {
+                    $bh_water_source .= 'deep_well ';
+                    $bh_deepwell = 1;
+                }
+            }
+            $bh_water_source = trim($bh_water_source);
+        }
+
+
+        $newImageUploaded = isset($_FILES['bh_image']) && $_FILES['bh_image']['error'] === UPLOAD_ERR_OK;
+
+        if ($newImageUploaded) {
+
+            $currentImageId = $_POST['id'];
             $uploadDir = '../../resources/gallery/';
             $newImageName = uniqid() . '_' . $_FILES['bh_image']['name'];
             $targetFile = $uploadDir . $newImageName;
 
+
+            $stmt = $pdo->prepare("SELECT bh_image FROM boarding_house_tracking WHERE id = :id");
+            $stmt->bindParam(':id', $currentImageId, PDO::PARAM_INT);
+            $stmt->execute();
+            $previousImage = $stmt->fetchColumn();
+
+
+            if ($previousImage && file_exists($uploadDir . $previousImage)) {
+                unlink($uploadDir . $previousImage);
+            }
+
+
             if (move_uploaded_file($_FILES['bh_image']['tmp_name'], $targetFile)) {
-                $stmt = $pdo->prepare("SELECT bh_image FROM boarding_house_tracking WHERE id = :id");
-                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-                $stmt->execute();
-                $previousImage = $stmt->fetchColumn();
-
-                if ($previousImage && file_exists($uploadDir . $previousImage)) {
-                    unlink($uploadDir . $previousImage);
-                }
-
-                $stmt = $pdo->prepare("UPDATE boarding_house_tracking SET bh_image = :bh_image WHERE id = :id");
-                $stmt->bindParam(':bh_image', $newImageName);
-                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-                $stmt->execute();
             } else {
                 echo "Failed to move uploaded image.";
             }
-        } else {
-            $stmt = $pdo->prepare("SELECT bh_image FROM boarding_house_tracking WHERE id = :id");
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-            $stmt->execute();
-            $previousImage = $stmt->fetchColumn();
-            $newImageName = $previousImage;
         }
 
 
@@ -108,6 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateform'])) {
         WHERE id = :id";
 
 
+
         $stmt = $pdo->prepare($sql);
 
 
@@ -134,7 +153,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateform'])) {
         $bh_construction_kind = isset($_POST['bh_construction_kind']) ? $_POST['bh_construction_kind'] : array();
         $constructionKind = implode(',', $bh_construction_kind);
         $stmt->bindParam(':bh_construction_kind', $constructionKind);
-
         $stmt->bindParam(':bh_specify', $bh_specify, PDO::PARAM_STR);
         $bh_class = isset($_POST['bh_class']) ? $_POST['bh_class'] : array();
         $bhClass = implode(',', $bh_class);
@@ -183,6 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateform'])) {
         $stmt->bindParam(':bh_precision', $_POST['bh_precision']);
         $stmt->bindParam(':bh_image', $newImageName);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
 
         if ($stmt->execute()) {
             $_SESSION['success'] = "Record updated successfully";

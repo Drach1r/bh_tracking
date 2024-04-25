@@ -130,11 +130,19 @@ $pdf->Cell(200, -10, '', 0);
 $pdf->Ln();
 
 $pdf->Cell(150);
-$pdf->Cell(50, 5, 'Date:_________________', 0);
+$submission_date = new DateTime($submission_time);
+$formatted_date = $submission_date->format('Y-m-d');
+$pdf->Cell(50, 5, 'Date: ' . $formatted_date, 0);
+$pdf->Ln();
+
+$labelWidth = $pdf->GetStringWidth('__________________________________________________________________________________________');
+$underlineWidth =  20;
+$pdf->Cell($labelWidth);
+$pdf->Cell($underlineWidth, -1, '', 'B');
 $pdf->Ln();
 
 $pdf->Cell(1);
-$pdf->Cell(200, 5, '', 0);
+$pdf->Cell(200, 6, '', 0);
 $pdf->Ln();
 
 $pdf->Cell(1);
