@@ -32,12 +32,12 @@ try {
 
 
 
-        $_SESSION['message'] = "User data updated successfully.";
+        $_SESSION['success'] = "User data updated successfully.";
 
         header("Location: ../../user.php");
         exit();
     } else {
-        echo "Form data not submitted.";
+        $_SESSION['error'] = "Failed to update record";
     }
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
