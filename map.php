@@ -196,7 +196,7 @@ include 'includes/navbar.php';
 
             <div class="row">
                 <div class="checkbox-group">
-                    <label for="lighting-ventilation"><strong>Lightning and Ventilation:</strong></label>
+                    <label for="light_ventilation"><strong>Lightning and Ventilation:</strong></label>
                     <label><input type="checkbox" class="light_ventilation light-checkbox-group" value="natural">
                         Natural</label>
                     <label><input type="checkbox" class="light_ventilation light-checkbox-group" value="artificial">
@@ -213,7 +213,7 @@ include 'includes/navbar.php';
                 </div>
 
                 <div class="checkbox-group">
-                    <label for="with-permit"><strong>With Permit:</strong></label>
+                    <label for="with_permit"><strong>With Permit:</strong></label>
                     <label><input type="checkbox" class="with_permit permit-checkbox-group" value="yes"> Yes</label>
                     <label><input type="checkbox" class="with_permit permit-checkbox-group" value="no"> No</label>
                     <script>
@@ -410,7 +410,7 @@ include 'includes/navbar.php';
             }
         });
 
-        $('#establishment-name, #district, #barangay, .bh_construction_kind, .bh_class, .bh_rates_charge, .bh_mp, .bh_water_source, .bh_premises_cond, .light_ventilation, .with_permit').on('input change', function() {
+        $('#establishment-name, #district, #barangay, .bh_construction_kind, .bh_class, .bh_rates_charge, .bh_mp, .bh_water_source, .light_ventilation, .with_permit, .bh_premises_cond').on('input change', function() {
             var establishmentName = $('#establishment-name').val().toLowerCase();
             var district = $('#district').val();
             var barangay = $('#barangay').val();
@@ -439,10 +439,19 @@ include 'includes/navbar.php';
                 return this.value;
             }).get().join(",");
 
+            console.log("Ventilation:", ventilation);
+            console.log("With Permit:", with_permit);
             markers.forEach(function(marker) {
                 var popupContent = marker.getPopup().getContent().toLowerCase();
                 var markerDistrict = marker.options.districtId;
                 var markerBarangay = marker.options.barangayId;
+
+
+
+                var ventilationValues = ventilation.split(",");
+                var permitValues = with_permit.split(",");
+
+
 
                 var showMarker =
                     (establishmentName === '' || popupContent.includes(establishmentName)) &&
@@ -451,8 +460,8 @@ include 'includes/navbar.php';
                     (mp === '' || popupContent.includes(mp)) &&
                     (rates === '' || popupContent.includes(rates)) &&
                     (waterSource === '' || waterSource.split(',').every(val => popupContent.includes(val.trim()))) &&
-                    (ventilation === '' || popupContent.includes(ventilation)) &&
-                    (with_permit === '' || popupContent.includes(with_permit)) &&
+                    (ventilation === '' || ventilationValues.every(val => popupContent.includes(val.trim()))) &&
+                    (with_permit === '' || permitValues.every(val => popupContent.includes(val.trim()))) &&
                     (premisescond === '' || popupContent.includes(premisescond)) &&
                     (district === '' || markerDistrict === parseInt(district)) &&
                     (barangay === '' || markerBarangay === parseInt(barangay));
@@ -462,6 +471,7 @@ include 'includes/navbar.php';
                     map.removeLayer(marker);
                 }
             });
+
         });
 
 
